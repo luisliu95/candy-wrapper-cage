@@ -1,0 +1,90 @@
+{
+  "sticky_note_m": {
+    "id": "sticky_note_m",
+    "name": "美杜莎的便利贴",
+    "description": "A号床枕头下的便利贴。歪歪扭扭地写着：「别信她们说的话。——M」",
+    "icon": "📝",
+    "chapter": 1,
+    "category": "evidence"
+  },
+  "candy_crane": {
+    "id": "candy_crane",
+    "name": "糖纸千纸鹤",
+    "description": "用粉色糖纸折成的千纸鹤。展开后内侧写着一行小字：「0037-0042-0019」。",
+    "icon": "🦢",
+    "chapter": 1,
+    "category": "evidence"
+  },
+  "rusty_key": {
+    "id": "rusty_key",
+    "name": "生锈钥匙",
+    "description": "从松动地砖下面找到的钥匙。上面刻着「D-04」——也许是某扇门的编号。",
+    "icon": "🗝️",
+    "chapter": 1,
+    "category": "key"
+  },
+  "escape_map": {
+    "id": "escape_map",
+    "name": "手绘逃生图",
+    "description": "许珩画的建筑平面图。标注了三个出口，但两个被红笔划掉了。唯一可用的出口在地下二层。",
+    "icon": "🗺️",
+    "chapter": 2,
+    "category": "document"
+  },
+  "qiaoqing_letter": {
+    "id": "qiaoqing_letter",
+    "name": "乔青的信",
+    "description": "一封没有寄出的信：「我已经联系到外面的记者。再坚持一下。——乔青」",
+    "icon": "✉️",
+    "chapter": 2,
+    "category": "evidence"
+  },
+  "xuheng_notes": {
+    "id": "xuheng_notes",
+    "name": "许珩的笔记",
+    "description": "许珩收集的证据汇总。详细记录了每个「学员」的来源和真实身份。",
+    "icon": "📓",
+    "chapter": 2,
+    "category": "evidence"
+  },
+  "broadcast_tape": {
+    "id": "broadcast_tape",
+    "name": "广播磁带",
+    "description": "标签写着「最后的广播——美杜莎」。这是她三个月前秘密录制的真相录音。",
+    "icon": "📼",
+    "chapter": 3,
+    "category": "evidence"
+  },
+  "broadcast_script": {
+    "id": "broadcast_script",
+    "name": "广播稿",
+    "description": "美杜莎手写的广播稿。标题：「致所有被糖纸包裹的人。」字迹工整，写了三页。",
+    "icon": "📜",
+    "chapter": 3,
+    "category": "document"
+  },
+  "server_log_disk": {
+    "id": "server_log_disk",
+    "name": "服务器硬盘",
+    "description": "从CANDY-SRV-07取出的硬盘，存储着7月12日以来的所有监控和通讯记录。",
+    "icon": "💿",
+    "chapter": 4,
+    "category": "evidence"
+  },
+  "admin_notebook": {
+    "id": "admin_notebook",
+    "name": "管理员笔记",
+    "description": "机房管理员的笔记本。记录了系统维护日志和一条关键信息：日志会在凌晨3点自动清除。",
+    "icon": "📕",
+    "chapter": 4,
+    "category": "document"
+  },
+  "xuheng_usb": {
+    "id": "xuheng_usb",
+    "name": "许珩的U盘",
+    "description": "藏在配电箱里的U盘，标签写着「备份——许珩」。里面是完整的证据副本。",
+    "icon": "💾",
+    "chapter": 4,
+    "category": "evidence"
+  }
+}

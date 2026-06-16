@@ -1,0 +1,463 @@
+{
+  "__comment": "《糖纸牢笼》全部剧情对话 —— 四章结构",
+
+  "start": {
+    "id": "start",
+    "chapter": 1,
+    "speaker": "旁白",
+    "text": "你在一阵刺鼻的甜味中醒来。粉色的天花板，粉色的墙壁。这是一间四人宿舍，但只有你一个人。",
+    "next": "ch1_wake_2",
+    "background": "ch1_dorm"
+  },
+  "ch1_wake_2": {
+    "id": "ch1_wake_2",
+    "chapter": 1,
+    "speaker": "旁白",
+    "text": "你的手腕上系着一条糖纸编的手环，上面写着一个编号：「CW-0042」。你不记得自己是怎么来到这里的。",
+    "next": "ch1_wake_3"
+  },
+  "ch1_wake_3": {
+    "id": "ch1_wake_3",
+    "chapter": 1,
+    "speaker": "系统",
+    "text": "「欢迎回来，0042号甜心。今日任务已更新，请前往公共区域领取糖纸配额。」",
+    "next": "ch1_wake_4"
+  },
+  "ch1_wake_4": {
+    "id": "ch1_wake_4",
+    "chapter": 1,
+    "speaker": "旁白",
+    "text": "广播的声音冰冷而甜腻。你觉得这一切不对劲——也许该先看看房间里有什么线索。",
+    "enterRoom": "ch1_dorm"
+  },
+
+  "ch1_exit_dorm": {
+    "id": "ch1_exit_dorm",
+    "chapter": 1,
+    "speaker": "旁白",
+    "text": "锈迹斑斑的锁被打开了。走廊里空无一人，但地上散落着粉色的糖纸。墙壁上的涂鸦写着：「不要走左边。」",
+    "next": "ch1_meet_medusa",
+    "trigger": { "setFlag": "escaped_dorm" }
+  },
+  "ch1_meet_medusa": {
+    "id": "ch1_meet_medusa",
+    "chapter": 1,
+    "speaker": "旁白",
+    "text": "拐角处，一个短发女孩靠在墙上。她的眼睛在昏暗的灯光下闪着冷光，像某种警惕的动物。",
+    "next": "ch1_medusa_speak"
+  },
+  "ch1_medusa_speak": {
+    "id": "ch1_medusa_speak",
+    "chapter": 1,
+    "speaker": "美杜莎",
+    "text": "「你是新来的？还是……终于醒过来的？」她的语气平淡，却带着一种奇异的疲惫。",
+    "choices": [
+      {
+        "text": "「这里是什么地方？我为什么在这？」",
+        "next": "ch1_medusa_explain",
+        "trigger": { "trust_medusa": 2 }
+      },
+      {
+        "text": "「你是谁？你看起来不像工作人员。」",
+        "next": "ch1_medusa_intro",
+        "trigger": { "trust_medusa": 1 }
+      },
+      {
+        "text": "「别挡路。我要离开这里。」",
+        "next": "ch1_medusa_cold",
+        "trigger": { "trust_medusa": -1, "alert": 1 }
+      }
+    ]
+  },
+  "ch1_medusa_explain": {
+    "id": "ch1_medusa_explain",
+    "chapter": 1,
+    "speaker": "美杜莎",
+    "text": "「这里叫'糖纸工坊'。表面上是青年矫正营，实际上……你很快就会明白。先记住一件事：别吃他们给的糖。」",
+    "next": "ch1_medusa_join",
+    "trigger": { "evidence": 1, "setFlag": "learned_candy_warning" }
+  },
+  "ch1_medusa_intro": {
+    "id": "ch1_medusa_intro",
+    "chapter": 1,
+    "speaker": "美杜莎",
+    "text": "「叫我美杜莎就好——当然不是真名。在这里，没有人用真名。真名会被记录在系统里。」",
+    "next": "ch1_medusa_join",
+    "trigger": { "evidence": 1 }
+  },
+  "ch1_medusa_cold": {
+    "id": "ch1_medusa_cold",
+    "chapter": 1,
+    "speaker": "美杜莎",
+    "text": "「随你。但这里没有出口——至少，不是你想象中的那种。」她耸了耸肩，目光移向别处。",
+    "next": "ch1_medusa_join"
+  },
+  "ch1_medusa_join": {
+    "id": "ch1_medusa_join",
+    "chapter": 1,
+    "speaker": "美杜莎",
+    "text": "「走吧。有些东西你需要亲眼看看。地下室的印刷间——那里藏着她们不想让你知道的东西。」",
+    "next": "ch1_to_ch2",
+    "trigger": { "setFlag": "medusa_joined" }
+  },
+  "ch1_to_ch2": {
+    "id": "ch1_to_ch2",
+    "chapter": 1,
+    "speaker": "旁白",
+    "text": "你跟着美杜莎走下狭窄的楼梯。空气变得潮湿，糖纸的甜味被油墨的气味取代。",
+    "next": "ch2_enter",
+    "background": "ch2_workshop"
+  },
+
+  "ch2_enter": {
+    "id": "ch2_enter",
+    "chapter": 2,
+    "speaker": "旁白",
+    "text": "地下室比你想象的大得多。角落里堆着一台老式印刷机，到处散落着纸张和传单。",
+    "next": "ch2_medusa_explain"
+  },
+  "ch2_medusa_explain": {
+    "id": "ch2_medusa_explain",
+    "chapter": 2,
+    "speaker": "美杜莎",
+    "text": "「这是许珩建的秘密基地。她用这台印刷机制作传单，想把这里的真相传出去。但上个月她突然消失了。」",
+    "next": "ch2_choice_investigate",
+    "trigger": { "evidence": 1, "trust_xuheng": 1 }
+  },
+  "ch2_choice_investigate": {
+    "id": "ch2_choice_investigate",
+    "chapter": 2,
+    "speaker": "旁白",
+    "text": "印刷间里也许藏着许珩留下的线索。你决定仔细搜索一番。",
+    "enterRoom": "ch2_workshop"
+  },
+
+  "ch2_exit_workshop": {
+    "id": "ch2_exit_workshop",
+    "chapter": 2,
+    "speaker": "旁白",
+    "text": "你从印刷间带出了重要的线索。许珩似乎一直在秘密记录这里发生的一切。",
+    "next": "ch2_meet_qiaoqing"
+  },
+  "ch2_meet_qiaoqing": {
+    "id": "ch2_meet_qiaoqing",
+    "chapter": 2,
+    "speaker": "旁白",
+    "text": "回到走廊时，你遇到了另一个人——一个戴眼镜的安静女孩，正靠在墙边轻声哼歌。",
+    "next": "ch2_qiaoqing_speak"
+  },
+  "ch2_qiaoqing_speak": {
+    "id": "ch2_qiaoqing_speak",
+    "chapter": 2,
+    "speaker": "乔青",
+    "text": "「你一定是0042。美杜莎跟我提过你。」她推了推眼镜，声音很轻。「我是乔青。我负责广播室。」",
+    "choices": [
+      {
+        "text": "「你也在调查这里的真相？」",
+        "next": "ch2_qiao_truth",
+        "trigger": { "trust_qiaoqing": 2 }
+      },
+      {
+        "text": "「广播室？那里能对外发出信号吗？」",
+        "next": "ch2_qiao_broadcast",
+        "trigger": { "trust_qiaoqing": 1, "evidence": 1 }
+      },
+      {
+        "text": "「你怎么知道我的编号？」",
+        "next": "ch2_qiao_number",
+        "trigger": { "trust_qiaoqing": 1, "alert": 1 }
+      }
+    ]
+  },
+  "ch2_qiao_truth": {
+    "id": "ch2_qiao_truth",
+    "chapter": 2,
+    "speaker": "乔青",
+    "text": "「调查？不……我只是在记录。有人要记住这些事情。就算我们出不去，至少声音要留下来。」",
+    "next": "ch2_qiao_plan",
+    "trigger": { "evidence": 1 }
+  },
+  "ch2_qiao_broadcast": {
+    "id": "ch2_qiao_broadcast",
+    "chapter": 2,
+    "speaker": "乔青",
+    "text": "「理论上可以。但频率被锁定了，而且他们会监听。不过……我有一个想法。」她的眼睛亮了一下。",
+    "next": "ch2_qiao_plan",
+    "trigger": { "evidence": 1 }
+  },
+  "ch2_qiao_number": {
+    "id": "ch2_qiao_number",
+    "chapter": 2,
+    "speaker": "乔青",
+    "text": "「这里每个人都有编号。名字会被收走，编号不会。」她低下头。「我的编号是0037。」",
+    "next": "ch2_qiao_plan"
+  },
+  "ch2_qiao_plan": {
+    "id": "ch2_qiao_plan",
+    "chapter": 2,
+    "speaker": "乔青",
+    "text": "「广播室还能用——我一直偷偷维护着设备。如果你能找到美杜莎之前录的那盘磁带，也许我们能做点什么。」",
+    "next": "ch2_to_ch3",
+    "trigger": { "setFlag": "qiaoqing_joined", "trust_qiaoqing": 1 }
+  },
+  "ch2_to_ch3": {
+    "id": "ch2_to_ch3",
+    "chapter": 2,
+    "speaker": "旁白",
+    "text": "乔青带你穿过一条昏暗的通道。尽头是一扇贴满告示的铁门，上面写着：「广播室 —— 仅限授权人员。」",
+    "next": "ch3_enter",
+    "background": "ch3_broadcast"
+  },
+
+  "ch3_enter": {
+    "id": "ch3_enter",
+    "chapter": 3,
+    "speaker": "旁白",
+    "text": "广播室比想象中小，但设备齐全。混音台上的按钮在微光中闪烁，像一排沉默的眼睛。",
+    "next": "ch3_qiao_guide"
+  },
+  "ch3_qiao_guide": {
+    "id": "ch3_qiao_guide",
+    "chapter": 3,
+    "speaker": "乔青",
+    "text": "「设备我来操作。你帮忙找找磁带和广播稿。美杜莎之前把重要的东西都藏在这个房间里了。」",
+    "enterRoom": "ch3_broadcast"
+  },
+
+  "ch3_exit_broadcast": {
+    "id": "ch3_exit_broadcast",
+    "chapter": 3,
+    "speaker": "旁白",
+    "text": "磁带播放出美杜莎的声音，低沉而坚定。这段录音记录了「糖纸工坊」的真相。",
+    "next": "ch3_tape_play"
+  },
+  "ch3_tape_play": {
+    "id": "ch3_tape_play",
+    "chapter": 3,
+    "speaker": "美杜莎（录音）",
+    "text": "「……他们管这叫'矫正'，但没有人需要被矫正。我们只是不够听话。这里的糖纸是锁链，微笑是牢笼……」",
+    "next": "ch3_tape_play_2",
+    "trigger": { "evidence": 3 }
+  },
+  "ch3_tape_play_2": {
+    "id": "ch3_tape_play_2",
+    "chapter": 3,
+    "speaker": "美杜莎（录音）",
+    "text": "「如果你听到这段录音，说明我的计划失败了。服务器机房里有所有的记录。密码是那天的日期。」",
+    "next": "ch3_medusa_react",
+    "trigger": { "evidence": 2, "setFlag": "heard_tape" }
+  },
+  "ch3_medusa_react": {
+    "id": "ch3_medusa_react",
+    "chapter": 3,
+    "speaker": "美杜莎",
+    "text": "美杜莎靠在门框上，表情复杂。「那是我三个月前录的。我以为可以一个人搞定一切。」",
+    "choices": [
+      {
+        "text": "「你不是一个人。现在我们一起。」",
+        "next": "ch3_unite",
+        "trigger": { "trust_medusa": 3 }
+      },
+      {
+        "text": "「你为什么不早点告诉我这些？」",
+        "next": "ch3_question",
+        "trigger": { "trust_medusa": -1, "evidence": 1 }
+      },
+      {
+        "text": "「服务器机房在哪里？我们赶紧行动。」",
+        "next": "ch3_urgent",
+        "trigger": { "alert": 1, "evidence": 1 }
+      }
+    ]
+  },
+  "ch3_unite": {
+    "id": "ch3_unite",
+    "chapter": 3,
+    "speaker": "美杜莎",
+    "text": "她沉默了一会儿，嘴角微微上扬。「……谢谢。很久没有人这样说了。服务器在地下二层。走吧。」",
+    "next": "ch3_to_ch4",
+    "trigger": { "setFlag": "united_team" }
+  },
+  "ch3_question": {
+    "id": "ch3_question",
+    "chapter": 3,
+    "speaker": "美杜莎",
+    "text": "「因为信任是奢侈品。在这里，你永远不知道谁会在晚上把你的名字交上去。」她的眼神变得锐利。",
+    "next": "ch3_to_ch4"
+  },
+  "ch3_urgent": {
+    "id": "ch3_urgent",
+    "chapter": 3,
+    "speaker": "乔青",
+    "text": "「等一下。系统会在凌晨3点清除日志。如果被发现我们进了服务器房……」她没有说完，但意思很清楚。",
+    "next": "ch3_to_ch4",
+    "trigger": { "setFlag": "know_deadline" }
+  },
+  "ch3_to_ch4": {
+    "id": "ch3_to_ch4",
+    "chapter": 3,
+    "speaker": "旁白",
+    "text": "雷声在远处响起。雨点开始敲打铁皮屋顶。你们走下最后一段楼梯，空调的嗡鸣声越来越大。",
+    "next": "ch4_enter",
+    "background": "ch4_server"
+  },
+
+  "ch4_enter": {
+    "id": "ch4_enter",
+    "chapter": 4,
+    "speaker": "旁白",
+    "text": "服务器机房的门半掩着。荧光灯管闪烁不定，机柜上的指示灯像星群一样明灭。外面的雨越下越大。",
+    "next": "ch4_medusa_warn"
+  },
+  "ch4_medusa_warn": {
+    "id": "ch4_medusa_warn",
+    "chapter": 4,
+    "speaker": "美杜莎",
+    "text": "「我和乔青在外面望风。你进去找那些数据——记住，时间不多了。」",
+    "next": "ch4_explore",
+    "trigger": { "setFlag": "ch4_started" }
+  },
+  "ch4_explore": {
+    "id": "ch4_explore",
+    "chapter": 4,
+    "speaker": "旁白",
+    "text": "你独自走进了机房。空调的冷风让你打了个寒颤。服务器的运转声像一种低沉的呼吸。",
+    "enterRoom": "ch4_server"
+  },
+
+  "ch4_exit_server": {
+    "id": "ch4_exit_server",
+    "chapter": 4,
+    "speaker": "旁白",
+    "text": "你从终端里提取了所有关键数据。屏幕上闪过最后一行日志：「0712——Project CandyWrap 启动。」",
+    "next": "ch4_alarm",
+    "trigger": { "evidence": 3 }
+  },
+  "ch4_alarm": {
+    "id": "ch4_alarm",
+    "chapter": 4,
+    "speaker": "系统",
+    "text": "「警告：未授权访问检测。安保系统已启动。所有出口将在五分钟内锁定。」",
+    "next": "ch4_crisis",
+    "trigger": { "alert": 3, "setFlag": "alarm_triggered" }
+  },
+  "ch4_crisis": {
+    "id": "ch4_crisis",
+    "chapter": 4,
+    "speaker": "美杜莎",
+    "text": "美杜莎冲进来：「被发现了！紧急出口还有几分钟能用。但你必须做一个选择——」",
+    "next": "ch4_final_choice"
+  },
+  "ch4_final_choice": {
+    "id": "ch4_final_choice",
+    "chapter": 4,
+    "speaker": "旁白",
+    "text": "警报声中，你面前有三条路。时间只够做一件事。",
+    "choices": [
+      {
+        "text": "启动广播，把真相传出去（需要磁带和广播稿）",
+        "next": "ending_check_broadcast",
+        "require": "broadcast_tape",
+        "trigger": { "evidence": 5, "alert": 2, "setFlag": "chose_broadcast" }
+      },
+      {
+        "text": "带着证据从紧急出口逃走",
+        "next": "ending_check_escape",
+        "trigger": { "setFlag": "chose_escape" }
+      },
+      {
+        "text": "销毁服务器，让数据和这一切一起消失",
+        "next": "ending_check_destroy",
+        "trigger": { "alert": 3, "setFlag": "chose_destroy" }
+      },
+      {
+        "text": "把U盘交给美杜莎，相信她会做出正确的决定",
+        "next": "ending_check_trust",
+        "require": "xuheng_usb",
+        "trigger": { "trust_medusa": 3, "setFlag": "chose_trust_medusa" }
+      }
+    ]
+  },
+
+  "ending_check_broadcast": {
+    "id": "ending_check_broadcast",
+    "chapter": 4,
+    "speaker": "旁白",
+    "text": "你冲回广播室，把磁带塞进播放器。美杜莎的声音透过喇叭，回荡在整个建筑里——也许，更远。",
+    "checkEnding": true
+  },
+  "ending_check_escape": {
+    "id": "ending_check_escape",
+    "chapter": 4,
+    "speaker": "旁白",
+    "text": "你抓起所有能带走的证据，冲向紧急出口。雨水扑面而来，但你头也不回。",
+    "checkEnding": true
+  },
+  "ending_check_destroy": {
+    "id": "ending_check_destroy",
+    "chapter": 4,
+    "speaker": "旁白",
+    "text": "你拉下了配电箱的总闸。火花在黑暗中飞溅，服务器一台接一台地熄灭。数据消失了——连同真相。",
+    "checkEnding": true
+  },
+  "ending_check_trust": {
+    "id": "ending_check_trust",
+    "chapter": 4,
+    "speaker": "旁白",
+    "text": "你把U盘放在美杜莎手心。她低头看了看，然后紧紧握住。「我知道该怎么做。」",
+    "checkEnding": true
+  },
+
+  "puzzle_ch1_fail": {
+    "id": "puzzle_ch1_fail",
+    "chapter": 1,
+    "speaker": "旁白",
+    "text": "地砖纹丝不动。也许需要用什么工具，或者找到正确的施力点。",
+    "enterRoom": "ch1_dorm"
+  },
+  "puzzle_ch2_fail": {
+    "id": "puzzle_ch2_fail",
+    "chapter": 2,
+    "speaker": "旁白",
+    "text": "密码错误。铁皮柜发出一声沉闷的响。你需要更多线索。",
+    "enterRoom": "ch2_workshop"
+  },
+  "puzzle_ch2_success": {
+    "id": "puzzle_ch2_success",
+    "chapter": 2,
+    "speaker": "旁白",
+    "text": "柜门弹开了。里面有一台旧录音笔和一叠手写笔记——全是许珩收集的证据。",
+    "next": "ch2_exit_workshop",
+    "trigger": { "addItem": "xuheng_notes", "evidence": 3, "trust_xuheng": 2 }
+  },
+  "puzzle_ch3_fail": {
+    "id": "puzzle_ch3_fail",
+    "chapter": 3,
+    "speaker": "乔青",
+    "text": "「频率不对……让我再调一下。你确定操作顺序没问题吗？」",
+    "enterRoom": "ch3_broadcast"
+  },
+  "puzzle_ch3_success": {
+    "id": "puzzle_ch3_success",
+    "chapter": 3,
+    "speaker": "旁白",
+    "text": "广播设备嗡的一声启动了。话筒前的红色指示灯亮起——信号通了。",
+    "next": "ch3_exit_broadcast",
+    "trigger": { "evidence": 2, "setFlag": "broadcast_ready" }
+  },
+  "puzzle_ch4_fail": {
+    "id": "puzzle_ch4_fail",
+    "chapter": 4,
+    "speaker": "旁白",
+    "text": "「访问被拒绝。」屏幕闪烁了一下。剩余尝试次数又少了一次。",
+    "enterRoom": "ch4_server"
+  },
+  "puzzle_ch4_success": {
+    "id": "puzzle_ch4_success",
+    "chapter": 4,
+    "speaker": "旁白",
+    "text": "屏幕上密密麻麻地滚动着日志。7月12日的记录被标记为「最高机密」——你终于触碰到了真相的核心。",
+    "next": "ch4_exit_server",
+    "trigger": { "evidence": 3, "setFlag": "unlocked_terminal", "setFlags": ["unlocked_exit"] }
+  }
+}

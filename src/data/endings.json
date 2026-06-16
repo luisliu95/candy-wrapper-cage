@@ -1,0 +1,70 @@
+{
+  "ending_signal": {
+    "id": "ending_signal",
+    "title": "📡 信号穿透雨夜",
+    "description": "美杜莎的声音通过广播信号穿透了暴雨，传向远方。也许有人会听到，也许需要很久。但真相已经不再被困在糖纸里了。",
+    "epilogue": "三天后，当地媒体报道了一则匿名广播的内容。有关部门介入调查。你和美杜莎、乔青的名字，终于从编号变回了名字。",
+    "condition": {
+      "minEvidence": 15,
+      "hasFlag": "chose_broadcast",
+      "hasFlags": ["broadcast_ready", "heard_tape"]
+    },
+    "priority": 10
+  },
+  "ending_evidence": {
+    "id": "ending_evidence",
+    "title": "📂 带走真相的人",
+    "description": "你带着所有证据冲进了暴雨中。身后的铁门在你背后关上。你不确定这些数据够不够——但至少，你活着走出来了。",
+    "epilogue": "你把证据交给了乔青联系的记者。调查持续了三个月。糖纸工坊最终被关闭，但有些人的记忆再也回不来了。",
+    "condition": {
+      "minEvidence": 10,
+      "hasFlag": "chose_escape"
+    },
+    "priority": 8
+  },
+  "ending_trust": {
+    "id": "ending_trust",
+    "title": "🤝 交付与信任",
+    "description": "美杜莎接过U盘，沉默了很久。「我不会让许珩白白消失的。」她转身消失在雨幕中——你第一次觉得她的背影不再孤独。",
+    "epilogue": "美杜莎用许珩的备份数据联系了多家媒体。事件曝光后引发轩然大波。在庭审那天，你在旁听席上看到了她——终于，不再是美杜莎，而是她真正的名字。",
+    "condition": {
+      "minTrustMedusa": 6,
+      "hasFlag": "chose_trust_medusa",
+      "hasFlags": ["found_xuheng_backup"]
+    },
+    "priority": 9
+  },
+  "ending_silence": {
+    "id": "ending_silence",
+    "title": "🔇 寂静的代价",
+    "description": "服务器在火花中熄灭。数据消失了，真相消失了，指控的依据也消失了。你站在黑暗中，只听到自己的呼吸和外面的雨声。",
+    "epilogue": "没有证据，一切只是「未经证实的传闻」。糖纸工坊换了名字，继续运营。你有时会在梦里听到那段没能播出的广播。",
+    "condition": {
+      "hasFlag": "chose_destroy"
+    },
+    "priority": 7
+  },
+  "ending_alliance": {
+    "id": "ending_alliance",
+    "title": "🕊️ 三个人的约定",
+    "description": "你、美杜莎和乔青站在雨中。没有人说话，但你们都知道——这不是结束，而是开始。三个人比一个人更难被消灭。",
+    "epilogue": "你们分别离开，约定在安全的地方汇合。每个人都带着不同的证据碎片。分散的真相更难被掩盖——这是许珩教给你们的最后一课。",
+    "condition": {
+      "minEvidence": 12,
+      "minTrustMedusa": 4,
+      "minTrustQiaoqing": 3,
+      "hasFlags": ["medusa_joined", "qiaoqing_joined", "united_team"]
+    },
+    "priority": 11
+  },
+  "ending_trapped": {
+    "id": "ending_trapped",
+    "title": "🍬 甜蜜的遗忘",
+    "description": "警报停了。灯重新亮起。你发现自己又坐在那间粉色宿舍的床上，手腕上系着糖纸手环。手环上的编号变了：「CW-0043」。",
+    "epilogue": "你不记得发生过什么。空气中弥漫着甜腻的味道，广播正在播放今日任务。一切如常——在糖纸牢笼里，每个人最终都会变得甜蜜。",
+    "condition": {
+      "maxEvidence": 5
+    },
+    "priority": 1
+  }
+}

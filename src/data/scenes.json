@@ -1,0 +1,239 @@
+{
+  "ch1_dorm": {
+    "id": "ch1_dorm",
+    "chapter": 1,
+    "name": "粉色宿舍",
+    "description": "铺满粉色糖纸的四人宿舍。窗帘紧闭，空气里有股甜腻的消毒水味。",
+    "background": "linear-gradient(180deg, #3d1f3f 0%, #6b2d5b 30%, #4a1942 70%, #2a0e2e 100%)",
+    "hotspots": [
+      {
+        "id": "ch1_bed_a",
+        "x": 5, "y": 40,
+        "w": 22, "h": 35,
+        "label": "A号床铺",
+        "description": "床单是粉色的，枕头下压着一张便利贴，字迹歪歪扭扭：「别信她们说的话。——M」",
+        "itemId": "sticky_note_m",
+        "usedFlag": "picked_sticky_note",
+        "trigger": { "evidence": 1 }
+      },
+      {
+        "id": "ch1_desk",
+        "x": 30, "y": 35,
+        "w": 20, "h": 30,
+        "label": "书桌",
+        "description": "桌上有一台关机的旧笔记本电脑，旁边放着一杯已经凉透的奶茶。桌角刻着四个字：「我想回家」。",
+        "trigger": { "evidence": 1, "setFlag": "seen_desk_carving" }
+      },
+      {
+        "id": "ch1_wardrobe",
+        "x": 55, "y": 25,
+        "w": 18, "h": 45,
+        "label": "衣柜",
+        "description": "衣柜门上贴着一张规章制度：「第七条：禁止在熄灯后使用通讯设备。」衣柜上方藏着一个糖纸折的千纸鹤。",
+        "itemId": "candy_crane",
+        "usedFlag": "picked_crane",
+        "trigger": { "evidence": 1, "setFlag": "found_crane" }
+      },
+      {
+        "id": "ch1_window",
+        "x": 78, "y": 15,
+        "w": 18, "h": 40,
+        "label": "窗户",
+        "description": "窗帘后的窗户被铁丝网封住了。透过缝隙，外面是灰蒙蒙的天。窗台上有一朵干枯的塑料花。",
+        "trigger": { "alert": 1, "setFlag": "seen_locked_window" }
+      },
+      {
+        "id": "ch1_floor_tile",
+        "x": 38, "y": 75,
+        "w": 24, "h": 15,
+        "label": "松动的地砖",
+        "description": "地砖有一块微微翘起。撬开后下面是一个小空间，里面有一把生锈的钥匙。",
+        "itemId": "rusty_key",
+        "usedFlag": "picked_rusty_key",
+        "puzzleId": "ch1_tile_puzzle"
+      },
+      {
+        "id": "ch1_door",
+        "x": 85, "y": 30,
+        "w": 12, "h": 50,
+        "label": "宿舍门",
+        "description": "门从外面锁着，但锁孔很旧。也许找到合适的钥匙就能打开。",
+        "requireItem": "rusty_key",
+        "storyJump": "ch1_exit_dorm",
+        "usedFlag": "opened_dorm_door"
+      }
+    ],
+    "exitTo": "ch1_exit_dorm"
+  },
+
+  "ch2_workshop": {
+    "id": "ch2_workshop",
+    "chapter": 2,
+    "name": "传单工坊",
+    "description": "堆满印刷机和纸张的地下室。到处散落着未完成的传单，油墨的气味刺鼻。",
+    "background": "linear-gradient(180deg, #1a2a1a 0%, #2d4a2d 30%, #1e3a1e 70%, #0a1a0a 100%)",
+    "hotspots": [
+      {
+        "id": "ch2_printer",
+        "x": 5, "y": 30,
+        "w": 25, "h": 40,
+        "label": "印刷机",
+        "description": "一台老旧的油印机，滚筒上还残留着墨迹。最后一批打印的内容是：「她们不是自愿来的。」",
+        "trigger": { "evidence": 2, "setFlag": "read_printer_msg" }
+      },
+      {
+        "id": "ch2_paper_stack",
+        "x": 35, "y": 50,
+        "w": 20, "h": 30,
+        "label": "纸堆",
+        "description": "几百张空白传单纸，中间夹着一张手绘的逃生路线图。路线图标注了三个出口，但两个被划掉了。",
+        "itemId": "escape_map",
+        "usedFlag": "picked_escape_map",
+        "trigger": { "evidence": 2 }
+      },
+      {
+        "id": "ch2_locker",
+        "x": 62, "y": 25,
+        "w": 18, "h": 45,
+        "label": "铁皮柜",
+        "description": "上锁的铁皮柜，上面贴着标签：「许珩 私人物品」。需要密码才能打开。",
+        "puzzleId": "ch2_locker_puzzle"
+      },
+      {
+        "id": "ch2_wall_writing",
+        "x": 35, "y": 8,
+        "w": 30, "h": 18,
+        "label": "墙上涂鸦",
+        "description": "有人用红色油墨在墙上写了一行字：「0712——他们来的那天。」旁边画着一个哭泣的表情。",
+        "trigger": { "evidence": 1, "setFlag": "seen_date_0712" }
+      },
+      {
+        "id": "ch2_trash",
+        "x": 82, "y": 60,
+        "w": 15, "h": 25,
+        "label": "废纸篓",
+        "description": "废纸篓里有一封揉皱的信，署名是「乔青」。信上写着：「我已经联系到外面的记者。再坚持一下。」",
+        "itemId": "qiaoqing_letter",
+        "usedFlag": "picked_qiao_letter",
+        "trigger": { "evidence": 2, "trust_qiaoqing": 1 }
+      }
+    ],
+    "exitTo": "ch2_exit_workshop"
+  },
+
+  "ch3_broadcast": {
+    "id": "ch3_broadcast",
+    "chapter": 3,
+    "name": "广播室",
+    "description": "封闭的广播室，设备陈旧但仍能运作。墙上贴着一张节目时间表，最后一期的标题被涂黑了。",
+    "background": "linear-gradient(180deg, #1a1a3e 0%, #2d2d6b 30%, #1e1e5a 70%, #0a0a2e 100%)",
+    "hotspots": [
+      {
+        "id": "ch3_console",
+        "x": 10, "y": 35,
+        "w": 30, "h": 35,
+        "label": "广播控制台",
+        "description": "布满灰尘的混音台和话筒。电源指示灯还在微微闪烁，也许还能用。",
+        "puzzleId": "ch3_broadcast_puzzle",
+        "requireFlag": "has_broadcast_tape"
+      },
+      {
+        "id": "ch3_tape_shelf",
+        "x": 45, "y": 20,
+        "w": 20, "h": 40,
+        "label": "磁带架",
+        "description": "几十盒磁带整齐排列。大部分标签已经褪色，只有一盒写着「最后的广播 —— 美杜莎」。",
+        "itemId": "broadcast_tape",
+        "usedFlag": "picked_tape",
+        "trigger": { "evidence": 2, "trust_medusa": 1, "setFlag": "has_broadcast_tape" }
+      },
+      {
+        "id": "ch3_schedule",
+        "x": 70, "y": 10,
+        "w": 25, "h": 25,
+        "label": "节目表",
+        "description": "时间表最后一行：「7月12日 22:00 —— 特别节目：真相。」后面用红笔写着：「已取消。」",
+        "trigger": { "evidence": 2, "setFlag": "seen_schedule_0712" }
+      },
+      {
+        "id": "ch3_drawer",
+        "x": 8, "y": 72,
+        "w": 22, "h": 18,
+        "label": "控制台抽屉",
+        "description": "抽屉里有一份手写稿，是美杜莎准备的广播稿。标题：「致所有被糖纸包裹的人。」",
+        "itemId": "broadcast_script",
+        "usedFlag": "picked_script",
+        "trigger": { "evidence": 3, "trust_medusa": 2 }
+      },
+      {
+        "id": "ch3_photo_wall",
+        "x": 72, "y": 42,
+        "w": 22, "h": 35,
+        "label": "照片墙",
+        "description": "墙上钉着几张合影。三个女孩站在广播室前微笑——但其中一个人的脸被人用马克笔涂掉了。",
+        "trigger": { "evidence": 1, "setFlag": "seen_defaced_photo" }
+      }
+    ],
+    "exitTo": "ch3_exit_broadcast"
+  },
+
+  "ch4_server": {
+    "id": "ch4_server",
+    "chapter": 4,
+    "name": "服务器雨夜",
+    "description": "地下服务器机房。荧光灯忽明忽灭，空调嗡嗡作响。窗外暴雨如注，雷声隐约可闻。",
+    "background": "linear-gradient(180deg, #0a0a1a 0%, #1a1a2e 30%, #0d0d2a 70%, #050510 100%)",
+    "hotspots": [
+      {
+        "id": "ch4_terminal",
+        "x": 8, "y": 30,
+        "w": 28, "h": 40,
+        "label": "主终端",
+        "description": "服务器主控终端，屏幕上闪烁着登录提示。这里存储着所有的监控记录和通讯日志。",
+        "puzzleId": "ch4_terminal_puzzle"
+      },
+      {
+        "id": "ch4_rack",
+        "x": 40, "y": 15,
+        "w": 22, "h": 55,
+        "label": "服务器机柜",
+        "description": "机柜标签写着「CANDY-SRV-07」。第七层的硬盘指示灯异常闪烁——那里存着7月12日的数据。",
+        "requireFlag": "unlocked_terminal",
+        "itemId": "server_log_disk",
+        "usedFlag": "picked_log_disk",
+        "trigger": { "evidence": 3, "setFlag": "got_server_log" }
+      },
+      {
+        "id": "ch4_notebook",
+        "x": 66, "y": 45,
+        "w": 18, "h": 25,
+        "label": "管理员笔记本",
+        "description": "一本翻旧的笔记本。最后一页写着：「系统会在凌晨3点自动清除日志。他们什么都想删掉。」",
+        "itemId": "admin_notebook",
+        "usedFlag": "picked_admin_nb",
+        "trigger": { "evidence": 2, "alert": 1 }
+      },
+      {
+        "id": "ch4_breaker",
+        "x": 88, "y": 25,
+        "w": 10, "h": 30,
+        "label": "配电箱",
+        "description": "配电箱的门虚掩着。里面除了开关，还藏着一个U盘，上面贴着标签：「备份 —— 许珩」。",
+        "itemId": "xuheng_usb",
+        "usedFlag": "picked_usb",
+        "trigger": { "evidence": 2, "trust_xuheng": 2, "setFlag": "found_xuheng_backup" }
+      },
+      {
+        "id": "ch4_exit_door",
+        "x": 3, "y": 70,
+        "w": 15, "h": 22,
+        "label": "紧急出口",
+        "description": "通往地面的紧急出口。门上的电子锁还在运作——也许终端里能找到解锁密码。",
+        "requireFlag": "unlocked_exit",
+        "storyJump": "ch4_final_choice",
+        "usedFlag": "used_exit"
+      }
+    ],
+    "exitTo": "ch4_exit_server"
+  }
+}

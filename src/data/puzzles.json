@@ -1,0 +1,80 @@
+{
+  "ch1_tile_puzzle": {
+    "id": "ch1_tile_puzzle",
+    "chapter": 1,
+    "title": "松动的地砖",
+    "description": "地砖翘起了一角，但需要找到正确的施力方向。糖纸千纸鹤里的数字也许是提示——三个编号相加等于多少？（0037+0042+0019）",
+    "type": "input",
+    "answer": "98",
+    "hint": "把千纸鹤上的三个编号加在一起。",
+    "successNode": "ch1_exit_dorm",
+    "failNode": "puzzle_ch1_fail",
+    "reward": {
+      "addItem": "rusty_key",
+      "evidence": 1,
+      "setFlag": "solved_tile"
+    },
+    "maxAttempts": 5
+  },
+
+  "ch2_locker_puzzle": {
+    "id": "ch2_locker_puzzle",
+    "chapter": 2,
+    "title": "许珩的铁皮柜",
+    "description": "四位数密码锁。墙上的涂鸦写着一个日期：「0712——他们来的那天。」而许珩的编号是0019。也许密码和这些数字有关？",
+    "type": "choice",
+    "options": ["0712", "0019", "1907", "7120"],
+    "answer": "0712",
+    "hint": "墙上涂鸦提到的日期。最直接的线索往往就是答案。",
+    "successNode": "puzzle_ch2_success",
+    "failNode": "puzzle_ch2_fail",
+    "reward": {
+      "addItem": "xuheng_notes",
+      "evidence": 3,
+      "trust_xuheng": 2,
+      "setFlag": "solved_locker"
+    },
+    "maxAttempts": 3
+  },
+
+  "ch3_broadcast_puzzle": {
+    "id": "ch3_broadcast_puzzle",
+    "chapter": 3,
+    "title": "广播设备启动",
+    "description": "控制台上有四个旋钮，分别标记为：频率、增益、模式、天线。乔青说：「先调频率到节目表上的时段，再开增益，然后切换到直播模式，最后启动天线。」正确的操作顺序是？",
+    "type": "choice",
+    "options": [
+      "频率 → 增益 → 模式 → 天线",
+      "天线 → 频率 → 模式 → 增益",
+      "模式 → 频率 → 天线 → 增益",
+      "增益 → 天线 → 频率 → 模式"
+    ],
+    "answer": "频率 → 增益 → 模式 → 天线",
+    "hint": "按乔青说的顺序来就对了。仔细听她的指导。",
+    "successNode": "puzzle_ch3_success",
+    "failNode": "puzzle_ch3_fail",
+    "reward": {
+      "evidence": 2,
+      "setFlag": "broadcast_ready"
+    },
+    "maxAttempts": 3
+  },
+
+  "ch4_terminal_puzzle": {
+    "id": "ch4_terminal_puzzle",
+    "chapter": 4,
+    "title": "服务器终端登录",
+    "description": "终端要求输入管理员密码。美杜莎的录音提到：「密码是那天的日期。」管理员笔记本里也提到了凌晨3点清除日志。那个改变一切的日期是什么？（格式：MMDD）",
+    "type": "input",
+    "answer": "0712",
+    "hint": "多处线索都指向同一个日期。7月12日——一切开始的那天。",
+    "successNode": "puzzle_ch4_success",
+    "failNode": "puzzle_ch4_fail",
+    "reward": {
+      "evidence": 3,
+      "setFlag": "unlocked_terminal",
+      "setFlags": ["unlocked_exit"]
+    },
+    "maxAttempts": 5
+  }
+}
