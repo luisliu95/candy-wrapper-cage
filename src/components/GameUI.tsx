@@ -7,6 +7,7 @@ import RoomExplorer from './RoomExplorer';
 import Inventory from './Inventory';
 import PuzzleModal from './PuzzleModal';
 import EndingScreen from './EndingScreen';
+import SugarEchoScreen from './SugarEchoScreen';
 
 const BG_MAP: Record<string, string> = {
   ch1_dorm: 'linear-gradient(180deg, #3d1f3f 0%, #6b2d5b 50%, #2a0e2e 100%)',
@@ -35,6 +36,10 @@ export default function GameUI() {
 
   if (phase === 'ending') {
     return <EndingScreen />;
+  }
+
+  if (phase === 'sugarecho') {
+    return <SugarEchoScreen />;
   }
 
   return (

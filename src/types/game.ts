@@ -36,6 +36,7 @@ export interface StoryTrigger {
   setFlag?: string;
   setFlags?: string[];    // 批量设置标记
   removeFlag?: string;
+  triggerSugarEcho?: boolean; // 触发 SugarEcho 消息审查
 }
 
 /** 场景（房间） */
@@ -150,5 +151,28 @@ export interface SaveData {
   timestamp: number;
 }
 
+/** SugarEcho 伪造消息 */
+export interface FakeMessage {
+  id: string;
+  sender: string;
+  text: string;
+  timestamp: string;
+  flaw: string;           // 漏洞类型 key
+  flawHint: string;       // 玩家识破后看到的提示
+  flawDetail: string;     // 技术层面的解释（SugarEcho 视角）
+}
+
+/** 章节消息池 */
+export interface ChapterMessages {
+  base: FakeMessage[];
+  [conditionKey: string]: FakeMessage[];
+}
+
+/** 玩家对消息的审查选项 */
+export interface FlawOption {
+  type: string;
+  label: string;
+}
+
 /** 游戏阶段 */
-export type GamePhase = 'start' | 'story' | 'room' | 'puzzle' | 'ending';
+export type GamePhase = 'start' | 'story' | 'room' | 'puzzle' | 'ending' | 'sugarecho';

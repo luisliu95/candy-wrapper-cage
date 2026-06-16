@@ -106,7 +106,8 @@
     "speaker": "旁白",
     "text": "你跟着美杜莎走下狭窄的楼梯。空气变得潮湿，糖纸的甜味被油墨的气味取代。",
     "next": "ch2_enter",
-    "background": "ch2_workshop"
+    "background": "ch2_workshop",
+    "trigger": { "triggerSugarEcho": true }
   },
 
   "ch2_enter": {
@@ -206,7 +207,8 @@
     "speaker": "旁白",
     "text": "乔青带你穿过一条昏暗的通道。尽头是一扇贴满告示的铁门，上面写着：「广播室 —— 仅限授权人员。」",
     "next": "ch3_enter",
-    "background": "ch3_broadcast"
+    "background": "ch3_broadcast",
+    "trigger": { "triggerSugarEcho": true }
   },
 
   "ch3_enter": {
@@ -299,7 +301,8 @@
     "speaker": "旁白",
     "text": "雷声在远处响起。雨点开始敲打铁皮屋顶。你们走下最后一段楼梯，空调的嗡鸣声越来越大。",
     "next": "ch4_enter",
-    "background": "ch4_server"
+    "background": "ch4_server",
+    "trigger": { "triggerSugarEcho": true }
   },
 
   "ch4_enter": {
@@ -346,7 +349,8 @@
     "chapter": 4,
     "speaker": "美杜莎",
     "text": "美杜莎冲进来：「被发现了！紧急出口还有几分钟能用。但你必须做一个选择——」",
-    "next": "ch4_final_choice"
+    "next": "ch4_final_choice",
+    "trigger": { "triggerSugarEcho": true }
   },
   "ch4_final_choice": {
     "id": "ch4_final_choice",

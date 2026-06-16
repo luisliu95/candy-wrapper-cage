@@ -1,11 +1,12 @@
 import { create } from 'zustand';
-import type { GamePhase, SaveData, StoryNode, StoryTrigger, Ending, EndingCondition, CraftRecipe } from '../types/game';
+import type { GamePhase, SaveData, StoryNode, StoryTrigger, Ending, EndingCondition, CraftRecipe, FakeMessage } from '../types/game';
 import storyData from '../data/dialogues.json';
 import roomsData from '../data/scenes.json';
 import itemsData from '../data/items.json';
 import puzzlesData from '../data/puzzles.json';
 import endingsData from '../data/endings.json';
 import recipesData from '../data/recipes.json';
+import { selectFakeMessage, generateFlawOptions } from './sugarEchoEngine';
 
 const SAVE_KEY = 'candy_wrapper_cage_save';
 
@@ -29,8 +30,12 @@ interface GameState {
   hotspotExamineCount: Record<string, number>;  // 热区调查次数
   message: string | null;
   // 背包组合
-  combineMode: boolean;       // 是否处于组合模式
-  combineSlots: string[];     // 当前选中的物品 ID（最多2个）
+  combineMode: boolean;
+  combineSlots: string[];
+  // SugarEcho 系统
+  currentFakeMessage: FakeMessage | null;
+  fakeMessageHistory: { chapter: number; messageId: string; detected: boolean }[];
+  sugarEchoFlawOptions: { type: string; label: string }[];
 
   // Actions
   startGame: () => void;
@@ -64,6 +69,11 @@ interface GameState {
   tryCombine: () => void;
   getAvailableRecipes: () => CraftRecipe[];
 
+  // SugarEcho
+  triggerSugarEcho: () => void;
+  judgeFlaw: (flawType: string) => void;
+  dismissSugarEcho: () => void;
+
   checkEnding: () => void;
   showMessage: (msg: string) => void;
   clearMessage: () => void;
@@ -91,6 +101,9 @@ export const useGameStore = create<GameState>((set, get) => ({
   message: null,
   combineMode: false,
   combineSlots: [],
+  currentFakeMessage: null,
+  fakeMessageHistory: [],
+  sugarEchoFlawOptions: [],
 
   startGame: () => {
     set({
@@ -112,6 +125,9 @@ export const useGameStore = create<GameState>((set, get) => ({
       message: null,
       combineMode: false,
       combineSlots: [],
+      currentFakeMessage: null,
+      fakeMessageHistory: [],
+      sugarEchoFlawOptions: [],
     });
   },
 
@@ -312,6 +328,11 @@ export const useGameStore = create<GameState>((set, get) => ({
     }
 
     set(updates as any);
+
+    // SugarEcho 触发（需要在 set 之后，因为引擎读最新状态）
+    if (trigger.triggerSugarEcho) {
+      setTimeout(() => get().triggerSugarEcho(), 300);
+    }
   },
 
   useHotspot: (hotspotId: string) => {
@@ -401,6 +422,86 @@ export const useGameStore = create<GameState>((set, get) => ({
     return recipes.filter(r =>
       inv.includes(r.materials[0]) && inv.includes(r.materials[1])
     );
+  },
+
+  // ===== SugarEcho AI 替身消息系统 =====
+  triggerSugarEcho: () => {
+    const s = get();
+    // 检查本章是否已经触发过
+    if (s.fakeMessageHistory.some(h => h.chapter === s.chapter)) return;
+
+    const msg = selectFakeMessage({
+      chapter: s.chapter,
+      evidence: s.evidence,
+      alert: s.alert,
+      trust_medusa: s.trust_medusa,
+      trust_xuheng: s.trust_xuheng,
+      trust_qiaoqing: s.trust_qiaoqing,
+      flags: s.flags,
+      inventory: s.inventory,
+    });
+
+    const options = generateFlawOptions(msg.flaw);
+
+    set({
+      currentFakeMessage: msg,
+      sugarEchoFlawOptions: options,
+      phase: 'sugarecho',
+    });
+  },
+
+  judgeFlaw: (flawType: string) => {
+    const s = get();
+    if (!s.currentFakeMessage) return;
+
+    const correct = flawType === s.currentFakeMessage.flaw;
+    const history = [...s.fakeMessageHistory, {
+      chapter: s.chapter,
+      messageId: s.currentFakeMessage.id,
+      detected: correct,
+    }];
+
+    if (correct) {
+      // 识破成功：+evidence，设置标记
+      const newEvidence = s.evidence + 3;
+      const flags = [...s.flags];
+      const flagKey = `detected_echo_ch${s.chapter}`;
+      if (!flags.includes(flagKey)) flags.push(flagKey);
+      if (!flags.includes('sugar_echo_aware')) flags.push('sugar_echo_aware');
+
+      set({
+        evidence: newEvidence,
+        flags,
+        fakeMessageHistory: history,
+        message: `🔍 识破成功！SugarEcho 的伪装被你发现了。证据 +3`,
+      });
+    } else {
+      // 判断错误：+alert
+      const newAlert = s.alert + 2;
+      set({
+        alert: newAlert,
+        fakeMessageHistory: history,
+        message: `⚠️ 判断失误。SugarEcho 注意到了你的审查行为。警戒 +2`,
+      });
+    }
+  },
+
+  dismissSugarEcho: () => {
+    const s = get();
+    // 选择不审查：记录但无奖惩
+    if (s.currentFakeMessage) {
+      const history = [...s.fakeMessageHistory, {
+        chapter: s.chapter,
+        messageId: s.currentFakeMessage.id,
+        detected: false,
+      }];
+      set({ fakeMessageHistory: history });
+    }
+    set({
+      currentFakeMessage: null,
+      sugarEchoFlawOptions: [],
+      phase: 'story',
+    });
   },
 
   checkEnding: () => {
