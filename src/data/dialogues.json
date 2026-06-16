@@ -122,8 +122,23 @@
     "chapter": 2,
     "speaker": "美杜莎",
     "text": "「这是许珩建的秘密基地。她用这台印刷机制作传单，想把这里的真相传出去。但上个月她突然消失了。」",
-    "next": "ch2_choice_investigate",
+    "next": "ch2_leaflet_intro",
     "trigger": { "evidence": 1, "trust_xuheng": 1 }
+  },
+  "ch2_leaflet_intro": {
+    "id": "ch2_leaflet_intro",
+    "chapter": 2,
+    "speaker": "美杜莎",
+    "text": "「等一下。他们要你画一张新的招募传单——这是我们的机会。你可以在传单里藏入求救信息。」",
+    "next": "ch2_leaflet_warn"
+  },
+  "ch2_leaflet_warn": {
+    "id": "ch2_leaflet_warn",
+    "chapter": 2,
+    "speaker": "美杜莎",
+    "text": "「但要小心。SugarEcho 会扫描所有传单。暗号太明显的话，我们都完了。」",
+    "trigger": { "triggerLeaflet": true },
+    "next": "ch2_choice_investigate"
   },
   "ch2_choice_investigate": {
     "id": "ch2_choice_investigate",

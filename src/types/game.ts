@@ -37,6 +37,7 @@ export interface StoryTrigger {
   setFlags?: string[];    // 批量设置标记
   removeFlag?: string;
   triggerSugarEcho?: boolean; // 触发 SugarEcho 消息审查
+  triggerLeaflet?: boolean;   // 触发传单隐写小游戏
 }
 
 /** 场景（房间） */
@@ -174,5 +175,34 @@ export interface FlawOption {
   label: string;
 }
 
+/** 传单隐写暗号方式 */
+export interface SteganMethod {
+  id: string;
+  name: string;
+  icon: string;
+  description: string;       // 玩法说明
+  flavor: string;            // 剧情氛围描述
+  baseSuccessRate: number;   // 基础成功率 0-100
+  evidenceReward: number;    // 成功时 +evidence
+  alertRisk: number;         // 失败时 +alert
+  bonusItem?: string;        // 持有此物品提升成功率
+  bonusRate: number;         // 物品加成百分点
+  medusaHintThreshold: number;  // trust_medusa >= 此值时给提示
+  medusaHint: string;        // 美杜莎的提示文本
+  scanPhases: string[];      // SugarEcho 扫描阶段描述（3段）
+  successText: string;
+  failText: string;
+}
+
+/** 传单隐写结果 */
+export interface LeafletResult {
+  methodId: string;
+  success: boolean;
+  roll: number;            // 实际骰点
+  threshold: number;       // 成功阈值
+  evidenceDelta: number;
+  alertDelta: number;
+}
+
 /** 游戏阶段 */
-export type GamePhase = 'start' | 'story' | 'room' | 'puzzle' | 'ending' | 'sugarecho';
+export type GamePhase = 'start' | 'story' | 'room' | 'puzzle' | 'ending' | 'sugarecho' | 'leaflet';

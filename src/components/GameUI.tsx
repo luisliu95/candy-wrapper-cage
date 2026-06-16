@@ -8,6 +8,7 @@ import Inventory from './Inventory';
 import PuzzleModal from './PuzzleModal';
 import EndingScreen from './EndingScreen';
 import SugarEchoScreen from './SugarEchoScreen';
+import LeafletGame from './LeafletGame';
 
 const BG_MAP: Record<string, string> = {
   ch1_dorm: 'linear-gradient(180deg, #3d1f3f 0%, #6b2d5b 50%, #2a0e2e 100%)',
@@ -40,6 +41,10 @@ export default function GameUI() {
 
   if (phase === 'sugarecho') {
     return <SugarEchoScreen />;
+  }
+
+  if (phase === 'leaflet') {
+    return <LeafletGame />;
   }
 
   return (

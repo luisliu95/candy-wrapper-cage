@@ -1331,6 +1331,416 @@ body {
   margin-top: 4px;
 }
 
+/* ===== 传单隐写小游戏 ===== */
+.leaflet-screen {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.leaflet-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(180deg, #1a2a1a 0%, #0a1a0a 50%, #0a0a0a 100%);
+  z-index: 0;
+}
+
+.leaflet-bg.scanning {
+  animation: scan-pulse 1.5s ease-in-out infinite;
+}
+
+.leaflet-bg.success {
+  background: linear-gradient(180deg, #0a2a1a 0%, #0a1a0a 100%);
+}
+
+.leaflet-bg.fail {
+  background: linear-gradient(180deg, #2a0a0a 0%, #1a0a0a 100%);
+}
+
+@keyframes scan-pulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.15) hue-rotate(10deg); }
+}
+
+.leaflet-content {
+  position: relative;
+  z-index: 2;
+  width: 520px;
+  max-width: 92vw;
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 4px;
+}
+
+.leaflet-title {
+  font-size: 18px;
+  color: var(--text-primary);
+  margin: 0 0 8px 0;
+  text-align: center;
+  text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+}
+
+.leaflet-title.text-success { color: var(--accent-green); }
+.leaflet-title.text-fail { color: var(--accent-red); }
+.leaflet-title.scan-title { color: var(--accent-pink); }
+
+.leaflet-subtitle {
+  font-size: 12px;
+  color: var(--text-dim);
+  text-align: center;
+  margin: 0 0 16px 0;
+}
+
+/* 任务简报 */
+.leaflet-briefing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.leaflet-icon-large {
+  font-size: 48px;
+}
+
+.leaflet-briefing-text {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--text-white);
+  max-width: 380px;
+}
+
+.leaflet-briefing-text p {
+  margin: 4px 0;
+}
+
+.leaflet-stats-preview {
+  display: flex;
+  gap: 12px;
+}
+
+/* 方式选择 */
+.leaflet-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.leaflet-method-card {
+  background: rgba(26, 10, 46, 0.8);
+  border: 2px solid rgba(255, 215, 0, 0.2);
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.leaflet-method-card:hover {
+  border-color: rgba(255, 215, 0, 0.5);
+  background: rgba(26, 10, 46, 0.95);
+}
+
+.leaflet-method-card.selected {
+  border-color: var(--text-primary);
+  background: rgba(45, 27, 78, 0.95);
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.15);
+}
+
+.method-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.method-icon {
+  font-size: 20px;
+}
+
+.method-name {
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--text-primary);
+}
+
+.method-desc {
+  font-size: 11px;
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin: 0 0 10px 0;
+}
+
+.method-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.method-stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.method-stat-label {
+  font-size: 10px;
+  color: var(--text-dim);
+  min-width: 40px;
+}
+
+.method-rate-bar {
+  flex: 1;
+  height: 8px;
+  background: rgba(255,255,255,0.1);
+  overflow: hidden;
+}
+
+.method-rate-fill {
+  height: 100%;
+  transition: width 0.3s;
+}
+
+.method-rate-fill[data-rate="high"] { background: var(--accent-green); }
+.method-rate-fill[data-rate="mid"] { background: var(--accent-orange); }
+.method-rate-fill[data-rate="low"] { background: var(--accent-red); }
+
+.method-rate-num {
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--text-white);
+  min-width: 32px;
+  text-align: right;
+}
+
+.method-rewards {
+  display: flex;
+  gap: 8px;
+}
+
+.method-bonus {
+  font-size: 10px;
+  color: var(--accent-green);
+  margin-top: 6px;
+  padding: 3px 8px;
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  background: rgba(0, 255, 136, 0.05);
+}
+
+.method-hint-btn {
+  font-family: var(--cn-font);
+  font-size: 10px;
+  padding: 4px 10px;
+  background: rgba(255, 107, 157, 0.1);
+  border: 1px solid rgba(255, 107, 157, 0.3);
+  color: var(--accent-pink);
+  cursor: pointer;
+  margin-top: 8px;
+  transition: all 0.15s;
+}
+
+.method-hint-btn:hover {
+  background: rgba(255, 107, 157, 0.2);
+}
+
+.method-hint-text {
+  font-size: 11px;
+  color: var(--accent-pink);
+  line-height: 1.6;
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-left: 2px solid var(--accent-pink);
+  background: rgba(255, 107, 157, 0.05);
+}
+
+.leaflet-select-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+/* 制作阶段 */
+.leaflet-crafting {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.leaflet-flavor {
+  font-size: 13px;
+  color: var(--text-white);
+  line-height: 1.7;
+  max-width: 360px;
+  font-style: italic;
+}
+
+.craft-progress-bar {
+  width: 280px;
+  height: 12px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.craft-progress-fill {
+  height: 100%;
+  background: var(--accent-green);
+  transition: width 0.05s linear;
+}
+
+.craft-progress-label {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+/* 扫描阶段 */
+.leaflet-scanning {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.scan-icon {
+  font-size: 40px;
+  animation: echo-pulse 1s ease-in-out infinite;
+}
+
+.scan-phases {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 320px;
+}
+
+.scan-phase {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.25);
+  transition: all 0.3s;
+}
+
+.scan-phase.active {
+  color: var(--text-dim);
+}
+
+.scan-phase.current {
+  color: var(--accent-pink);
+}
+
+.scan-phase-dot {
+  min-width: 16px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.scan-bar {
+  width: 280px;
+  height: 4px;
+  background: rgba(255, 107, 157, 0.15);
+  overflow: hidden;
+}
+
+.scan-bar-inner {
+  width: 40%;
+  height: 100%;
+  background: var(--accent-pink);
+  animation: scan-slide 1.5s ease-in-out infinite;
+}
+
+@keyframes scan-slide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(350%); }
+}
+
+/* 结果阶段 */
+.leaflet-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.result-badge {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: bold;
+  border: 3px solid;
+}
+
+.result-badge.success {
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+  box-shadow: 0 0 16px rgba(0, 255, 136, 0.3);
+}
+
+.result-badge.fail {
+  border-color: var(--accent-red);
+  color: var(--accent-red);
+  box-shadow: 0 0 16px rgba(255, 68, 68, 0.3);
+}
+
+.leaflet-result-text {
+  font-size: 12px;
+  color: var(--text-white);
+  line-height: 1.7;
+  max-width: 380px;
+}
+
+.leaflet-result-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.result-roll {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.roll-label {
+  color: var(--text-dim);
+}
+
+.roll-value {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--accent-cyan);
+}
+
+.roll-sep {
+  color: var(--text-dim);
+}
+
+.roll-threshold {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--text-primary);
+}
+
+.result-effects {
+  display: flex;
+  gap: 8px;
+}
+
 /* 响应式 */
 @media (max-width: 600px) {
   .game-title {

@@ -1,0 +1,86 @@
+[
+  {
+    "id": "strawberry_coords",
+    "name": "草莓籽坐标",
+    "icon": "🍓",
+    "description": "在传单的草莓插图上，用籽粒的位置排列出经纬度坐标。只有知道编码规则的人才能读出真正的地址。",
+    "flavor": "你拿起画笔，在草莓表面一颗一颗地点上种子。每一颗都是一个数字，每一行都是一段坐标。",
+    "baseSuccessRate": 70,
+    "evidenceReward": 3,
+    "alertRisk": 2,
+    "bonusItem": "escape_map",
+    "bonusRate": 15,
+    "medusaHintThreshold": 3,
+    "medusaHint": "「把关键坐标分散在多颗草莓之间，不要集中在一颗上。AI 的图像识别对分散特征的敏感度较低。」",
+    "scanPhases": [
+      "SugarEcho 正在分析图像元素……",
+      "正在匹配已知隐写模式库……",
+      "执行果实纹理异常检测……"
+    ],
+    "successText": "扫描完成。传单通过审核。草莓籽的排列被判定为'自然随机分布'——你的坐标安全地藏在了甜蜜的外表下。",
+    "failText": "警告：检测到图像元素中存在非随机排列模式。传单已被标记为可疑。SugarEcho 记录了你的操作。"
+  },
+  {
+    "id": "ingredient_acrostic",
+    "name": "配料表首字母",
+    "icon": "📋",
+    "description": "在传单背面的'糖果配料表'中，让每种配料的首字母拼出求救信息。看起来只是普通的食品成分列表。",
+    "flavor": "白砂糖、醋酸、脱脂奶粉……你仔细挑选每一种配料，让它们的首字母暗藏玄机。",
+    "baseSuccessRate": 80,
+    "evidenceReward": 2,
+    "alertRisk": 1,
+    "bonusItem": "xuheng_notes",
+    "bonusRate": 10,
+    "medusaHintThreshold": 2,
+    "medusaHint": "「用生僻的配料名。SugarEcho 的语料库里常见配料的首字母组合都被标记过了，换成冷门的就不会触发。」",
+    "scanPhases": [
+      "SugarEcho 正在解析文本内容……",
+      "执行首字母序列模式匹配……",
+      "对比已知暗语数据库……"
+    ],
+    "successText": "扫描完成。配料表内容符合标准食品标签格式。SugarEcho 未检测到异常文本模式。你的求救信息藏在了最无聊的角落。",
+    "failText": "警告：配料表首字母序列与已知暗语模式匹配度 87%。传单已被拦截。你的小聪明被看穿了。"
+  },
+  {
+    "id": "color_morse",
+    "name": "色块摩斯码",
+    "icon": "🎨",
+    "description": "用传单边框的装饰色块编码摩斯电报。粉色=点，紫色=划，白色=间隔。看起来只是像素风装饰。",
+    "flavor": "你在传单边缘画下一排小色块。粉、紫、白、粉、粉……每一个颜色都承载着看不见的声音。",
+    "baseSuccessRate": 55,
+    "evidenceReward": 4,
+    "alertRisk": 3,
+    "bonusItem": "purple_candy_wrap",
+    "bonusRate": 20,
+    "medusaHintThreshold": 4,
+    "medusaHint": "「用更多颜色来稀释信号密度。如果只有三种颜色在交替，模式太明显了。混入橙色和蓝色当噪声。」",
+    "scanPhases": [
+      "SugarEcho 正在提取色彩通道……",
+      "执行序列周期性分析……",
+      "匹配已知编码模式……"
+    ],
+    "successText": "扫描完成。边框装饰被判定为'标准8bit像素风格式'。摩斯码伪装成了复古美学——SugarEcho 分不清艺术和情报。",
+    "failText": "警告：检测到边框色块存在高度规律性序列。匹配到摩斯编码特征。传单已被移交人工审核。"
+  },
+  {
+    "id": "typo_acrostic",
+    "name": "错别字藏头",
+    "icon": "✏️",
+    "description": "在传单的宣传语中故意使用特定的错别字，让错字的偏旁部首拼出关键信息。普通人只会以为是手写体潦草。",
+    "flavor": "'甜密'不是'甜蜜'，'按全'不是'安全'……每一个错字都是一声无声的呼救。你的手在微微发抖。",
+    "baseSuccessRate": 65,
+    "evidenceReward": 3,
+    "alertRisk": 2,
+    "bonusItem": "broadcast_script",
+    "bonusRate": 15,
+    "medusaHintThreshold": 3,
+    "medusaHint": "「错别字不要太集中，每段文字最多放一个。而且要选那种常见的手写失误——让 AI 以为你只是字写得丑。」",
+    "scanPhases": [
+      "SugarEcho 正在执行 OCR 文字识别……",
+      "运行语义合理性检查……",
+      "分析错误字符关联性……"
+    ],
+    "successText": "扫描完成。检测到 4 处书写错误，判定为'手写体识别偏差，置信度不足'。SugarEcho 认为你只是字写得丑而已。",
+    "failText": "警告：错别字偏旁分析显示高关联性语义特征。判定为人为编码。你的呼救被 AI 的文字解析拦截了。"
+  }
+]

@@ -333,6 +333,14 @@ export const useGameStore = create<GameState>((set, get) => ({
     if (trigger.triggerSugarEcho) {
       setTimeout(() => get().triggerSugarEcho(), 300);
     }
+    // 传单隐写触发
+    if (trigger.triggerLeaflet) {
+      setTimeout(() => {
+        if (!get().flags.includes('leaflet_completed')) {
+          set({ phase: 'leaflet' });
+        }
+      }, 300);
+    }
   },
 
   useHotspot: (hotspotId: string) => {
