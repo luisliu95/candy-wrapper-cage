@@ -786,6 +786,193 @@ body {
   z-index: 999;
 }
 
+/* ===== 物品组合系统 ===== */
+.inventory-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.combine-toggle-btn {
+  font-family: var(--cn-font);
+  font-size: 10px;
+  padding: 3px 10px;
+  background: transparent;
+  border: 1px solid var(--accent-cyan);
+  color: var(--accent-cyan);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.combine-toggle-btn:hover {
+  background: rgba(0, 212, 255, 0.15);
+}
+
+.combine-toggle-btn.active {
+  background: rgba(0, 212, 255, 0.2);
+  border-color: var(--text-primary);
+  color: var(--text-primary);
+}
+
+.combine-toggle-btn.has-recipe {
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+  animation: recipe-glow 2s ease-in-out infinite;
+}
+
+@keyframes recipe-glow {
+  0%, 100% { box-shadow: 0 0 4px rgba(0, 255, 136, 0.2); }
+  50% { box-shadow: 0 0 10px rgba(0, 255, 136, 0.5); }
+}
+
+.combine-hint {
+  padding: 12px 14px;
+  background: rgba(0, 212, 255, 0.08);
+  border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.combine-slots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.combine-slot {
+  width: 36px;
+  height: 36px;
+  border: 2px dashed rgba(0, 212, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--text-dim);
+  background: rgba(0, 0, 0, 0.3);
+  transition: all 0.2s;
+}
+
+.combine-slot.filled {
+  border-color: var(--accent-cyan);
+  border-style: solid;
+  background: rgba(0, 212, 255, 0.1);
+  color: var(--text-white);
+}
+
+.combine-slot.result {
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+}
+
+.combine-plus,
+.combine-equals {
+  font-size: 14px;
+  color: var(--text-dim);
+  font-weight: bold;
+}
+
+.combine-tip {
+  font-size: 10px;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.inventory-item.combine-mode {
+  cursor: pointer;
+}
+
+.inventory-item.combine-mode:hover {
+  background: rgba(0, 212, 255, 0.12);
+  border-left: 3px solid var(--accent-cyan);
+}
+
+.inventory-item.selected {
+  background: rgba(0, 212, 255, 0.18);
+  border-left: 3px solid var(--text-primary);
+}
+
+.combine-check {
+  font-size: 16px;
+  color: var(--text-dim);
+  min-width: 20px;
+  text-align: center;
+}
+
+.inventory-item.selected .combine-check {
+  color: var(--accent-green);
+}
+
+.recipe-hint {
+  padding: 8px 14px;
+  font-size: 10px;
+  color: var(--accent-green);
+  text-align: center;
+  border-top: 1px solid rgba(0, 255, 136, 0.15);
+  background: rgba(0, 255, 136, 0.05);
+  animation: recipe-glow 2s ease-in-out infinite;
+}
+
+/* ===== 增强热区样式 ===== */
+.hotspot.locked {
+  border-color: rgba(255, 68, 68, 0.3);
+  background: rgba(255, 68, 68, 0.05);
+  cursor: not-allowed;
+}
+
+.hotspot.locked:hover {
+  border-color: rgba(255, 68, 68, 0.5);
+  background: rgba(255, 68, 68, 0.1);
+  box-shadow: 0 0 8px rgba(255, 68, 68, 0.3);
+}
+
+.hotspot-lock {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-size: 10px;
+}
+
+.hotspot-status-tag {
+  font-size: 9px;
+  padding: 1px 6px;
+  margin-left: 8px;
+  border: 1px solid;
+  vertical-align: middle;
+}
+
+.hotspot-status-tag.investigated {
+  border-color: var(--text-dim);
+  color: var(--text-dim);
+}
+
+.hotspot-effect-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.effect-tag {
+  font-size: 10px;
+  padding: 2px 8px;
+  border: 1px solid;
+}
+
+.effect-tag.evidence {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+.effect-tag.alert {
+  border-color: var(--accent-red);
+  color: var(--accent-red);
+}
+
+.effect-tag.trust {
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+}
+
 /* 响应式 */
 @media (max-width: 600px) {
   .game-title {

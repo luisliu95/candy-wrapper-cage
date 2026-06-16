@@ -1,10 +1,11 @@
 import { create } from 'zustand';
-import type { GamePhase, SaveData, StoryNode, StoryTrigger, Ending, EndingCondition } from '../types/game';
+import type { GamePhase, SaveData, StoryNode, StoryTrigger, Ending, EndingCondition, CraftRecipe } from '../types/game';
 import storyData from '../data/dialogues.json';
 import roomsData from '../data/scenes.json';
 import itemsData from '../data/items.json';
 import puzzlesData from '../data/puzzles.json';
 import endingsData from '../data/endings.json';
+import recipesData from '../data/recipes.json';
 
 const SAVE_KEY = 'candy_wrapper_cage_save';
 
@@ -25,7 +26,11 @@ interface GameState {
   // 标记与状态
   flags: string[];
   usedHotspots: string[];
+  hotspotExamineCount: Record<string, number>;  // 热区调查次数
   message: string | null;
+  // 背包组合
+  combineMode: boolean;       // 是否处于组合模式
+  combineSlots: string[];     // 当前选中的物品 ID（最多2个）
 
   // Actions
   startGame: () => void;
@@ -49,6 +54,15 @@ interface GameState {
   applyTrigger: (trigger: StoryTrigger) => void;
   useHotspot: (hotspotId: string) => void;
   isHotspotUsed: (hotspotId: string) => boolean;
+  getHotspotExamineCount: (hotspotId: string) => number;
+  incrementExamineCount: (hotspotId: string) => void;
+
+  // 背包组合
+  toggleCombineMode: () => void;
+  selectForCombine: (itemId: string) => void;
+  clearCombineSlots: () => void;
+  tryCombine: () => void;
+  getAvailableRecipes: () => CraftRecipe[];
 
   checkEnding: () => void;
   showMessage: (msg: string) => void;
@@ -73,7 +87,10 @@ export const useGameStore = create<GameState>((set, get) => ({
   trust_qiaoqing: 0,
   flags: [],
   usedHotspots: [],
+  hotspotExamineCount: {},
   message: null,
+  combineMode: false,
+  combineSlots: [],
 
   startGame: () => {
     set({
@@ -91,7 +108,10 @@ export const useGameStore = create<GameState>((set, get) => ({
       trust_qiaoqing: 0,
       flags: [],
       usedHotspots: [],
+      hotspotExamineCount: {},
       message: null,
+      combineMode: false,
+      combineSlots: [],
     });
   },
 
@@ -115,7 +135,10 @@ export const useGameStore = create<GameState>((set, get) => ({
         trust_qiaoqing: save.trust_qiaoqing || 0,
         flags: save.flags,
         usedHotspots: save.usedHotspots || [],
+        hotspotExamineCount: (save as any).hotspotExamineCount || {},
         message: '存档读取成功！',
+        combineMode: false,
+        combineSlots: [],
       });
       return true;
     } catch {
@@ -125,7 +148,7 @@ export const useGameStore = create<GameState>((set, get) => ({
 
   saveGame: () => {
     const s = get();
-    const save: SaveData = {
+    const save = {
       currentNode: s.currentNode,
       currentRoom: s.currentRoom,
       inventory: [...s.inventory],
@@ -136,6 +159,7 @@ export const useGameStore = create<GameState>((set, get) => ({
       trust_qiaoqing: s.trust_qiaoqing,
       flags: [...s.flags],
       usedHotspots: [...s.usedHotspots],
+      hotspotExamineCount: { ...s.hotspotExamineCount },
       chapter: s.chapter,
       timestamp: Date.now(),
     };
@@ -299,6 +323,84 @@ export const useGameStore = create<GameState>((set, get) => ({
 
   isHotspotUsed: (hotspotId: string) => {
     return get().usedHotspots.includes(hotspotId);
+  },
+
+  getHotspotExamineCount: (hotspotId: string) => {
+    return get().hotspotExamineCount[hotspotId] || 0;
+  },
+
+  incrementExamineCount: (hotspotId: string) => {
+    const counts = { ...get().hotspotExamineCount };
+    counts[hotspotId] = (counts[hotspotId] || 0) + 1;
+    set({ hotspotExamineCount: counts });
+  },
+
+  // ===== 背包组合系统 =====
+  toggleCombineMode: () => {
+    const mode = get().combineMode;
+    set({ combineMode: !mode, combineSlots: [] });
+  },
+
+  selectForCombine: (itemId: string) => {
+    const slots = [...get().combineSlots];
+    const idx = slots.indexOf(itemId);
+    if (idx >= 0) {
+      slots.splice(idx, 1);
+    } else if (slots.length < 2) {
+      slots.push(itemId);
+    }
+    set({ combineSlots: slots });
+    // 自动尝试组合
+    if (slots.length === 2) {
+      setTimeout(() => get().tryCombine(), 100);
+    }
+  },
+
+  clearCombineSlots: () => {
+    set({ combineSlots: [] });
+  },
+
+  tryCombine: () => {
+    const s = get();
+    const [a, b] = s.combineSlots;
+    if (!a || !b) return;
+
+    const recipes = recipesData as CraftRecipe[];
+    const recipe = recipes.find(r =>
+      (r.materials[0] === a && r.materials[1] === b) ||
+      (r.materials[0] === b && r.materials[1] === a)
+    );
+
+    if (recipe) {
+      // 移除材料
+      const inv = s.inventory.filter(id => id !== a && id !== b);
+      // 添加产物
+      inv.push(recipe.result);
+      const item = (itemsData as Record<string, { name: string }>)[recipe.result];
+      set({
+        inventory: inv,
+        combineSlots: [],
+        combineMode: false,
+        message: `组合成功！获得：${item?.name || recipe.result}`,
+      });
+      // 应用触发器
+      if (recipe.trigger) {
+        get().applyTrigger(recipe.trigger);
+      }
+    } else {
+      set({
+        combineSlots: [],
+        message: '这两样东西似乎无法组合……',
+      });
+    }
+  },
+
+  getAvailableRecipes: () => {
+    const inv = get().inventory;
+    const recipes = recipesData as CraftRecipe[];
+    return recipes.filter(r =>
+      inv.includes(r.materials[0]) && inv.includes(r.materials[1])
+    );
   },
 
   checkEnding: () => {

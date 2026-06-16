@@ -1,0 +1,37 @@
+[
+  {
+    "id": "recipe_door_code",
+    "materials": ["leaflet_fragment", "purple_candy_wrap"],
+    "result": "door_passcode",
+    "description": "把传单碎片对着光照，紫色糖纸上隐约显现出一组数字——这是门禁暗号！",
+    "trigger": { "evidence": 2, "setFlag": "crafted_door_code" }
+  },
+  {
+    "id": "recipe_full_map",
+    "materials": ["escape_map", "admin_notebook"],
+    "result": "annotated_map",
+    "description": "把逃生路线图和管理员笔记本上的维护通道标注对照，你发现了一条隐藏的逃生路线。",
+    "trigger": { "evidence": 3, "setFlag": "crafted_full_map" }
+  },
+  {
+    "id": "recipe_evidence_pack",
+    "materials": ["xuheng_notes", "qiaoqing_letter"],
+    "result": "evidence_package",
+    "description": "许珩的调查笔记加上乔青联系记者的信——这份组合证据足以引起外界关注。",
+    "trigger": { "evidence": 3, "trust_xuheng": 1, "trust_qiaoqing": 1, "setFlag": "crafted_evidence" }
+  },
+  {
+    "id": "recipe_broadcast_ready",
+    "materials": ["broadcast_tape", "broadcast_script"],
+    "result": "broadcast_package",
+    "description": "磁带配合广播稿，一切准备就绪。只要找到能运作的广播设备，真相就能传出去。",
+    "trigger": { "evidence": 2, "trust_medusa": 2, "setFlag": "broadcast_fully_ready" }
+  },
+  {
+    "id": "recipe_master_key",
+    "materials": ["rusty_key", "candy_crane"],
+    "result": "master_key",
+    "description": "千纸鹤展开后，内侧的编号「0037-0042-0019」刚好是钥匙齿纹的修正参数。你用糖纸包裹钥匙柄，轻轻一拧——咔哒。",
+    "trigger": { "evidence": 1, "setFlag": "crafted_master_key" }
+  }
+]

@@ -86,5 +86,64 @@
     "icon": "💾",
     "chapter": 4,
     "category": "evidence"
+  },
+
+  "leaflet_fragment": {
+    "id": "leaflet_fragment",
+    "name": "传单碎片",
+    "description": "从印刷机旁捡到的半张传单。上面有一些模糊的字符，对着光看也许能发现隐藏内容。",
+    "icon": "📃",
+    "chapter": 2,
+    "category": "tool",
+    "combinable": true
+  },
+  "purple_candy_wrap": {
+    "id": "purple_candy_wrap",
+    "name": "紫色糖纸",
+    "description": "一张半透明的紫色糖纸。材质特殊，也许可以当作滤光片使用。",
+    "icon": "🟣",
+    "chapter": 2,
+    "category": "tool",
+    "combinable": true
+  },
+  "door_passcode": {
+    "id": "door_passcode",
+    "name": "门禁暗号",
+    "description": "用紫色糖纸透视传单碎片后发现的暗号：「CW-0712-EXIT」。这是紧急出口的备用密码。",
+    "icon": "🔐",
+    "chapter": 2,
+    "category": "key"
+  },
+  "annotated_map": {
+    "id": "annotated_map",
+    "name": "标注逃生图",
+    "description": "结合管理员笔记补全的逃生图。上面标注了一条经过通风管道的隐藏路线。",
+    "icon": "🗺️",
+    "chapter": 4,
+    "category": "document"
+  },
+  "evidence_package": {
+    "id": "evidence_package",
+    "name": "组合证据包",
+    "description": "许珩的笔记和乔青的信组合在一起。完整的证据链足以让任何人相信这里发生的一切。",
+    "icon": "📦",
+    "chapter": 2,
+    "category": "evidence"
+  },
+  "broadcast_package": {
+    "id": "broadcast_package",
+    "name": "广播套件",
+    "description": "磁带加上广播稿，万事俱备。只需要一台能工作的广播设备，真相就能穿透墙壁。",
+    "icon": "📡",
+    "chapter": 3,
+    "category": "tool"
+  },
+  "master_key": {
+    "id": "master_key",
+    "name": "改造钥匙",
+    "description": "用千纸鹤内侧的编号修正了钥匙齿纹。现在它能打开更多的门了。",
+    "icon": "🔑",
+    "chapter": 1,
+    "category": "key"
   }
 }

@@ -58,14 +58,18 @@ export interface Hotspot {
   w: number; h: number;
   label: string;
   description: string;
+  icon?: string;            // 热区图标 emoji
   itemId?: string;
   puzzleId?: string;
   requireItem?: string;
+  requireItems?: string[];  // 需要同时持有多个物品
   requireFlag?: string;
   usedFlag?: string;
   trigger?: StoryTrigger;
   storyJump?: string;
-  dialogueId?: string;    // 触发对话节点
+  dialogueId?: string;
+  examineCount?: number;    // 可调查次数（>1 次才出新信息）
+  multiDescriptions?: string[]; // 多次调查时的不同描述
 }
 
 /** 物品 */
@@ -76,6 +80,16 @@ export interface Item {
   icon: string;
   chapter: number;        // 所属章节
   category: 'key' | 'evidence' | 'tool' | 'document' | 'personal';
+  combinable?: boolean;   // 是否可参与组合
+}
+
+/** 物品组合配方 */
+export interface CraftRecipe {
+  id: string;
+  materials: [string, string];  // 两个材料物品 ID
+  result: string;               // 产出物品 ID
+  description: string;          // 组合描述文本
+  trigger?: StoryTrigger;       // 组合时额外触发效果
 }
 
 /** 谜题 */

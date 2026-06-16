@@ -116,6 +116,26 @@
         "itemId": "qiaoqing_letter",
         "usedFlag": "picked_qiao_letter",
         "trigger": { "evidence": 2, "trust_qiaoqing": 1 }
+      },
+      {
+        "id": "ch2_torn_leaflet",
+        "x": 5, "y": 72,
+        "w": 18, "h": 18,
+        "label": "撕碎的传单",
+        "description": "地上有一张被撕成两半的传单。上面印着模糊的字符，似乎还藏着什么秘密。",
+        "itemId": "leaflet_fragment",
+        "usedFlag": "picked_leaflet_fragment",
+        "trigger": { "evidence": 1 }
+      },
+      {
+        "id": "ch2_candy_wrapper",
+        "x": 58, "y": 72,
+        "w": 15, "h": 18,
+        "label": "紫色糖纸",
+        "description": "角落里有一张紫色的糖纸，半透明的材质在灯光下泛着奇异的光。也许能当滤光片用。",
+        "itemId": "purple_candy_wrap",
+        "usedFlag": "picked_purple_wrap",
+        "trigger": { "evidence": 1 }
       }
     ],
     "exitTo": "ch2_exit_workshop"
