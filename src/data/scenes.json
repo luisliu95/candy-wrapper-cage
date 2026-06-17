@@ -140,6 +140,7 @@
     "name": "传单工坊",
     "description": "堆满印刷机和纸张的地下室。到处散落着未完成的传单，油墨的气味刺鼻。",
     "background": "linear-gradient(180deg, #1a2a1a 0%, #2d4a2d 30%, #1e3a1e 70%, #0a1a0a 100%)",
+    "playerSpawn": { "x": 50, "y": 75 },
     "hotspots": [
       {
         "id": "ch2_printer",
@@ -245,6 +246,7 @@
     "name": "广播室",
     "description": "封闭的广播室，设备陈旧但仍能运作。墙上贴着一张节目时间表，最后一期的标题被涂黑了。",
     "background": "linear-gradient(180deg, #1a1a3e 0%, #2d2d6b 30%, #1e1e5a 70%, #0a0a2e 100%)",
+    "playerSpawn": { "x": 50, "y": 80 },
     "hotspots": [
       {
         "id": "ch3_console",
@@ -323,6 +325,7 @@
     "name": "服务器雨夜",
     "description": "地下服务器机房。荧光灯忽明忽灭，空调嗡嗡作响。窗外暴雨如注，雷声隐约可闻。",
     "background": "linear-gradient(180deg, #0a0a1a 0%, #1a1a2e 30%, #0d0d2a 70%, #050510 100%)",
+    "playerSpawn": { "x": 50, "y": 85 },
     "hotspots": [
       {
         "id": "ch4_terminal",

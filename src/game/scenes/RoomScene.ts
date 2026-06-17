@@ -3,6 +3,8 @@ import { useGameStore } from '../../store/gameStore';
 import type { Room, Hotspot, InteractionType } from '../../types/game';
 import roomsData from '../../data/scenes.json';
 
+// ===== 常量 =====
+
 const ROOM_COLORS: Record<string, number> = {
   ch1_dorm: 0x4a1942,
   ch2_workshop: 0x1e3a1e,
@@ -10,7 +12,6 @@ const ROOM_COLORS: Record<string, number> = {
   ch4_server: 0x0d0d2a,
 };
 
-/** 交互类型 → 提示前缀和图标 */
 const PROMPT_CONFIG: Record<InteractionType, { prefix: string; color: string }> = {
   investigate: { prefix: 'E：调查', color: '#00d4ff' },
   pickup:      { prefix: 'E：拾取', color: '#00ff88' },
@@ -22,6 +23,9 @@ const PROMPT_CONFIG: Record<InteractionType, { prefix: string; color: string }> 
 
 const DEFAULT_INTERACTION_RADIUS = 50;
 const DEFAULT_SPRITE_COLOR = 0x997755;
+const SPRITE_W = 16;
+const SPRITE_H = 24;
+const FRAME_COUNT = 2; // 每方向2帧（idle + walk）
 
 interface EntityObj {
   rect: Phaser.GameObjects.Rectangle;
@@ -40,9 +44,101 @@ function hotspotToPixel(h: Hotspot, cw: number, ch: number) {
   };
 }
 
+// ===== 像素占位精灵生成 =====
+
+/**
+ * 在 Canvas 上绘制一帧 16×24 像素角色
+ * facing: 0=down, 1=left, 2=right, 3=up
+ * frame: 0=idle, 1=walk (脚部偏移)
+ */
+function drawPixelChar(
+  ctx: CanvasRenderingContext2D,
+  ox: number, oy: number,
+  facing: number, frame: number
+) {
+  const hair = '#553322';
+  const skin = '#ffddbb';
+  const eye  = '#222222';
+  const body = '#ff6b9d';
+  const shoe = '#8b4513';
+
+  // 头发 (row 0-3)
+  ctx.fillStyle = hair;
+  ctx.fillRect(ox + 2, oy + 0, 12, 4);
+
+  // 头 (row 4-10)
+  ctx.fillStyle = skin;
+  ctx.fillRect(ox + 3, oy + 4, 10, 7);
+
+  // 眼睛 (row 7)
+  ctx.fillStyle = eye;
+  if (facing === 0) { // down
+    ctx.fillRect(ox + 5, oy + 7, 2, 2);
+    ctx.fillRect(ox + 9, oy + 7, 2, 2);
+  } else if (facing === 3) { // up - no eyes visible
+    ctx.fillStyle = hair;
+    ctx.fillRect(ox + 3, oy + 4, 10, 3);
+  } else if (facing === 1) { // left
+    ctx.fillRect(ox + 4, oy + 7, 2, 2);
+    ctx.fillRect(ox + 8, oy + 7, 2, 2);
+  } else { // right
+    ctx.fillRect(ox + 6, oy + 7, 2, 2);
+    ctx.fillRect(ox + 10, oy + 7, 2, 2);
+  }
+
+  // 身体 (row 11-19)
+  ctx.fillStyle = body;
+  const bodyOffset = frame === 1 ? 1 : 0;
+  ctx.fillRect(ox + 3, oy + 11 + bodyOffset, 10, 9 - bodyOffset);
+
+  // 鞋子 (row 20-23)
+  ctx.fillStyle = shoe;
+  if (frame === 0) {
+    ctx.fillRect(ox + 4, oy + 20, 3, 4);
+    ctx.fillRect(ox + 9, oy + 20, 3, 4);
+  } else {
+    // 走路帧 - 脚交叉
+    ctx.fillRect(ox + 3, oy + 20, 3, 4);
+    ctx.fillRect(ox + 10, oy + 20, 3, 4);
+  }
+}
+
+function generatePlaceholderSpritesheet(scene: Phaser.Scene): string {
+  const key = 'monika_placeholder';
+  if (scene.textures.exists(key)) return key;
+
+  // 8帧: down_idle, down_walk, left_idle, left_walk, right_idle, right_walk, up_idle, up_walk
+  const totalFrames = 8;
+  const canvas = document.createElement('canvas');
+  canvas.width = SPRITE_W * totalFrames;
+  canvas.height = SPRITE_H;
+  const ctx = canvas.getContext('2d')!;
+
+  // facing: 0=down, 1=left, 2=right, 3=up
+  const facings = [0, 0, 1, 1, 2, 2, 3, 3];
+  const frames  = [0, 1, 0, 1, 0, 1, 0, 1];
+
+  for (let i = 0; i < totalFrames; i++) {
+    drawPixelChar(ctx, i * SPRITE_W, 0, facings[i], frames[i]);
+  }
+
+  scene.textures.addCanvas(key, canvas);
+  return key;
+}
+
+// ===== 房间背景图路径 =====
+
+const ROOM_BG_PATHS: Record<string, string> = {
+  ch1_dorm:      '/assets/rooms/ch1_dorm.png',
+  ch2_workshop:  '/assets/rooms/ch2_workshop.png',
+  ch3_broadcast: '/assets/rooms/ch3_broadcast.png',
+  ch4_server:    '/assets/rooms/ch4_server.png',
+};
+
+// ===== RoomScene =====
+
 export default class RoomScene extends Phaser.Scene {
-  private player!: Phaser.GameObjects.Container;
-  private playerBody!: Phaser.GameObjects.Rectangle;
+  private player!: Phaser.GameObjects.Sprite;
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private wasd!: Record<string, Phaser.Input.Keyboard.Key>;
   private interactKey!: Phaser.Input.Keyboard.Key;
@@ -52,11 +148,9 @@ export default class RoomScene extends Phaser.Scene {
   private speed = 160;
   private roomId = '';
   private facing: 'down' | 'up' | 'left' | 'right' = 'down';
-  private playerHead!: Phaser.GameObjects.Rectangle;
-  private playerEyeL!: Phaser.GameObjects.Rectangle;
-  private playerEyeR!: Phaser.GameObjects.Rectangle;
-  private playerHair!: Phaser.GameObjects.Rectangle;
   private collisionRects: Phaser.GameObjects.Rectangle[] = [];
+  private hasRealSprite = false;
+  private hasRoomBg = false;
 
   constructor() {
     super({ key: 'RoomScene' });
@@ -66,20 +160,58 @@ export default class RoomScene extends Phaser.Scene {
     this.roomId = data.roomId || 'ch1_dorm';
   }
 
+  preload() {
+    // 尝试加载真实角色 spritesheet
+    const spritePath = '/assets/sprites/monika.png';
+    if (!this.textures.exists('monika')) {
+      this.load.spritesheet('monika', spritePath, {
+        frameWidth: SPRITE_W,
+        frameHeight: SPRITE_H,
+      });
+      this.load.once('filecomplete-spritesheet-monika', () => {
+        this.hasRealSprite = true;
+      });
+      this.load.once('loaderror', () => {
+        this.hasRealSprite = false;
+      });
+    } else {
+      this.hasRealSprite = true;
+    }
+
+    // 尝试加载房间背景
+    const bgPath = ROOM_BG_PATHS[this.roomId];
+    const bgKey = `room_bg_${this.roomId}`;
+    if (bgPath && !this.textures.exists(bgKey)) {
+      this.load.image(bgKey, bgPath);
+      this.load.once(`filecomplete-image-${bgKey}`, () => {
+        this.hasRoomBg = true;
+      });
+    } else if (this.textures.exists(bgKey)) {
+      this.hasRoomBg = true;
+    }
+  }
+
   create() {
     const W = this.scale.width;
     const H = this.scale.height;
 
-    const bgColor = ROOM_COLORS[this.roomId] || 0x1a0a2e;
-    this.cameras.main.setBackgroundColor(bgColor);
+    // ===== 房间背景 =====
+    const bgKey = `room_bg_${this.roomId}`;
+    if (this.hasRoomBg && this.textures.exists(bgKey)) {
+      const bg = this.add.image(W / 2, H / 2, bgKey);
+      bg.setDisplaySize(W, H);
+      bg.setDepth(0);
+    } else {
+      // 纯色 + 网格 fallback
+      const bgColor = ROOM_COLORS[this.roomId] || 0x1a0a2e;
+      this.cameras.main.setBackgroundColor(bgColor);
+      const gridG = this.add.graphics();
+      gridG.lineStyle(1, 0xffffff, 0.04);
+      for (let x = 0; x <= W; x += 40) gridG.lineBetween(x, 0, x, H);
+      for (let y = 0; y <= H; y += 40) gridG.lineBetween(0, y, W, y);
+    }
 
-    // 地板网格
-    const gridG = this.add.graphics();
-    gridG.lineStyle(1, 0xffffff, 0.04);
-    for (let x = 0; x <= W; x += 40) gridG.lineBetween(x, 0, x, H);
-    for (let y = 0; y <= H; y += 40) gridG.lineBetween(0, y, W, y);
-
-    // 加载交互实体
+    // ===== 交互实体 =====
     const room = (roomsData as Record<string, Room>)[this.roomId];
     this.entities = [];
     this.collisionRects = [];
@@ -91,12 +223,11 @@ export default class RoomScene extends Phaser.Scene {
         const color = hs.spriteColor ?? DEFAULT_SPRITE_COLOR;
         const isUsed = hs.usedFlag ? store.usedHotspots.includes(hs.usedFlag) : false;
 
-        // 实体矩形
         const alpha = isUsed ? 0.3 : 0.6;
         const rect = this.add.rectangle(pos.x, pos.y, pos.w, pos.h, color, alpha);
         rect.setStrokeStyle(2, 0xffd700, isUsed ? 0.15 : 0.5);
+        rect.setDepth(1);
 
-        // 碰撞体
         if (hs.blocked) {
           this.physics.world.enable(rect);
           const rbody = rect.body as Phaser.Physics.Arcade.Body;
@@ -105,12 +236,10 @@ export default class RoomScene extends Phaser.Scene {
           this.collisionRects.push(rect);
         }
 
-        // 图标
         const iconText = this.add.text(pos.x, pos.y, hs.icon || '', {
           fontSize: '18px',
         }).setOrigin(0.5).setDepth(3);
 
-        // 标签
         const label = this.add.text(pos.x, pos.y - pos.h / 2 - 12, hs.label, {
           fontSize: '10px',
           fontFamily: '"PingFang SC", "Microsoft YaHei", sans-serif',
@@ -124,31 +253,40 @@ export default class RoomScene extends Phaser.Scene {
       }
     }
 
-    // 莫妮卡（使用 playerSpawn 或默认居中偏下）
+    // ===== 莫妮卡角色 =====
     const spawn = (room as any)?.playerSpawn;
     const spawnX = spawn ? (spawn.x / 100) * W : W / 2;
     const spawnY = spawn ? (spawn.y / 100) * H : H * 0.6;
-    this.player = this.add.container(spawnX, spawnY);
-    this.playerBody = this.add.rectangle(0, 4, 16, 20, 0xff6b9d);
-    this.playerHead = this.add.rectangle(0, -10, 14, 14, 0xffddbb);
-    this.playerHair = this.add.rectangle(0, -16, 16, 6, 0x553322);
-    this.playerEyeL = this.add.rectangle(-3, -10, 3, 3, 0x222222);
-    this.playerEyeR = this.add.rectangle(3, -10, 3, 3, 0x222222);
-    this.player.add([this.playerBody, this.playerHead, this.playerHair, this.playerEyeL, this.playerEyeR]);
-    this.player.setSize(16, 28).setDepth(10);
 
+    // 确定纹理 key
+    let textureKey: string;
+    if (this.hasRealSprite && this.textures.exists('monika')) {
+      textureKey = 'monika';
+    } else {
+      textureKey = generatePlaceholderSpritesheet(this);
+    }
+
+    // 创建动画（只创建一次）
+    this.createAnimations(textureKey);
+
+    // 创建 Sprite
+    this.player = this.add.sprite(spawnX, spawnY, textureKey, 0);
+    this.player.setScale(2); // 放大2倍以适配画布
+    this.player.setDepth(10);
+
+    // 物理
     this.physics.world.enable(this.player);
     const body = this.player.body as Phaser.Physics.Arcade.Body;
     body.setCollideWorldBounds(true);
-    body.setSize(16, 20);
-    body.setOffset(-8, -10);
+    body.setSize(SPRITE_W - 4, SPRITE_H - 4);
+    body.setOffset(2, 2);
 
     // 碰撞
     for (const cr of this.collisionRects) {
       this.physics.add.collider(this.player, cr);
     }
 
-    // 键盘
+    // ===== 键盘 =====
     this.cursors = this.input.keyboard!.createCursorKeys();
     this.wasd = {
       W: this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.W),
@@ -158,7 +296,7 @@ export default class RoomScene extends Phaser.Scene {
     };
     this.interactKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.E);
 
-    // E 键提示（底部）
+    // E 键提示
     this.promptText = this.add.text(W / 2, H - 28, '', {
       fontSize: '13px',
       fontFamily: '"PingFang SC", "Microsoft YaHei", sans-serif',
@@ -169,25 +307,17 @@ export default class RoomScene extends Phaser.Scene {
       padding: { x: 14, y: 6 },
     }).setOrigin(0.5).setDepth(20);
 
-    // E 键交互 —— 分两条路径
+    // E 键交互
     this.interactKey.on('down', () => {
       if (!this.nearbyEntity) return;
       const hs = this.nearbyEntity;
-
-      // 需要弹 React 弹窗的类型：investigate（显示描述）+ 有多次调查文本
-      // 直接走 triggerInteraction 的类型：pickup / use / puzzle / exit / talk
       const needPopup = hs.interactionType === 'investigate' || hs.multiDescriptions;
-
       if (needPopup) {
         this.game.events.emit('pause-input');
         this.game.events.emit('entity-interact', hs);
       } else {
-        // 直接调用统一入口
         const result = useGameStore.getState().triggerInteraction(hs.id);
-        if (result.handled) {
-          // 刷新实体外观
-          this.refreshEntityVisual(hs.id);
-        }
+        if (result.handled) this.refreshEntityVisual(hs.id);
       }
     });
 
@@ -196,9 +326,37 @@ export default class RoomScene extends Phaser.Scene {
       useGameStore.getState().exitRoom();
     });
 
-    // 暂停/恢复输入
+    // 暂停/恢复
     this.game.events.on('pause-input', () => { this.input.keyboard!.enabled = false; });
     this.game.events.on('resume-input', () => { this.input.keyboard!.enabled = true; });
+  }
+
+  /** 创建 8 方向动画 */
+  private createAnimations(textureKey: string) {
+    const anims = this.anims;
+    // 帧布局: 0=down_idle, 1=down_walk, 2=left_idle, 3=left_walk,
+    //         4=right_idle, 5=right_walk, 6=up_idle, 7=up_walk
+    const defs: { key: string; frames: number[]; rate: number; repeat: number }[] = [
+      { key: 'monika_down_idle',  frames: [0],    rate: 1,  repeat: 0 },
+      { key: 'monika_down_walk',  frames: [0, 1], rate: 6,  repeat: -1 },
+      { key: 'monika_left_idle',  frames: [2],    rate: 1,  repeat: 0 },
+      { key: 'monika_left_walk',  frames: [2, 3], rate: 6,  repeat: -1 },
+      { key: 'monika_right_idle', frames: [4],    rate: 1,  repeat: 0 },
+      { key: 'monika_right_walk', frames: [4, 5], rate: 6,  repeat: -1 },
+      { key: 'monika_up_idle',    frames: [6],    rate: 1,  repeat: 0 },
+      { key: 'monika_up_walk',    frames: [6, 7], rate: 6,  repeat: -1 },
+    ];
+
+    for (const d of defs) {
+      if (!anims.exists(d.key)) {
+        anims.create({
+          key: d.key,
+          frames: d.frames.map(f => ({ key: textureKey, frame: f })),
+          frameRate: d.rate,
+          repeat: d.repeat,
+        });
+      }
+    }
   }
 
   update() {
@@ -212,14 +370,11 @@ export default class RoomScene extends Phaser.Scene {
 
     body.setVelocity(vx, vy);
 
-    // 朝向
-    const eo = this.facing === 'left' ? -2 : this.facing === 'right' ? 2 : 0;
-    this.playerEyeL.setPosition(-3 + eo, -10);
-    this.playerEyeR.setPosition(3 + eo, -10);
-    if (vx || vy) {
-      this.playerBody.setPosition(0, 4 + Math.sin(this.time.now / 80) * 1.5);
-    } else {
-      this.playerBody.setPosition(0, 4);
+    // 播放动画
+    const isMoving = vx !== 0 || vy !== 0;
+    const animKey = `monika_${this.facing}_${isMoving ? 'walk' : 'idle'}`;
+    if (this.player.anims.currentAnim?.key !== animKey) {
+      this.player.play(animKey, true);
     }
 
     // 靠近检测
@@ -232,14 +387,12 @@ export default class RoomScene extends Phaser.Scene {
       const dist = Phaser.Math.Distance.Between(px, py, e.rect.x, e.rect.y);
       const triggerDist = e.radius + Math.max(e.rect.width, e.rect.height) / 2;
       const isUsed = e.hotspot.usedFlag ? store.usedHotspots.includes(e.hotspot.usedFlag) : false;
-      // 锁定检测
       const isLocked = (e.hotspot.requireFlag && !store.flags.includes(e.hotspot.requireFlag))
                      || (e.hotspot.requireItem && !store.inventory.includes(e.hotspot.requireItem));
 
       if (dist < triggerDist && dist < closestDist) {
         closestDist = dist;
         this.nearbyEntity = e.hotspot;
-        // 高亮
         e.rect.setStrokeStyle(3, isLocked ? 0xff4444 : 0xffd700, 1);
         e.label.setColor(isUsed ? '#888888' : '#ffffff');
       } else {
@@ -248,12 +401,11 @@ export default class RoomScene extends Phaser.Scene {
       }
     }
 
-    // 提示文字
+    // 提示
     if (this.nearbyEntity) {
       const hs = this.nearbyEntity;
       const type = hs.interactionType || 'investigate';
       const conf = PROMPT_CONFIG[type] || PROMPT_CONFIG.investigate;
-      const text = hs.promptText || conf.prefix;
       const isUsed = hs.usedFlag ? store.usedHotspots.includes(hs.usedFlag) : false;
 
       if (isUsed && !hs.puzzleId) {
@@ -269,7 +421,6 @@ export default class RoomScene extends Phaser.Scene {
     }
   }
 
-  /** 交互后刷新单个实体外观 */
   private refreshEntityVisual(hotspotId: string) {
     const entity = this.entities.find(e => e.hotspot.id === hotspotId);
     if (!entity) return;
@@ -284,6 +435,8 @@ export default class RoomScene extends Phaser.Scene {
 
   switchRoom(roomId: string) {
     this.roomId = roomId;
+    this.hasRoomBg = false;
+    this.hasRealSprite = false;
     this.scene.restart({ roomId });
   }
 }

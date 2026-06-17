@@ -110,6 +110,49 @@ body {
   min-width: 260px;
 }
 
+/* 探索模式切换 */
+.mode-switcher {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.mode-label {
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+}
+
+.mode-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.mode-btn {
+  font-family: var(--cn-font);
+  font-size: 12px;
+  padding: 6px 16px;
+  background: transparent;
+  border: 2px solid var(--text-dim);
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.mode-btn:hover {
+  border-color: var(--text-primary);
+  color: var(--text-primary);
+}
+
+.mode-btn.active {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  background: rgba(0, 212, 255, 0.1);
+  box-shadow: 0 0 8px rgba(0, 212, 255, 0.2);
+}
+
 /* ===== 像素按钮 ===== */
 .pixel-btn {
   font-family: var(--cn-font);
