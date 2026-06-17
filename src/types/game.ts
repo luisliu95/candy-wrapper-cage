@@ -53,25 +53,42 @@ export interface Room {
   unlockHint?: string;    // 未解锁时的提示
 }
 
-/** 可点击热区 */
+/** 交互类型 —— 决定 E 键提示文字和图标 */
+export type InteractionType = 'investigate' | 'pickup' | 'talk' | 'use' | 'puzzle' | 'exit';
+
+/**
+ * 交互区域（兼容点击热区和 Phaser interaction zone）
+ *
+ * 原有字段（React 点击热区）全部保留，
+ * 新增 Phaser 专用字段均为可选，向后兼容。
+ */
 export interface Hotspot {
   id: string;
+  // --- 定位（百分比坐标，React 热区使用） ---
   x: number; y: number;
   w: number; h: number;
+  // --- 基础信息 ---
   label: string;
   description: string;
-  icon?: string;            // 热区图标 emoji
+  icon?: string;
+  // --- Phaser 交互区域专用字段（可选，不影响旧数据） ---
+  interactionRadius?: number;   // 交互触发半径(px)，默认50
+  promptText?: string;          // 自定义 E 键提示文字
+  interactionType?: InteractionType; // 交互分类
+  spriteColor?: number;         // 实体显示颜色（十六进制）
+  blocked?: boolean;            // 是否作为碰撞体阻挡玩家
+  // --- 交互效果（两种模式共用） ---
   itemId?: string;
   puzzleId?: string;
   requireItem?: string;
-  requireItems?: string[];  // 需要同时持有多个物品
+  requireItems?: string[];
   requireFlag?: string;
   usedFlag?: string;
   trigger?: StoryTrigger;
   storyJump?: string;
   dialogueId?: string;
-  examineCount?: number;    // 可调查次数（>1 次才出新信息）
-  multiDescriptions?: string[]; // 多次调查时的不同描述
+  examineCount?: number;
+  multiDescriptions?: string[];
 }
 
 /** 物品 */

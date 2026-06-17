@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { GamePhase, SaveData, StoryNode, StoryTrigger, Ending, EndingCondition, CraftRecipe, FakeMessage } from '../types/game';
+import type { GamePhase, SaveData, StoryNode, StoryTrigger, Ending, EndingCondition, CraftRecipe, FakeMessage, Hotspot, Room } from '../types/game';
 import storyData from '../data/dialogues.json';
 import roomsData from '../data/scenes.json';
 import itemsData from '../data/items.json';
@@ -73,6 +73,10 @@ interface GameState {
   triggerSugarEcho: () => void;
   judgeFlaw: (flawType: string) => void;
   dismissSugarEcho: () => void;
+
+  // 统一交互入口（Phaser E键 / React 点击热区 共用）
+  triggerInteraction: (interactionId: string) => { handled: boolean; reason?: string };
+  getHotspotById: (roomId: string, hotspotId: string) => Hotspot | null;
 
   checkEnding: () => void;
   showMessage: (msg: string) => void;
@@ -430,6 +434,78 @@ export const useGameStore = create<GameState>((set, get) => ({
     return recipes.filter(r =>
       inv.includes(r.materials[0]) && inv.includes(r.materials[1])
     );
+  },
+
+  // ===== 统一交互入口 =====
+  getHotspotById: (roomId: string, hotspotId: string) => {
+    const room = (roomsData as Record<string, Room>)[roomId];
+    if (!room) return null;
+    return room.hotspots.find(h => h.id === hotspotId) || null;
+  },
+
+  triggerInteraction: (interactionId: string) => {
+    const s = get();
+    const roomId = s.currentRoom;
+    if (!roomId) return { handled: false, reason: 'not_in_room' };
+
+    const room = (roomsData as Record<string, Room>)[roomId];
+    if (!room) return { handled: false, reason: 'room_not_found' };
+
+    const hotspot = room.hotspots.find(h => h.id === interactionId);
+    if (!hotspot) return { handled: false, reason: 'hotspot_not_found' };
+
+    // 前置条件检查
+    if (hotspot.requireFlag && !s.flags.includes(hotspot.requireFlag)) {
+      get().showMessage('还不能操作这里……也许需要先完成其他事情。');
+      return { handled: false, reason: 'flag_required' };
+    }
+    if (hotspot.requireItem && !s.inventory.includes(hotspot.requireItem)) {
+      get().showMessage('需要特定物品才能操作');
+      return { handled: false, reason: 'item_required' };
+    }
+    if (hotspot.requireItems) {
+      for (const id of hotspot.requireItems) {
+        if (!s.inventory.includes(id)) {
+          get().showMessage('还缺少一些必要的物品……');
+          return { handled: false, reason: 'items_required' };
+        }
+      }
+    }
+
+    // 谜题
+    if (hotspot.puzzleId) {
+      get().openPuzzle(hotspot.puzzleId);
+      return { handled: true };
+    }
+
+    // 剧情跳转
+    if (hotspot.storyJump) {
+      get().goToNode(hotspot.storyJump);
+      return { handled: true };
+    }
+    if (hotspot.dialogueId) {
+      get().goToNode(hotspot.dialogueId);
+      return { handled: true };
+    }
+
+    // 拾取物品
+    if (hotspot.itemId && hotspot.usedFlag && !s.usedHotspots.includes(hotspot.usedFlag)) {
+      get().addItem(hotspot.itemId);
+      get().useHotspot(hotspot.usedFlag);
+    }
+
+    // 触发效果
+    if (hotspot.trigger && (!hotspot.usedFlag || !s.usedHotspots.includes(hotspot.usedFlag))) {
+      get().applyTrigger(hotspot.trigger);
+      if (hotspot.usedFlag) {
+        get().useHotspot(hotspot.usedFlag);
+      }
+    }
+
+    // 调查计数
+    get().incrementExamineCount(interactionId);
+
+    return { handled: true };
   },
 
   // ===== SugarEcho AI 替身消息系统 =====

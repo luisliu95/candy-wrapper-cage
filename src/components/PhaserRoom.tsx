@@ -16,7 +16,7 @@ export default function PhaserRoom() {
   const {
     currentRoom, exitRoom, addItem, applyTrigger, openPuzzle, goToNode,
     isHotspotUsed, useHotspot, showMessage, hasItem, hasFlag,
-    incrementExamineCount, getHotspotExamineCount
+    incrementExamineCount, getHotspotExamineCount, triggerInteraction
   } = useGameStore();
 
   // 当前交互中的热区
@@ -64,46 +64,10 @@ export default function PhaserRoom() {
     }
   }, [currentRoom]);
 
-  // 处理热区操作（复用原 RoomExplorer 的逻辑）
+  // 处理热区操作 —— 统一走 triggerInteraction
   const handleHotspotAction = (hotspot: Hotspot) => {
-    if (hotspot.requireItem && !hasItem(hotspot.requireItem)) {
-      showMessage('需要特定物品才能操作');
-      closePopup();
-      return;
-    }
-    if (hotspot.requireFlag && !hasFlag(hotspot.requireFlag)) {
-      showMessage('还不能操作这里……也许需要先完成其他事情。');
-      closePopup();
-      return;
-    }
-
-    if (hotspot.puzzleId) {
-      closePopup();
-      openPuzzle(hotspot.puzzleId);
-      return;
-    }
-    if (hotspot.storyJump) {
-      closePopup();
-      goToNode(hotspot.storyJump);
-      return;
-    }
-    if (hotspot.dialogueId) {
-      closePopup();
-      goToNode(hotspot.dialogueId);
-      return;
-    }
-
-    if (hotspot.itemId && hotspot.usedFlag && !isHotspotUsed(hotspot.usedFlag)) {
-      addItem(hotspot.itemId);
-      useHotspot(hotspot.usedFlag);
-    }
-    if (hotspot.trigger && (!hotspot.usedFlag || !isHotspotUsed(hotspot.usedFlag))) {
-      applyTrigger(hotspot.trigger);
-      if (hotspot.usedFlag) {
-        useHotspot(hotspot.usedFlag);
-      }
-    }
     closePopup();
+    triggerInteraction(hotspot.id);
   };
 
   const closePopup = () => {
