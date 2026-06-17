@@ -141,7 +141,7 @@ export const useGameStore = create<GameState>((set, get) => ({
       if (!raw) return false;
       const save: SaveData = JSON.parse(raw);
       set({
-        phase: save.currentRoom ? 'room' : 'story',
+        phase: save.currentRoom ? 'topdown' : 'story',
         currentNode: save.currentNode,
         currentRoom: save.currentRoom,
         currentPuzzle: null,
@@ -257,7 +257,7 @@ export const useGameStore = create<GameState>((set, get) => ({
 
   closePuzzle: () => {
     const room = get().currentRoom;
-    set({ currentPuzzle: null, phase: room ? 'room' : 'story' });
+    set({ currentPuzzle: null, phase: room ? 'topdown' : 'story' });
   },
 
   addItem: (itemId: string) => {
