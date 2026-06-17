@@ -124,8 +124,11 @@ export default class RoomScene extends Phaser.Scene {
       }
     }
 
-    // 莫妮卡
-    this.player = this.add.container(W / 2, H * 0.6);
+    // 莫妮卡（使用 playerSpawn 或默认居中偏下）
+    const spawn = (room as any)?.playerSpawn;
+    const spawnX = spawn ? (spawn.x / 100) * W : W / 2;
+    const spawnY = spawn ? (spawn.y / 100) * H : H * 0.6;
+    this.player = this.add.container(spawnX, spawnY);
     this.playerBody = this.add.rectangle(0, 4, 16, 20, 0xff6b9d);
     this.playerHead = this.add.rectangle(0, -10, 14, 14, 0xffddbb);
     this.playerHair = this.add.rectangle(0, -16, 16, 6, 0x553322);

@@ -31,6 +31,61 @@
     "enterRoom": "ch1_dorm"
   },
 
+  "ch1_phone_echo": {
+    "id": "ch1_phone_echo",
+    "chapter": 1,
+    "speaker": "旁白",
+    "text": "手机屏幕上显示着一条「莫妮卡」发给妈妈的消息：「妈，我到了！环境挺好的，别担心我～」发送时间是昨天 18:42。",
+    "next": "ch1_phone_echo_2"
+  },
+  "ch1_phone_echo_2": {
+    "id": "ch1_phone_echo_2",
+    "chapter": 1,
+    "speaker": "旁白",
+    "text": "但你不记得发过这条消息。你甚至不记得昨天发生了什么。这条消息……是谁替你发的？",
+    "next": "ch1_phone_echo_3"
+  },
+  "ch1_phone_echo_3": {
+    "id": "ch1_phone_echo_3",
+    "chapter": 1,
+    "speaker": "系统",
+    "text": "「SweetConnect 提示：为保护您的隐私，本设备已限制外部通讯功能。所有消息将由 SugarEcho 系统代为管理。」",
+    "enterRoom": "ch1_dorm",
+    "trigger": { "evidence": 1, "alert": 1, "setFlag": "discovered_echo_system" }
+  },
+
+  "ch1_drawer_opened": {
+    "id": "ch1_drawer_opened",
+    "chapter": 1,
+    "speaker": "旁白",
+    "text": "抽屉弹开了。里面有一张折叠的纸——上面用圆珠笔写着一串数字和一行字：「门禁备用密码：0042。——如果你想离开，用这个。」",
+    "enterRoom": "ch1_dorm",
+    "trigger": { "evidence": 2, "addItem": "candy_crane", "setFlag": "has_door_password" }
+  },
+  "ch1_drawer_fail": {
+    "id": "ch1_drawer_fail",
+    "chapter": 1,
+    "speaker": "旁白",
+    "text": "密码错了。锁发出一声短促的蜂鸣。也许该再仔细看看海报上的颜色排列。",
+    "enterRoom": "ch1_dorm"
+  },
+  "ch1_door_opened": {
+    "id": "ch1_door_opened",
+    "chapter": 1,
+    "speaker": "旁白",
+    "text": "面板发出一声清脆的「嘀」，指示灯从红色变成绿色。电子锁解除了。",
+    "enterRoom": "ch1_dorm",
+    "trigger": { "evidence": 1, "setFlag": "door_unlocked" }
+  },
+  "ch1_door_panel_fail": {
+    "id": "ch1_door_panel_fail",
+    "chapter": 1,
+    "speaker": "旁白",
+    "text": "「密码错误。剩余尝试次数：2」面板上闪过红色警告。你需要找到正确的密码。",
+    "enterRoom": "ch1_dorm",
+    "trigger": { "alert": 1 }
+  },
+
   "ch1_exit_dorm": {
     "id": "ch1_exit_dorm",
     "chapter": 1,

@@ -51,6 +51,7 @@ export interface Room {
   exitTo?: string;        // 退出后跳转的剧情节点
   requireFlag?: string;   // 需要标记才能进入
   unlockHint?: string;    // 未解锁时的提示
+  playerSpawn?: { x: number; y: number }; // 玩家出生点（百分比坐标）
 }
 
 /** 交互类型 —— 决定 E 键提示文字和图标 */
