@@ -114,7 +114,6 @@ function generatePlaceholderSpritesheet(scene: Phaser.Scene): string {
   canvas.height = SPRITE_H;
   const ctx = canvas.getContext('2d')!;
 
-  // facing: 0=down, 1=left, 2=right, 3=up
   const facings = [0, 0, 1, 1, 2, 2, 3, 3];
   const frames  = [0, 1, 0, 1, 0, 1, 0, 1];
 
@@ -122,7 +121,11 @@ function generatePlaceholderSpritesheet(scene: Phaser.Scene): string {
     drawPixelChar(ctx, i * SPRITE_W, 0, facings[i], frames[i]);
   }
 
-  scene.textures.addCanvas(key, canvas);
+  // 先注册为 canvas 纹理，再手动添加帧切片
+  const tex = scene.textures.addCanvas(key, canvas);
+  for (let i = 0; i < totalFrames; i++) {
+    tex.add(i, 0, i * SPRITE_W, 0, SPRITE_W, SPRITE_H);
+  }
   return key;
 }
 
