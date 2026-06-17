@@ -205,4 +205,4 @@ export interface LeafletResult {
 }
 
 /** 游戏阶段 */
-export type GamePhase = 'start' | 'story' | 'room' | 'puzzle' | 'ending' | 'sugarecho' | 'leaflet';
+export type GamePhase = 'start' | 'story' | 'room' | 'topdown' | 'puzzle' | 'ending' | 'sugarecho' | 'leaflet';

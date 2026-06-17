@@ -4,6 +4,7 @@ import StatusBar from './StatusBar';
 import DialogBox from './DialogBox';
 import ChoicePanel from './ChoicePanel';
 import RoomExplorer from './RoomExplorer';
+import PhaserRoom from './PhaserRoom';
 import Inventory from './Inventory';
 import PuzzleModal from './PuzzleModal';
 import EndingScreen from './EndingScreen';
@@ -54,6 +55,10 @@ export default function GameUI() {
       <div className="scene-area">
         <div className="scene-background" style={{ background: bg }} />
 
+        {/* Phaser 顶视角模式 */}
+        {phase === 'topdown' && <PhaserRoom />}
+
+        {/* 原有点击热区模式（保留作 fallback） */}
         {phase === 'room' && <RoomExplorer />}
 
         {phase === 'story' && node && (

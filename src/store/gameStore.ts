@@ -203,9 +203,9 @@ export const useGameStore = create<GameState>((set, get) => ({
       get().applyTrigger(node.trigger);
     }
 
-    // 进入房间
+    // 进入房间（优先顶视角模式，保留 'room' 作回退）
     if (node.enterRoom) {
-      set({ currentNode: nodeId, phase: 'room', currentRoom: node.enterRoom, ...chapterUpdate });
+      set({ currentNode: nodeId, phase: 'topdown', currentRoom: node.enterRoom, ...chapterUpdate });
       return;
     }
 
@@ -220,7 +220,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   },
 
   enterRoom: (roomId: string) => {
-    set({ currentRoom: roomId, phase: 'room' });
+    set({ currentRoom: roomId, phase: 'topdown' });
   },
 
   exitRoom: () => {
