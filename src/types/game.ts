@@ -134,8 +134,10 @@ export interface Puzzle {
 export interface Ending {
   id: string;
   title: string;
+  subtitle?: string;      // 一句话总结
   description: string;
   epilogue?: string;      // 后日谈
+  lastMessage?: string;   // 最后一条手机消息
   condition: EndingCondition;
   priority: number;       // 数字越大优先匹配
 }

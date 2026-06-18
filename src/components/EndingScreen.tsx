@@ -5,14 +5,18 @@ import { getBondLevel, getBondLevelLabel } from '../types/game';
 import endingsData from '../data/endings.json';
 
 interface EndingWithNpc extends Ending {
+  subtitle?: string;
   epilogue?: string;
+  lastMessage?: string;
   npcEpilogues?: Record<string, string>;
 }
 
+type ViewMode = 'scene' | 'epilogue' | 'npc' | 'message';
+
 export default function EndingScreen() {
-  const { currentEnding, evidence, alert, trust_medusa, trust_xuheng, trust_qiaoqing, deleteSave } = useGameStore();
-  const [showEpilogue, setShowEpilogue] = useState(false);
-  const [showNpcEpilogue, setShowNpcEpilogue] = useState<string | null>(null);
+  const { currentEnding, evidence, alert, trust_medusa, trust_xuheng, trust_qiaoqing, memoryFragments, deleteSave } = useGameStore();
+  const [viewMode, setViewMode] = useState<ViewMode>('scene');
+  const [activeNpc, setActiveNpc] = useState<string | null>(null);
 
   if (!currentEnding) return null;
   const ending = (endingsData as Record<string, EndingWithNpc>)[currentEnding];
@@ -22,32 +26,6 @@ export default function EndingScreen() {
   const bondX = getBondLevel(trust_xuheng);
   const bondQ = getBondLevel(trust_qiaoqing);
 
-  // 根据羁绊等级选择对应的 NPC 后日谈
-  const getNpcEpilogue = (npcKey: string): string | null => {
-    if (!ending.npcEpilogues) return null;
-    const levels = ['high', 'mid', 'low'];
-    for (const level of levels) {
-      const key = `${npcKey}_${level}`;
-      if (ending.npcEpilogues[key]) {
-        // 检查当前NPC是否达到该等级
-        let currentLevel: string;
-        if (npcKey === 'medusa') currentLevel = bondM;
-        else if (npcKey === 'xuheng') currentLevel = bondX;
-        else currentLevel = bondQ;
-
-        // 匹配最接近的等级（从高到低）
-        if (level === currentLevel || 
-            (level === 'high' && currentLevel === 'high') ||
-            (level === 'mid' && (currentLevel === 'mid' || currentLevel === 'high')) ||
-            (level === 'low' && currentLevel === 'low')) {
-          return ending.npcEpilogues[key];
-        }
-      }
-    }
-    return null;
-  };
-
-  // 精确匹配当前等级的后日谈
   const getMatchedNpcEpilogue = (npcKey: string): string | null => {
     if (!ending.npcEpilogues) return null;
     let currentLevel: string;
@@ -55,48 +33,66 @@ export default function EndingScreen() {
     else if (npcKey === 'xuheng') currentLevel = bondX;
     else currentLevel = bondQ;
 
-    // 先精确匹配，再降级匹配
     const key = `${npcKey}_${currentLevel}`;
     if (ending.npcEpilogues[key]) return ending.npcEpilogues[key];
-    // 降级匹配
     if (currentLevel === 'high' && ending.npcEpilogues[`${npcKey}_mid`]) return ending.npcEpilogues[`${npcKey}_mid`];
-    if (currentLevel === 'mid' && ending.npcEpilogues[`${npcKey}_low`]) return ending.npcEpilogues[`${npcKey}_low`];
+    if ((currentLevel === 'high' || currentLevel === 'mid') && ending.npcEpilogues[`${npcKey}_low`]) return ending.npcEpilogues[`${npcKey}_low`];
     if (ending.npcEpilogues[`${npcKey}_low`]) return ending.npcEpilogues[`${npcKey}_low`];
     return null;
   };
 
-  const npcEpilogues = [
+  const npcList = [
     { key: 'medusa', name: '美杜莎', icon: '🐍', trust: trust_medusa, level: bondM },
     { key: 'xuheng', name: '许珩', icon: '📝', trust: trust_xuheng, level: bondX },
     { key: 'qiaoqing', name: '乔青', icon: '🎙️', trust: trust_qiaoqing, level: bondQ },
-  ].map(npc => ({
-    ...npc,
-    epilogue: getMatchedNpcEpilogue(npc.key),
-  })).filter(npc => npc.epilogue);
+  ].map(npc => ({ ...npc, epilogue: getMatchedNpcEpilogue(npc.key) })).filter(npc => npc.epilogue);
 
-  const handleRestart = () => {
-    deleteSave();
-    window.location.reload();
-  };
+  const handleRestart = () => { deleteSave(); window.location.reload(); };
 
-  const BOND_COLORS: Record<string, string> = {
-    low: '#888',
-    mid: '#ffcc00',
-    high: '#ff4488',
-  };
+  const BOND_COLORS: Record<string, string> = { low: '#888', mid: '#ffcc00', high: '#ff4488' };
+
+  // 根据结局选择顶部 emoji
+  const topIcon = currentEnding === 'ending_true_echo' ? '🕊️'
+    : currentEnding === 'ending_paper_door' ? '🚪' : '🍬';
+
+  // 当前显示文本
+  let displayText = ending.description;
+  if (viewMode === 'epilogue') displayText = ending.epilogue || '';
+  if (viewMode === 'npc' && activeNpc) displayText = npcList.find(n => n.key === activeNpc)?.epilogue || '';
+  if (viewMode === 'message') displayText = '';
 
   return (
     <div className="ending-screen">
-      <div className="pixel-candy" style={{ fontSize: 40, marginBottom: 20 }}>🍬</div>
+      <div className="pixel-candy" style={{ fontSize: 40, marginBottom: 12 }}>{topIcon}</div>
       <h1 className="ending-title">{ending.title}</h1>
-      <p className="ending-description">
-        {showNpcEpilogue
-          ? npcEpilogues.find(n => n.key === showNpcEpilogue)?.epilogue || ''
-          : showEpilogue && ending.epilogue
-            ? ending.epilogue
-            : ending.description}
-      </p>
+      {ending.subtitle && viewMode === 'scene' && (
+        <div className="ending-subtitle">{ending.subtitle}</div>
+      )}
 
+      {/* 最后一条消息视图 */}
+      {viewMode === 'message' && ending.lastMessage ? (
+        <div className="ending-last-message">
+          <div className="last-msg-phone">
+            <div className="last-msg-header">💬 消息</div>
+            <div className="last-msg-bubble">
+              <div className="last-msg-sender">莫妮卡</div>
+              <div className="last-msg-text">{ending.lastMessage}</div>
+              <div className="last-msg-time">刚刚 ✓✓</div>
+            </div>
+            <div className="last-msg-note">
+              {currentEnding === 'ending_true_echo'
+                ? '这一次，是你自己发的。'
+                : currentEnding === 'ending_paper_door'
+                  ? '你不确定这条消息够不够真实。'
+                  : '这条消息不是你发的。但你已经分不清了。'}
+            </div>
+          </div>
+        </div>
+      ) : (
+        <p className="ending-description">{displayText}</p>
+      )}
+
+      {/* 数据统计 */}
       <div className="ending-stats">
         <div className="ending-stat">
           <div className="ending-stat-value" style={{ color: '#00d4ff' }}>{evidence}</div>
@@ -118,25 +114,35 @@ export default function EndingScreen() {
           <div className="ending-stat-value" style={{ color: BOND_COLORS[bondQ] }}>{trust_qiaoqing}</div>
           <div className="ending-stat-label">乔青 [{getBondLevelLabel(bondQ)}]</div>
         </div>
+        <div className="ending-stat">
+          <div className="ending-stat-value" style={{ color: '#aa88ff' }}>{memoryFragments.length}</div>
+          <div className="ending-stat-label">记忆碎片</div>
+        </div>
       </div>
 
-      <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
-        {ending.epilogue && !showEpilogue && !showNpcEpilogue && (
-          <button className="pixel-btn btn-accent" onClick={() => { setShowEpilogue(true); setShowNpcEpilogue(null); }}>
+      {/* 按钮区 */}
+      <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
+        {viewMode === 'scene' && ending.epilogue && (
+          <button className="pixel-btn btn-accent" onClick={() => setViewMode('epilogue')}>
             📖 后日谈
           </button>
         )}
-        {npcEpilogues.map(npc => (
+        {viewMode === 'scene' && ending.lastMessage && (
+          <button className="pixel-btn btn-small" onClick={() => setViewMode('message')}>
+            📱 最后一条消息
+          </button>
+        )}
+        {(viewMode === 'scene' || viewMode === 'epilogue') && npcList.map(npc => (
           <button
             key={npc.key}
-            className={`pixel-btn ${showNpcEpilogue === npc.key ? 'btn-accent' : 'btn-small'}`}
-            onClick={() => { setShowNpcEpilogue(showNpcEpilogue === npc.key ? null : npc.key); setShowEpilogue(false); }}
+            className={`pixel-btn btn-small ${viewMode === 'npc' && activeNpc === npc.key ? 'btn-accent' : ''}`}
+            onClick={() => { setViewMode('npc'); setActiveNpc(npc.key); }}
           >
-            {npc.icon} {npc.name}的故事
+            {npc.icon} {npc.name}
           </button>
         ))}
-        {(showEpilogue || showNpcEpilogue) && (
-          <button className="pixel-btn btn-small" onClick={() => { setShowEpilogue(false); setShowNpcEpilogue(null); }}>
+        {viewMode !== 'scene' && (
+          <button className="pixel-btn btn-small" onClick={() => { setViewMode('scene'); setActiveNpc(null); }}>
             ← 返回
           </button>
         )}

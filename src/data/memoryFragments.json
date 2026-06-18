@@ -40,16 +40,6 @@
     "obtainedFrom": "许珩的笔记中提到「设置安全锚」的策略"
   },
   {
-    "id": "mem_meikong_slip",
-    "chapter": 3,
-    "title": "美空的失言",
-    "icon": "👤",
-    "description": "美空无意中说了一句「你还是喜欢把刘海别到耳后」——这是只有林夏才会注意到的细节。美空自己也不知道她为什么会知道这件事。",
-    "quote": "「她的温柔不是程序生成的。那些碎片来自一个真实的人——我的朋友。」",
-    "evidenceBonus": 3,
-    "obtainedFrom": "广播室 — 美空在听到录音磁带后的反应"
-  },
-  {
     "id": "mem_pause_pattern",
     "chapter": 3,
     "title": "停顿的节拍",

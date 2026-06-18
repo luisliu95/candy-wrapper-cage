@@ -778,6 +778,72 @@ body {
   margin-top: 4px;
 }
 
+.ending-subtitle {
+  font-size: 13px;
+  color: var(--accent-pink);
+  margin-bottom: 24px;
+  font-style: italic;
+  letter-spacing: 1px;
+}
+
+/* 结局最后一条消息 */
+.ending-last-message {
+  max-width: 360px;
+  margin-bottom: 30px;
+  animation: echo-fade-in 0.6s ease-out;
+}
+
+.last-msg-phone {
+  background: #111118;
+  border: 2px solid #333;
+  padding: 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.last-msg-header {
+  padding: 8px 12px;
+  font-size: 10px;
+  color: #666;
+  border-bottom: 1px solid #222;
+}
+
+.last-msg-bubble {
+  margin: 14px 12px;
+  background: #1a3a2a;
+  border: 1px solid #2a5a3a;
+  padding: 12px;
+  margin-left: 40px;
+}
+
+.last-msg-sender {
+  font-size: 10px;
+  color: var(--accent-green);
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+.last-msg-text {
+  font-size: 13px;
+  color: var(--text-white);
+  line-height: 1.7;
+}
+
+.last-msg-time {
+  font-size: 9px;
+  color: #5a8a5a;
+  text-align: right;
+  margin-top: 6px;
+}
+
+.last-msg-note {
+  padding: 10px 14px;
+  font-size: 11px;
+  color: var(--text-dim);
+  text-align: center;
+  border-top: 1px solid #222;
+  font-style: italic;
+}
+
 /* ===== 消息提示 ===== */
 .message-toast {
   position: fixed;

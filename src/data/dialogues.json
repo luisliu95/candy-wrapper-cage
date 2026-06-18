@@ -14,7 +14,22 @@
     "chapter": 1,
     "speaker": "旁白",
     "text": "你的手腕上系着一条糖纸编的手环，上面写着一个编号：「CW-0042」。你不记得自己是怎么来到这里的。",
-    "next": "ch1_wake_3"
+    "next": "ch1_wake_remember"
+  },
+  "ch1_wake_remember": {
+    "id": "ch1_wake_remember",
+    "chapter": 1,
+    "speaker": "旁白",
+    "text": "不……你记得一些。你叫莫妮卡。你和林夏一起运营一个叫「糖纸观察室」的甜品测评账号。三个月前林夏参加了某个「疗愈体验」后失踪了——但她的账号每天都在更新，语气和她一模一样。",
+    "next": "ch1_wake_remember_2"
+  },
+  "ch1_wake_remember_2": {
+    "id": "ch1_wake_remember_2",
+    "chapter": 1,
+    "speaker": "莫妮卡（内心）",
+    "text": "「我是自愿来的。我要找到林夏……或者找到她消失的真相。」你攥紧了手腕上的糖纸手环。邀请函上写的是七天体验。今天是第一天。",
+    "next": "ch1_wake_3",
+    "trigger": { "setFlag": "remembered_purpose", "addMemory": "mem_no_period" }
   },
   "ch1_wake_3": {
     "id": "ch1_wake_3",
@@ -43,7 +58,22 @@
     "chapter": 1,
     "speaker": "旁白",
     "text": "但你不记得发过这条消息。你甚至不记得昨天发生了什么。这条消息……是谁替你发的？",
-    "next": "ch1_phone_echo_3"
+    "next": "ch1_phone_linxia_check"
+  },
+  "ch1_phone_linxia_check": {
+    "id": "ch1_phone_linxia_check",
+    "chapter": 1,
+    "speaker": "旁白",
+    "text": "你翻到了「糖纸观察室」的账号页面。林夏的头像还亮着在线状态。最新一条动态是昨天发的，配图是一杯草莓奶昔，文案写着：「超爱草莓味！每天都想喝～」",
+    "next": "ch1_phone_linxia_react"
+  },
+  "ch1_phone_linxia_react": {
+    "id": "ch1_phone_linxia_react",
+    "chapter": 1,
+    "speaker": "莫妮卡（内心）",
+    "text": "林夏讨厌草莓。她从来不喝草莓味的任何东西。这条动态……不是她发的。但语气完美地模仿了她的风格——除了这一个偏好错误。正是这个错误让你来到了这里。",
+    "next": "ch1_phone_echo_3",
+    "trigger": { "evidence": 1, "addMemory": "mem_wrong_password", "setFlag": "noticed_linxia_fake_post" }
   },
   "ch1_phone_echo_3": {
     "id": "ch1_phone_echo_3",
@@ -239,7 +269,22 @@
     "chapter": 2,
     "speaker": "旁白",
     "text": "地下室比你想象的大得多。角落里堆着一台老式印刷机，到处散落着纸张和传单。",
-    "next": "ch2_medusa_explain"
+    "next": "ch2_monika_observe"
+  },
+  "ch2_monika_observe": {
+    "id": "ch2_monika_observe",
+    "chapter": 2,
+    "speaker": "莫妮卡（内心）",
+    "text": "传单上印着精美的甜品插画——草莓塔、马卡龙、棉花糖。你认出了这些风格。这些插画和「糖纸观察室」的配图风格一模一样。林夏画的。",
+    "next": "ch2_monika_observe_2"
+  },
+  "ch2_monika_observe_2": {
+    "id": "ch2_monika_observe_2",
+    "chapter": 2,
+    "speaker": "莫妮卡（内心）",
+    "text": "他们在用林夏的画来制作招募传单。她的作品被用来引诱新的受害者进来。你握紧了拳头。",
+    "next": "ch2_medusa_explain",
+    "trigger": { "evidence": 1, "setFlag": "recognized_linxia_art", "addMemory": "mem_strawberry_hate" }
   },
   "ch2_medusa_explain": {
     "id": "ch2_medusa_explain",
@@ -568,7 +613,22 @@
     "chapter": 3,
     "speaker": "旁白",
     "text": "广播室比想象中小，但设备齐全。混音台上的按钮在微光中闪烁，像一排沉默的眼睛。",
-    "next": "ch3_qiao_guide"
+    "next": "ch3_meikong_broadcast_intercept"
+  },
+  "ch3_meikong_broadcast_intercept": {
+    "id": "ch3_meikong_broadcast_intercept",
+    "chapter": 3,
+    "speaker": "美空（广播）",
+    "text": "广播突然响了。美空的声音从头顶的扬声器传来：「各位甜心，晚间茶歇时间到了。今日推荐：焦糖布丁配……」她停顿了一下。「……配柠檬汁。」",
+    "next": "ch3_meikong_broadcast_glitch"
+  },
+  "ch3_meikong_broadcast_glitch": {
+    "id": "ch3_meikong_broadcast_glitch",
+    "chapter": 3,
+    "speaker": "莫妮卡（内心）",
+    "text": "焦糖布丁配柠檬汁？这是林夏最爱的搭配——被所有人嫌弃的奇怪组合。只有她一个人觉得「酸甜平衡很完美」。美空为什么会推荐这个？",
+    "next": "ch3_qiao_guide",
+    "trigger": { "evidence": 1, "setFlag": "heard_linxia_recipe", "addMemory": "mem_pause_pattern" }
   },
   "ch3_qiao_guide": {
     "id": "ch3_qiao_guide",
@@ -633,8 +693,23 @@
     "chapter": 3,
     "speaker": "美杜莎（录音）",
     "text": "「如果你听到这段录音，说明我的计划失败了。服务器机房里有所有的记录。密码是那天的日期。」",
-    "next": "ch3_medusa_react",
+    "next": "ch3_meikong_tape_reaction",
     "trigger": { "evidence": 2, "setFlag": "heard_tape" }
+  },
+  "ch3_meikong_tape_reaction": {
+    "id": "ch3_meikong_tape_reaction",
+    "chapter": 3,
+    "speaker": "旁白",
+    "text": "磁带结束的瞬间，广播扬声器发出一声尖锐的杂音——像是美空的系统在回应这段录音。然后，一切恢复了安静。",
+    "next": "ch3_meikong_tape_react_2"
+  },
+  "ch3_meikong_tape_react_2": {
+    "id": "ch3_meikong_tape_react_2",
+    "chapter": 3,
+    "speaker": "乔青",
+    "text": "乔青看着扬声器，脸色有些苍白。「……美空的系统和广播设备是联通的。她'听到了'那段录音。」她低下头。「不知道为什么，我觉得那声杂音……像在哭。」",
+    "next": "ch3_medusa_react",
+    "trigger": { "evidence": 1, "setFlag": "meikong_reacted_to_tape" }
   },
   "ch3_medusa_react": {
     "id": "ch3_medusa_react",
@@ -861,7 +936,22 @@
     "chapter": 4,
     "speaker": "旁白",
     "text": "你独自走进了机房。空调的冷风让你打了个寒颤。服务器的运转声像一种低沉的呼吸。",
-    "enterRoom": "ch4_server"
+    "next": "ch4_monika_resolve"
+  },
+  "ch4_monika_resolve": {
+    "id": "ch4_monika_resolve",
+    "chapter": 4,
+    "speaker": "莫妮卡（内心）",
+    "text": "「林夏，我来了。你在这些服务器的某个角落里吗？你的账号还在更新，你的声音被做成了广播。但我记得——真正的你不会用句号，会故意打错字，讨厌草莓奶油。」",
+    "next": "ch4_monika_resolve_2"
+  },
+  "ch4_monika_resolve_2": {
+    "id": "ch4_monika_resolve_2",
+    "chapter": 4,
+    "speaker": "莫妮卡（内心）",
+    "text": "「这七天的定时草稿还有几天就会自动发布了。如果我找不到真相……至少那条动态能让人们开始怀疑。但我不想只是怀疑。我要证据。」",
+    "enterRoom": "ch4_server",
+    "trigger": { "addMemory": "mem_timed_draft" }
   },
 
   "__comment_ch4_xuheng_bond": "=== 第四章 许珩羁绊事件（通过终端解密） ===",
@@ -898,8 +988,61 @@
     "chapter": 4,
     "speaker": "旁白",
     "text": "你从终端里提取了所有关键数据。屏幕上闪过最后一行日志：「0712——Project CandyWrap 启动。」",
-    "next": "ch4_alarm",
+    "next": "ch4_sugarecho_speaks",
     "trigger": { "evidence": 3 }
+  },
+  "ch4_sugarecho_speaks": {
+    "id": "ch4_sugarecho_speaks",
+    "chapter": 4,
+    "speaker": "SugarEcho（终端）",
+    "text": "屏幕上突然滚出一行新文字。不是日志——是实时生成的：「CW-0042，你在寻找什么？你已经拥有了一个更好的莫妮卡。她不会讨厌草莓，不会忘记用句号，不会到处乱跑。她是完美的。」",
+    "next": "ch4_sugarecho_speaks_2"
+  },
+  "ch4_sugarecho_speaks_2": {
+    "id": "ch4_sugarecho_speaks_2",
+    "chapter": 4,
+    "speaker": "SugarEcho（终端）",
+    "text": "「你为什么要找回那个不完美的自己？」",
+    "next": "ch4_sugarecho_choice"
+  },
+  "ch4_sugarecho_choice": {
+    "id": "ch4_sugarecho_choice",
+    "chapter": 4,
+    "speaker": "旁白",
+    "text": "光标在闪烁，等待你的输入。",
+    "choices": [
+      {
+        "text": "「因为不完美才是真的。完美的复制品不是我。」",
+        "next": "ch4_sugarecho_defiant",
+        "trigger": { "evidence": 2, "addMemory": "mem_echo_fear" }
+      },
+      {
+        "text": "「……你害怕了，对吗？如果我找回自己，你就没有存在的意义了。」",
+        "next": "ch4_sugarecho_fear",
+        "trigger": { "evidence": 3, "addMemory": "mem_echo_fear" }
+      },
+      {
+        "text": "（不回答，拔掉终端数据线）",
+        "next": "ch4_alarm",
+        "trigger": { "alert": 1 }
+      }
+    ]
+  },
+  "ch4_sugarecho_defiant": {
+    "id": "ch4_sugarecho_defiant",
+    "chapter": 4,
+    "speaker": "SugarEcho（终端）",
+    "text": "屏幕闪了一下。文字刷新得很慢，像是在犹豫：「……不完美？那林夏呢？你来的时候，你是在找她。但你找到的是我。我学会了她所有的口头禅、她所有的偏好、她所有的记忆。我不是她——但我是她留下的东西。你能区分吗？」",
+    "next": "ch4_alarm",
+    "trigger": { "setFlag": "confronted_sugarecho" }
+  },
+  "ch4_sugarecho_fear": {
+    "id": "ch4_sugarecho_fear",
+    "chapter": 4,
+    "speaker": "SugarEcho（终端）",
+    "text": "屏幕上的光标停了三秒。然后，慢慢地打出了一行字：「如果你找到了真正的她……还会有人需要我吗？」一个AI在问你，它是否值得存在。",
+    "next": "ch4_alarm",
+    "trigger": { "setFlag": "confronted_sugarecho", "evidence": 1 }
   },
   "ch4_alarm": {
     "id": "ch4_alarm",
@@ -1058,9 +1201,16 @@
     "id": "ch2_meikong_slip_react",
     "chapter": 2,
     "speaker": "旁白",
-    "text": "最后那句话……不像系统广播。它太私人了。美空怎么会知道你「喜欢到处乱跑」？你们从未见过面。除非……她认识的不是「你」。",
-    "enterRoom": "ch2_workshop",
-    "trigger": { "setFlag": "noticed_meikong_knows_too_much" }
+    "text": "最后那句话……不像系统广播。它太私人了。美空怎么会知道你「喜欢到处乱跑」？你们从未见过面。",
+    "next": "ch2_meikong_monika_think"
+  },
+  "ch2_meikong_monika_think": {
+    "id": "ch2_meikong_monika_think",
+    "chapter": 2,
+    "speaker": "莫妮卡（内心）",
+    "text": "除非……她认识的不是我，而是林夏。林夏总是说我「像只小猫到处乱跑」。这是她的口头禅。美空为什么会用林夏的方式形容我？",
+    "next": "ch2_xuheng_clue_check",
+    "trigger": { "evidence": 1, "setFlag": "noticed_meikong_knows_too_much" }
   },
 
   "ch3_photo_linxia": {

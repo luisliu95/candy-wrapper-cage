@@ -707,7 +707,7 @@ export const useGameStore = create<GameState>((set, get) => ({
       }
     }
 
-    set({ currentEnding: 'ending_trapped', phase: 'ending' });
+    set({ currentEnding: 'ending_perfect_double', phase: 'ending' });
   },
 
   showMessage: (msg: string) => set({ message: msg }),
