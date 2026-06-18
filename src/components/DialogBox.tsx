@@ -7,7 +7,7 @@ interface Props {
 }
 
 export default function DialogBox({ node }: Props) {
-  const { goToNode } = useGameStore();
+  const { goToNode, enterRoom } = useGameStore();
   const [displayText, setDisplayText] = useState('');
   const [isTyping, setIsTyping] = useState(true);
 
@@ -30,6 +30,9 @@ export default function DialogBox({ node }: Props) {
     return () => clearInterval(timer);
   }, [fullText]);
 
+  // 判断是否有可点击的下一步
+  const hasNextAction = !!(node.next || node.enterRoom);
+
   const handleClick = useCallback(() => {
     if (isTyping) {
       setDisplayText(fullText);
@@ -41,8 +44,11 @@ export default function DialogBox({ node }: Props) {
     // 跳转到下一节点
     if (node.next) {
       goToNode(node.next);
+    } else if (node.enterRoom) {
+      // 没有 next 但有 enterRoom —— 直接进入房间
+      enterRoom(node.enterRoom);
     }
-  }, [isTyping, fullText, node, goToNode]);
+  }, [isTyping, fullText, node, goToNode, enterRoom]);
 
   return (
     <div className="dialog-container" onClick={handleClick}>
@@ -52,7 +58,7 @@ export default function DialogBox({ node }: Props) {
           {displayText}
           {isTyping && <span className="typing-cursor" />}
         </div>
-        {!isTyping && !node.choices?.length && node.next && (
+        {!isTyping && !node.choices?.length && hasNextAction && (
           <div className="dialog-next">▼ 点击继续</div>
         )}
       </div>

@@ -1,7 +1,5 @@
 import { create } from 'zustand';
-import type { GamePhase, SaveData, StoryNode, StoryTrigger, Ending, EndingCondition, CraftRecipe, FakeMessage, Hotspot, Room, ExplorationMode } from '../types/game';
-
-const MODE_KEY = 'candy_wrapper_cage_mode';
+import type { GamePhase, SaveData, StoryNode, StoryTrigger, Ending, EndingCondition, CraftRecipe, FakeMessage, Hotspot, Room } from '../types/game';
 import storyData from '../data/dialogues.json';
 import roomsData from '../data/scenes.json';
 import itemsData from '../data/items.json';
@@ -14,7 +12,6 @@ const SAVE_KEY = 'candy_wrapper_cage_save';
 
 interface GameState {
   phase: GamePhase;
-  explorationMode: ExplorationMode;
   currentNode: string;
   currentRoom: string | null;
   currentPuzzle: string | null;
@@ -41,8 +38,6 @@ interface GameState {
   sugarEchoFlawOptions: { type: string; label: string }[];
 
   // Actions
-  setExplorationMode: (mode: ExplorationMode) => void;
-  getRoomPhase: () => 'room' | 'topdown';
   startGame: () => void;
   loadGame: () => boolean;
   saveGame: () => void;
@@ -93,7 +88,6 @@ interface GameState {
 
 export const useGameStore = create<GameState>((set, get) => ({
   phase: 'start',
-  explorationMode: (localStorage.getItem(MODE_KEY) as ExplorationMode) || 'control',
   currentNode: 'start',
   currentRoom: null,
   currentPuzzle: null,
@@ -114,21 +108,6 @@ export const useGameStore = create<GameState>((set, get) => ({
   currentFakeMessage: null,
   fakeMessageHistory: [],
   sugarEchoFlawOptions: [],
-
-  setExplorationMode: (mode: ExplorationMode) => {
-    localStorage.setItem(MODE_KEY, mode);
-    const s = get();
-    // 如果当前正在房间中，立即切换 phase
-    if (s.phase === 'room' || s.phase === 'topdown') {
-      set({ explorationMode: mode, phase: mode === 'control' ? 'topdown' : 'room' });
-    } else {
-      set({ explorationMode: mode });
-    }
-  },
-
-  getRoomPhase: () => {
-    return get().explorationMode === 'control' ? 'topdown' : 'room';
-  },
 
   startGame: () => {
     set({
@@ -162,7 +141,7 @@ export const useGameStore = create<GameState>((set, get) => ({
       if (!raw) return false;
       const save: SaveData = JSON.parse(raw);
       set({
-        phase: save.currentRoom ? get().getRoomPhase() : 'story',
+        phase: save.currentRoom ? 'topdown' : 'story',
         currentNode: save.currentNode,
         currentRoom: save.currentRoom,
         currentPuzzle: null,
@@ -230,7 +209,7 @@ export const useGameStore = create<GameState>((set, get) => ({
 
     // 进入房间（根据 explorationMode 选择 phase）
     if (node.enterRoom) {
-      set({ currentNode: nodeId, phase: get().getRoomPhase(), currentRoom: node.enterRoom, ...chapterUpdate });
+      set({ currentNode: nodeId, phase: 'topdown', currentRoom: node.enterRoom, ...chapterUpdate });
       return;
     }
 
@@ -245,7 +224,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   },
 
   enterRoom: (roomId: string) => {
-    set({ currentRoom: roomId, phase: get().getRoomPhase() });
+    set({ currentRoom: roomId, phase: 'topdown' });
   },
 
   exitRoom: () => {
@@ -278,7 +257,7 @@ export const useGameStore = create<GameState>((set, get) => ({
 
   closePuzzle: () => {
     const room = get().currentRoom;
-    set({ currentPuzzle: null, phase: room ? get().getRoomPhase() : 'story' });
+    set({ currentPuzzle: null, phase: room ? 'topdown' : 'story' });
   },
 
   addItem: (itemId: string) => {

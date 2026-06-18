@@ -1,7 +1,7 @@
 import { useGameStore } from '../store/gameStore';
 
 export default function StartScreen() {
-  const { startGame, loadGame, hasSave, explorationMode, setExplorationMode } = useGameStore();
+  const { startGame, loadGame, hasSave } = useGameStore();
 
   const handleContinue = () => {
     const success = loadGame();
@@ -24,23 +24,6 @@ export default function StartScreen() {
             ◆ 继续游戏
           </button>
         )}
-        <div className="mode-switcher">
-          <span className="mode-label">探索模式</span>
-          <div className="mode-buttons">
-            <button
-              className={`mode-btn ${explorationMode === 'control' ? 'active' : ''}`}
-              onClick={() => setExplorationMode('control')}
-            >
-              🎮 操纵
-            </button>
-            <button
-              className={`mode-btn ${explorationMode === 'click' ? 'active' : ''}`}
-              onClick={() => setExplorationMode('click')}
-            >
-              🖱️ 点击
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   );

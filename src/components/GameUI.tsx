@@ -3,7 +3,6 @@ import { useGameStore } from '../store/gameStore';
 import StatusBar from './StatusBar';
 import DialogBox from './DialogBox';
 import ChoicePanel from './ChoicePanel';
-import RoomExplorer from './RoomExplorer';
 import PhaserRoom from './PhaserRoom';
 import Inventory from './Inventory';
 import PuzzleModal from './PuzzleModal';
@@ -36,31 +35,16 @@ export default function GameUI() {
   const bgKey = node?.background || `ch${chapter}_dorm`;
   const bg = BG_MAP[bgKey] || BG_MAP[`ch${chapter}_dorm`] || BG_MAP['ch1_dorm'];
 
-  if (phase === 'ending') {
-    return <EndingScreen />;
-  }
-
-  if (phase === 'sugarecho') {
-    return <SugarEchoScreen />;
-  }
-
-  if (phase === 'leaflet') {
-    return <LeafletGame />;
-  }
+  if (phase === 'ending') return <EndingScreen />;
+  if (phase === 'sugarecho') return <SugarEchoScreen />;
+  if (phase === 'leaflet') return <LeafletGame />;
 
   return (
     <div className="game-container">
       <StatusBar />
-
       <div className="scene-area">
         <div className="scene-background" style={{ background: bg }} />
-
-        {/* Phaser 顶视角模式 */}
         {phase === 'topdown' && <PhaserRoom />}
-
-        {/* 原有点击热区模式（保留作 fallback） */}
-        {phase === 'room' && <RoomExplorer />}
-
         {phase === 'story' && node && (
           <>
             <DialogBox node={node} />
@@ -70,7 +54,6 @@ export default function GameUI() {
           </>
         )}
       </div>
-
       {currentPuzzle && <PuzzleModal />}
       <Inventory />
       {message && <div className="message-toast">{message}</div>}

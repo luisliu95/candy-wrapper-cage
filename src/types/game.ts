@@ -222,8 +222,5 @@ export interface LeafletResult {
   alertDelta: number;
 }
 
-/** 探索模式 */
-export type ExplorationMode = 'click' | 'control';
-
 /** 游戏阶段 */
-export type GamePhase = 'start' | 'story' | 'room' | 'topdown' | 'puzzle' | 'ending' | 'sugarecho' | 'leaflet';
+export type GamePhase = 'start' | 'story' | 'topdown' | 'puzzle' | 'ending' | 'sugarecho' | 'leaflet';

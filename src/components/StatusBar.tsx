@@ -3,14 +3,7 @@ import { useGameStore } from '../store/gameStore';
 const CHAPTER_NAMES = ['', '第一章 粉色宿舍', '第二章 传单工坊', '第三章 广播室', '第四章 服务器雨夜'];
 
 export default function StatusBar() {
-  const {
-    evidence, alert, trust_medusa, trust_xuheng, trust_qiaoqing,
-    chapter, saveGame, explorationMode, setExplorationMode
-  } = useGameStore();
-
-  const toggleMode = () => {
-    setExplorationMode(explorationMode === 'control' ? 'click' : 'control');
-  };
+  const { evidence, alert, trust_medusa, trust_xuheng, trust_qiaoqing, chapter, saveGame } = useGameStore();
 
   return (
     <div className="status-bar">
@@ -40,13 +33,6 @@ export default function StatusBar() {
         </div>
       </div>
       <div className="status-actions">
-        <button
-          className="pixel-btn btn-small"
-          onClick={toggleMode}
-          title={`当前：${explorationMode === 'control' ? '操纵模式' : '点击模式'}（点击切换）`}
-        >
-          {explorationMode === 'control' ? '🎮' : '🖱️'}
-        </button>
         <button className="pixel-btn btn-small" onClick={saveGame}>
           💾 存档
         </button>
