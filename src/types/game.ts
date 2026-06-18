@@ -91,6 +91,7 @@ export interface Hotspot {
   dialogueId?: string;
   examineCount?: number;
   multiDescriptions?: string[];
+  maxAlert?: number;            // 警戒值超过此值时不可交互
 }
 
 /** 物品 */
@@ -154,6 +155,7 @@ export interface EndingCondition {
   hasFlags?: string[];
   hasItem?: string;
   minMemoryFragments?: number; // 最少记忆碎片数量
+  minHighBondCount?: number;   // 至少几个NPC达到高羁绊(≥70)
 }
 
 /** 游戏存档 */
@@ -182,6 +184,11 @@ export interface FakeMessage {
   flaw: string;           // 漏洞类型 key
   flawHint: string;       // 玩家识破后看到的提示
   flawDetail: string;     // 技术层面的解释（SugarEcho 视角）
+  difficulty?: number;    // 识别难度 1-3（越高越难看出来），默认1
+  rewardMemory?: string;  // 识破成功后额外获得的记忆碎片 ID
+  rewardEvidence?: number; // 识破成功后额外证据（覆盖默认 +3）
+  echoNote?: string;      // SugarEcho 在手机状态栏的内心独白（气氛文案）
+  category?: 'punctuation' | 'preference' | 'official' | 'secret_code' | 'betrayal' | 'memory' | 'general';
 }
 
 /** 章节消息池 */
@@ -210,6 +217,9 @@ export interface SteganMethod {
   bonusRate: number;         // 物品加成百分点
   medusaHintThreshold: number;  // trust_medusa >= 此值时给提示
   medusaHint: string;        // 美杜莎的提示文本
+  qiaoBonusFlag?: string;    // 乔青高羁绊对应的 flag
+  qiaoBonusRate?: number;    // 乔青加成百分点
+  qiaoBonusHint?: string;    // 乔青加成提示文本
   scanPhases: string[];      // SugarEcho 扫描阶段描述（3段）
   successText: string;
   failText: string;
@@ -235,6 +245,56 @@ export interface MemoryFragment {
   quote: string;            // 莫妮卡的感悟引语
   evidenceBonus: number;    // 获得时额外 +evidence
   obtainedFrom: string;     // 获取来源说明
+}
+
+/** 警戒等级 */
+export type AlertLevel = 'low' | 'mid' | 'high';
+
+/** 计算警戒等级：0-39 低 / 40-69 中 / 70-100 高 */
+export function getAlertLevel(alert: number): AlertLevel {
+  if (alert >= 70) return 'high';
+  if (alert >= 40) return 'mid';
+  return 'low';
+}
+
+/** 警戒等级中文名 */
+export function getAlertLevelLabel(level: AlertLevel): string {
+  switch (level) {
+    case 'high': return '危险';
+    case 'mid': return '警惕';
+    case 'low': return '安全';
+  }
+}
+
+/** 美空广播文案（按警戒等级） */
+export function getMeikongBroadcast(level: AlertLevel): string {
+  switch (level) {
+    case 'low':
+      return '「各位甜心，今天的糖纸配额已更新。请保持微笑，享受甜蜜的每一天。」';
+    case 'mid':
+      return '「注意：部分区域已启动加强巡逻。请各位甜心留在指定区域，不要进行未授权活动。」';
+    case 'high':
+      return '「警告：检测到异常行为模式。安保协议已升级至二级。所有非必要通道将于10分钟内关闭。请配合检查。」';
+  }
+}
+
+/** NPC 羁绊等级 */
+export type BondLevel = 'low' | 'mid' | 'high';
+
+/** 计算羁绊等级：0-39 低 / 40-69 中 / 70-100 高 */
+export function getBondLevel(trust: number): BondLevel {
+  if (trust >= 70) return 'high';
+  if (trust >= 40) return 'mid';
+  return 'low';
+}
+
+/** 羁绊等级中文名 */
+export function getBondLevelLabel(level: BondLevel): string {
+  switch (level) {
+    case 'high': return '深厚';
+    case 'mid': return '信赖';
+    case 'low': return '疏离';
+  }
 }
 
 /** 游戏阶段 */

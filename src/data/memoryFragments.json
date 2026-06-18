@@ -60,6 +60,16 @@
     "obtainedFrom": "广播室 — 对比林夏的旧视频和美空的广播录音"
   },
   {
+    "id": "mem_meikong_slip",
+    "chapter": 3,
+    "title": "美空的真名",
+    "icon": "🔊",
+    "description": "美空的系统ID是 MK-01，人格数据源是 CW-0023——林夏的编号。美空不是一个程序，她是林夏的23%。那些不经意的停顿、温柔的失言，都是林夏的灵魂碎片在系统缝隙中挣扎。",
+    "quote": "「她一直在那里。在每一次广播的停顿里，在每一句不该说的话里。23%不足以活着——但足以记得。」",
+    "evidenceBonus": 3,
+    "obtainedFrom": "广播室照片墙 / 服务器MK-01日志 — 发现美空与林夏的关联"
+  },
+  {
     "id": "mem_echo_fear",
     "chapter": 4,
     "title": "SugarEcho 的恐惧",

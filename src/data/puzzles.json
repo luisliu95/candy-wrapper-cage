@@ -65,7 +65,7 @@
     "reward": {
       "addItem": "xuheng_notes",
       "evidence": 3,
-      "trust_xuheng": 2,
+      "trust_xuheng": 15,
       "setFlag": "solved_locker"
     },
     "maxAttempts": 3

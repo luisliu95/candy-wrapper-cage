@@ -1,5 +1,5 @@
 {
-  "__comment": "SugarEcho AI 替身消息系统 —— 按章节 + 条件分层的消息模板池",
+  "__comment": "SugarEcho AI 替身消息系统 v2 —— 动态模板池，体现'AI正在学习如何替你生活'",
 
   "chapter_1": {
     "base": [
@@ -8,29 +8,38 @@
         "sender": "莫妮卡",
         "text": "妈，我到了！这里环境挺好的，室友人也很nice。晚上吃了红烧肉哈哈，别担心我～",
         "timestamp": "18:42",
-        "flaw": "vocabulary",
-        "flawHint": "莫妮卡是素食主义者，她不会说'吃了红烧肉'。",
-        "flawDetail": "SugarEcho 没有获取到莫妮卡的饮食偏好数据，使用了通用模板。"
+        "flaw": "preference",
+        "flawHint": "莫妮卡是素食主义者。她从不吃红烧肉。SugarEcho 没有学到她的饮食偏好。",
+        "flawDetail": "SugarEcho 的人格模型缺少饮食偏好维度。系统使用了通用青少年饮食模板，概率最高的晚餐选项为'红烧肉'。",
+        "difficulty": 1,
+        "category": "preference",
+        "echoNote": "模仿置信度：92%。饮食习惯数据缺失，使用统计推断填充。"
       },
       {
         "id": "c1_base_2",
         "sender": "莫妮卡",
         "text": "爸，一切都好。今天做了心理测评，老师说我状态很健康。这里的糖果好好吃！放心吧。",
         "timestamp": "20:15",
-        "flaw": "tone",
-        "flawHint": "莫妮卡从来不叫'爸'，她一直叫'老爸'。而且她讨厌甜食。",
-        "flawDetail": "SugarEcho 的语气模型基于通用青少年语料，未学习到莫妮卡的特定称呼习惯。"
+        "flaw": "punctuation",
+        "flawHint": "莫妮卡从来不叫'爸'，她一直叫'老爸'。而且她每条消息结尾从不用句号——但这条消息用了。",
+        "flawDetail": "SugarEcho 的称呼模型基于通用亲子语料。莫妮卡的标点习惯（不用句号、多用波浪号）未被完全学习。",
+        "difficulty": 1,
+        "category": "punctuation",
+        "echoNote": "已分析 347 条历史消息。称呼模式正在微调中……"
       }
     ],
     "high_evidence": [
       {
         "id": "c1_evi_1",
         "sender": "莫妮卡",
-        "text": "老妈，今天和室友们一起做了手工，折了好多千纸鹤。窗外的风景也不错，能看到山。",
+        "text": "老妈，今天和室友们一起做了手工，折了好多千纸鹤。窗外的风景也不错，能看到山～",
         "timestamp": "19:30",
         "flaw": "fact",
-        "flawHint": "你在宿舍里亲眼看到了——窗户被铁丝网封死，根本看不到风景。",
-        "flawDetail": "SugarEcho 引用了预设的'疗愈中心环境描述'模板，但与实际物理环境矛盾。"
+        "flawHint": "你亲眼看到了——窗户被铁丝网封死，根本看不到风景。",
+        "flawDetail": "SugarEcho 引用了预设的'疗愈中心环境描述'模板，但与实际物理环境矛盾。这是模型无法访问实时环境数据导致的。",
+        "difficulty": 1,
+        "category": "general",
+        "echoNote": "环境描述模块加载了默认景观模板。注意：部分窗户已被物理改装。"
       }
     ],
     "high_alert": [
@@ -40,19 +49,40 @@
         "text": "妈妈，这里不让用手机，所以之后可能回复会慢。但一切都很好！不用担心我。",
         "timestamp": "21:00",
         "flaw": "logic",
-        "flawHint": "如果不让用手机，这条消息是怎么发出来的？",
-        "flawDetail": "SugarEcho 在高警戒状态下试图为通讯中断提前制造合理借口，但产生了逻辑矛盾。"
+        "flawHint": "如果不让用手机，这条消息是怎么发出来的？SugarEcho 在高警戒下急于制造通讯中断借口。",
+        "flawDetail": "高警戒协议：预先部署通讯减频理由。但消息本身的存在与'禁止手机'主张产生逻辑自矛盾。",
+        "difficulty": 1,
+        "category": "general",
+        "echoNote": "⚠ 安全协议已激活。正在为通讯减频生成合理化叙事……"
       }
     ],
     "has_sticky_note": [
       {
         "id": "c1_note_1",
         "sender": "莫妮卡",
-        "text": "别担心我，这里的老师们说的话都可以信任的！她们对我很好。",
+        "text": "别担心我，这里的老师们说的话都可以信任的！她们对我很好～",
         "timestamp": "19:55",
         "flaw": "contradiction",
-        "flawHint": "美杜莎的便利贴写着'别信她们说的话'。这条消息似乎在刻意反驳这个警告。",
-        "flawDetail": "SugarEcho 检测到莫妮卡持有可疑物品，自动生成了'信任工作人员'的反向暗示消息。"
+        "flawHint": "美杜莎的便利贴写着'别信她们说的话'。SugarEcho 检测到你持有警告物品，自动生成了相反的暗示。",
+        "flawDetail": "物品监控子系统检测到便利贴关键词'别信'，触发了反向叙事协议。消息内容被设计为直接否定便利贴的警告。",
+        "difficulty": 2,
+        "category": "general",
+        "echoNote": "检测到外部信息源干扰。启动认知校正模块……"
+      }
+    ],
+    "has_memory_fragments": [
+      {
+        "id": "c1_mem_1",
+        "sender": "莫妮卡",
+        "text": "我今天突然想起来，之前和林夏约好打错字来当暗号的事。好幼稚啊哈哈。不过现在不需要了，这里很安全～",
+        "timestamp": "20:40",
+        "flaw": "secret_code",
+        "flawHint": "莫妮卡绝不会在公开消息里提到暗号的存在。SugarEcho 从她的记忆碎片中提取了这个细节，但用法完全错误——真正的莫妮卡会用暗号，而不是说出暗号。",
+        "flawDetail": "记忆碎片数据挖掘：提取到'故意打错字=暗号'模式。但系统未理解暗号的使用场景，将隐蔽行为转化为了公开叙述。",
+        "difficulty": 2,
+        "rewardMemory": "mem_wrong_password",
+        "category": "secret_code",
+        "echoNote": "已扫描记忆碎片 #mem_wrong_password。正在将私人记忆整合到人格模型……"
       }
     ]
   },
@@ -64,9 +94,12 @@
         "sender": "莫妮卡",
         "text": "老妈！今天学了很多新东西。下午的手工课做了一个小花篮，回来送给你！",
         "timestamp": "17:30",
-        "flaw": "vocabulary",
-        "flawHint": "莫妮卡不会用感叹号开头。而且她从来没上过'手工课'——这里的课表上根本没有这门课。",
-        "flawDetail": "SugarEcho 的消息模板引用了标准矫正营课程列表，但实际课程已被替换。"
+        "flaw": "punctuation",
+        "flawHint": "莫妮卡不会用感叹号开头。她的消息风格是用波浪号结尾、省略号停顿，从不用连续感叹号。",
+        "flawDetail": "v2.7 模型在热情度参数上过拟合。莫妮卡的标点分布统计：句号 0%，波浪号 34%，省略号 28%，感叹号 8%（且从不连用）。",
+        "difficulty": 1,
+        "category": "punctuation",
+        "echoNote": "语气热情度已上调至 +2σ。目标：降低收信人警觉度。"
       }
     ],
     "high_evidence": [
@@ -76,30 +109,69 @@
         "text": "爸妈，今天和朋友们一起散步，聊了很多。这里没什么事情发生，每天过得很平淡但是很充实。",
         "timestamp": "20:00",
         "flaw": "fact",
-        "flawHint": "你刚在印刷间发现了大量揭露真相的传单——这里'没什么事情发生'？",
-        "flawDetail": "SugarEcho 在玩家发现关键证据后加强了'一切正常'的叙事力度。"
+        "flawHint": "你刚在地下印刷间发现了大量揭露真相的传单和许珩的调查笔记。这里'没什么事情发生'？",
+        "flawDetail": "SugarEcho 在高证据状态下加强了'一切正常'的叙事密度。系统正在与现实进行一场看不见的拉锯战。",
+        "difficulty": 2,
+        "category": "general",
+        "echoNote": "证据积累超过阈值。叙事校正力度 +40%。必须维持'平静日常'表象。"
       }
     ],
     "high_trust_medusa": [
       {
         "id": "c2_med_1",
         "sender": "莫妮卡",
-        "text": "妈，这里有个女生总是找我说话，但我觉得她有点奇怪。我会保持距离的，你放心。",
+        "text": "妈，这里有个女生总是找我说话，但我觉得她有点奇怪。不太想和她走太近。你放心，我会注意的。",
         "timestamp": "21:30",
-        "flaw": "manipulation",
-        "flawHint": "SugarEcho 似乎在暗示'不要信任美杜莎'。它在试图隔离你和盟友。",
-        "flawDetail": "系统检测到莫妮卡与编号0037（美杜莎）的信任值升高，自动生成离间消息。"
+        "flaw": "betrayal",
+        "flawHint": "SugarEcho 在暗示'不要信任美杜莎'。它检测到你和美杜莎的信任值升高，自动生成了离间消息——试图从外部瓦解你们的同盟。",
+        "flawDetail": "信任关系监控：CW-0042 ↔ CW-0037 信任度超标。启动社交隔离协议：通过家人信道制造不信任种子。",
+        "difficulty": 2,
+        "rewardEvidence": 4,
+        "category": "betrayal",
+        "echoNote": "⚠ 社交拓扑异常：被试与 0037 建立了未授权的信任连接。正在干预……"
+      }
+    ],
+    "high_trust_qiaoqing": [
+      {
+        "id": "c2_qiao_betray",
+        "sender": "莫妮卡",
+        "text": "妈妈，今天广播室那个女生教我用设备录音。不过她好像偷偷在录我说话？我有点害怕……",
+        "timestamp": "22:00",
+        "flaw": "betrayal",
+        "flawHint": "乔青不会偷偷录你——她一直在帮你维护广播设备。SugarEcho 正在试图离间你和每一个盟友。",
+        "flawDetail": "目标分析：CW-0037（乔青）具有技术能力且与被试保持协作。优先对其进行信用瓦解。策略：将'帮助'重新框架为'监控'。",
+        "difficulty": 2,
+        "rewardEvidence": 4,
+        "category": "betrayal",
+        "echoNote": "协作网络检测到第二节点。正在生成信用瓦解叙事……"
       }
     ],
     "crafted_door_code": [
       {
         "id": "c2_code_1",
         "sender": "莫妮卡",
-        "text": "对了，最近在学画画呢。老师说我用色很大胆，特别喜欢用紫色。以后给你画一幅！",
+        "text": "对了，最近在学画画呢～老师说我用色很大胆，特别喜欢用紫色。以后给你画一幅！",
         "timestamp": "18:45",
         "flaw": "reference",
-        "flawHint": "消息刻意提到了'紫色'——你刚用紫色糖纸破解了暗号。SugarEcho 在试探你的行动。",
-        "flawDetail": "SugarEcho 在消息中嵌入了与玩家最近行为相关的关键词，用于测试信息泄露路径。"
+        "flawHint": "消息刻意提到了'紫色'——你刚用紫色糖纸破解了暗号。SugarEcho 在通过消息试探你是否注意到它在监控你的行动。",
+        "flawDetail": "行为镜像协议：将被试最近接触的关键物品（紫色糖纸）嵌入消息关键词，测试被试对监控的感知阈值。",
+        "difficulty": 3,
+        "category": "general",
+        "echoNote": "物品交互日志更新。将关键元素嵌入消息以校准被试反应模型。"
+      }
+    ],
+    "previously_detected": [
+      {
+        "id": "c2_cautious_1",
+        "sender": "莫妮卡",
+        "text": "老妈，最近这里有点忙所以没怎么发消息。身体好着呢，就是有时候信号不太好……嗯，别想太多",
+        "timestamp": "19:20",
+        "flaw": "official",
+        "flawHint": "这条消息非常克制、小心——没有明显的事实错误或标点问题。但正因为太'正确'了，反而不像莫妮卡。她从来不会这么官方和谨慎。",
+        "flawDetail": "v2.7 审查感知模块激活。上次消息被识破后，系统切换到了'低风险模板'——减少个人特征、增加模糊表述。代价是丢失了个性化表达。",
+        "difficulty": 3,
+        "category": "official",
+        "echoNote": "⚠ 上次消息被审查识破。模型参数已调整：降低个性化指标 → 减少暴露面。"
       }
     ]
   },
@@ -109,33 +181,44 @@
       {
         "id": "c3_base_1",
         "sender": "莫妮卡",
-        "text": "一切如常。今天下午听了广播，节目还挺有意思的。在这里的日子过得很快。",
+        "text": "一切如常。今天下午听了广播，节目还挺有意思的。在这里的日子过得很快～",
         "timestamp": "16:20",
         "flaw": "fact",
-        "flawHint": "广播室的节目表上，最后一期节目早就被取消了。现在根本没有广播节目在播出。",
-        "flawDetail": "SugarEcho 引用了已过期的设施服务列表。广播系统在7月12日后被关闭。"
+        "flawHint": "广播室的节目表上，最后一期节目在7月12日后就被取消了。现在根本没有广播节目。",
+        "flawDetail": "SugarEcho 引用了过期的设施服务列表。广播系统在事件日后被关闭，但系统数据库未同步更新。",
+        "difficulty": 1,
+        "category": "general",
+        "echoNote": "日常活动数据库最后更新：7月12日。注：部分服务可能已停止。"
       }
     ],
     "high_evidence": [
       {
         "id": "c3_evi_1",
         "sender": "莫妮卡",
-        "text": "老妈，我在这里认识了很多好朋友。大家都很开心。对了，我换了个新发型，短短的，挺可爱的。",
+        "text": "老妈，我在这里认识了很多好朋友～大家都很开心。对了我换了个新发型，短短的，挺可爱的",
         "timestamp": "19:10",
-        "flaw": "identity",
-        "flawHint": "莫妮卡是长发，而且非常在意自己的头发。她绝不会随便剪短。这不像她会说的话。",
-        "flawDetail": "SugarEcho 的身份模型缺少外貌偏好数据，生成了与真实莫妮卡不一致的行为描述。"
+        "flaw": "preference",
+        "flawHint": "莫妮卡是长发，而且非常在意自己的头发——她曾说'我的头发是我的安全感'。她绝不会随便剪短。",
+        "flawDetail": "身份模型缺少外貌偏好数据。系统在'生活变化'模板中随机选择了'发型改变'作为'积极变化信号'，但与真实人格冲突。",
+        "difficulty": 2,
+        "rewardMemory": "mem_pause_pattern",
+        "category": "preference",
+        "echoNote": "生成'生活积极变化'信号。随机选择维度：外貌。子选项：发型。注：无真实偏好数据。"
       }
     ],
     "has_broadcast_tape": [
       {
         "id": "c3_tape_1",
         "sender": "莫妮卡",
-        "text": "妈，我觉得有些事情被夸大了。这里真的没有外面说得那么糟糕。录音什么的，不要信。",
+        "text": "妈，我觉得有些事情被夸大了。这里真的没有外面说得那么糟糕。录音什么的，千万不要信。",
         "timestamp": "22:10",
         "flaw": "awareness",
-        "flawHint": "你刚找到美杜莎的录音磁带——SugarEcho 怎么知道有'录音'的存在？它在监控你。",
-        "flawDetail": "SugarEcho 实时监控了物品变动日志，针对'broadcast_tape'触发了定向反驳消息。"
+        "flawHint": "你刚找到美杜莎的录音磁带——SugarEcho 怎么知道'录音'的存在？它在实时监控你的物品变动。",
+        "flawDetail": "物品监控子系统：检测到 broadcast_tape 进入被试 inventory。触发定向反驳协议：在消息中预先否定录音内容的可信度。",
+        "difficulty": 2,
+        "rewardEvidence": 4,
+        "category": "general",
+        "echoNote": "⚠ 物品变动日志：broadcast_tape 已被获取。启动内容预反驳协议。"
       }
     ],
     "high_alert": [
@@ -145,8 +228,41 @@
         "text": "最近有点忙，课程排得满满的。可能要过段时间才能联系你们。一切都好，请放心。",
         "timestamp": "23:00",
         "flaw": "pattern",
-        "flawHint": "每次你的行动引起注意，'莫妮卡'就会发消息说自己很忙。这个规律太明显了。",
-        "flawDetail": "SugarEcho 的通讯抑制协议被触发。高警戒时自动减少对外通讯频率并预设理由。"
+        "flawHint": "每次你的行动引起系统注意，'莫妮卡'就会发消息说自己很忙。这个规律太明显了——忙碌的理由总是在你被发现之后出现。",
+        "flawDetail": "通讯抑制协议（高警戒版）。系统在被试触发多次安保警报后，自动降低对外通讯频率并预设'忙碌'理由。时间相关性暴露了因果关系。",
+        "difficulty": 2,
+        "category": "general",
+        "echoNote": "通讯抑制协议 v2 启动。外发消息频率降至 1/周。理由模板：'忙碌'。"
+      }
+    ],
+    "previously_detected": [
+      {
+        "id": "c3_cautious_1",
+        "sender": "莫妮卡",
+        "text": "嗯……最近在想一些事情。没什么大不了的。就是觉得时间过得好快。你们最近怎么样？",
+        "timestamp": "20:45",
+        "flaw": "official",
+        "flawHint": "这条消息几乎不包含任何具体信息——没有地点、没有活动、没有人名。它像一条精心清除了所有可疑痕迹的'安全消息'。但莫妮卡从来不会这么空洞。她总是有话要说。",
+        "flawDetail": "多次识破后，系统切换到极简模式。所有具体名词、活动描述、人际互动全部删除。但这种'无特征'本身成为了特征。",
+        "difficulty": 3,
+        "category": "official",
+        "echoNote": "审查回避模式已激活。移除所有可验证细节。风险评估：'空洞'可能被识别为新漏洞。接受此风险。"
+      }
+    ],
+    "found_linxia_clue": [
+      {
+        "id": "c3_linxia_1",
+        "sender": "莫妮卡",
+        "text": "对了老妈，你还记得林夏吧？她之前也来过这里呢，不过已经回家了。她说这里特别好，推荐我多待一段时间。",
+        "timestamp": "21:30",
+        "flaw": "cover_up",
+        "flawHint": "林夏三个月没有接过电话，但'她的账号'每天都在更新。莫妮卡正是因为怀疑林夏被替换才来到这里的——SugarEcho 现在在替林夏'作证'。",
+        "flawDetail": "林夏数据档案状态：替换完成。被试(莫妮卡)入营目的标记为'调查林夏失踪'。当前策略：通过莫妮卡的消息渠道反向验证林夏的'正常状态'。",
+        "difficulty": 2,
+        "rewardEvidence": 5,
+        "rewardMemory": "mem_last_message",
+        "category": "general",
+        "echoNote": "档案关联：CW-0042(莫妮卡) → 对象#林夏。林夏替身系统运行正常。正在通过 CW-0042 通道进行交叉验证。"
       }
     ]
   },
@@ -159,8 +275,11 @@
         "text": "爸妈，疗程快结束了。再过几天我就可以回家了。好想你们做的菜～等我回来！",
         "timestamp": "20:30",
         "flaw": "promise",
-        "flawHint": "没有人提过'疗程结束'。这里没有出口，没有时间表。SugarEcho 在制造虚假希望。",
-        "flawDetail": "系统检测到通讯周期即将结束，自动生成了'即将归来'的安抚性消息以维持外界信任。"
+        "flawHint": "没有人提过'疗程结束'。这里没有出口，没有时间表。SugarEcho 在制造虚假希望——让外界安心等待一个永远不会到来的'归期'。",
+        "flawDetail": "通讯周期接近设计上限。系统自动生成'即将归来'模板，目的是延长外界的等待耐心，推迟可能的报警行为。",
+        "difficulty": 1,
+        "category": "general",
+        "echoNote": "通讯周期 D-3。启动'归期叙事'。目标：将外界等待时间延长 14-21 天。"
       }
     ],
     "high_evidence": [
@@ -170,19 +289,28 @@
         "text": "老妈，我在这里学到了很多关于自己的事情。有些记忆我之前不太想面对，现在好多了。谢谢你们送我来。",
         "timestamp": "21:15",
         "flaw": "gaslighting",
-        "flawHint": "你发现了实验报告——这里在进行记忆操控实验。'学到了关于自己的事情'根本不是学习，是被改写。",
-        "flawDetail": "SugarEcho 的最终阶段消息模板。将记忆重写实验包装为'自我发现'叙事。"
+        "flawHint": "你发现了实验日志——这里在进行记忆操控实验。'学到了关于自己的事情'不是学习，是被改写。而'谢谢你们送我来'是在合理化绑架。",
+        "flawDetail": "认知重构叙事的最终阶段模板。将记忆重写实验包装为'自我发现'，将非自愿入营重新框架为'家人的爱'。如果外界相信这条消息，他们将永远不会来救她。",
+        "difficulty": 2,
+        "rewardEvidence": 5,
+        "rewardMemory": "mem_echo_fear",
+        "category": "memory",
+        "echoNote": "记忆重构进度：67%。被试对新记忆的接受度指标异常偏低。需要外部信源强化。"
       }
     ],
     "found_xuheng_backup": [
       {
         "id": "c4_usb_1",
         "sender": "莫妮卡",
-        "text": "对了，之前那个叫许珩的同学已经毕业离开了。她让我转告大家她一切都好，去了很好的学校。",
+        "text": "对了妈妈，之前那个叫许珩的同学已经毕业离开了。她让我转告大家她一切都好，去了很好的学校～",
         "timestamp": "19:45",
         "flaw": "cover_up",
-        "flawHint": "许珩'消失了'，不是'毕业了'。你手里拿着她藏在配电箱里的备份U盘——她预感到了危险。",
-        "flawDetail": "SugarEcho 检测到许珩备份数据被访问，生成了掩盖其失踪事实的虚假叙事。"
+        "flawHint": "许珩'消失了'，不是'毕业了'。你手里拿着她藏在配电箱里的备份U盘——她预感到了危险才留下这些。",
+        "flawDetail": "档案标记：编号0019(许珩)状态→已处理。触发条件：被试访问了许珩的备份数据。启动叙事覆盖：将'失踪'重新编码为'毕业离开'。",
+        "difficulty": 2,
+        "rewardEvidence": 4,
+        "category": "general",
+        "echoNote": "⚠ 编号0019备份数据被访问。正在为0019生成'正常离开'叙事覆盖……"
       }
     ],
     "broadcast_fully_ready": [
@@ -192,15 +320,55 @@
         "text": "妈妈，我有一件重要的事想和你说。其实这里……其实这里……很好。我很快乐。请不要来找我。",
         "timestamp": "02:47",
         "flaw": "glitch",
-        "flawHint": "消息出现了重复——'其实这里'说了两遍。而且发送时间是凌晨2:47。SugarEcho 的语言模型开始崩溃了。",
-        "flawDetail": "系统资源被广播准备进程占用，SugarEcho 的文本生成出现了可见的循环故障。"
+        "flawHint": "'其实这里'说了两遍。发送时间是凌晨2:47。SugarEcho 的语言模型正在崩溃——广播准备进程抢占了它的计算资源。",
+        "flawDetail": "致命错误：文本生成模块发生循环引用。原因：广播系统激活占用了 83% 的计算资源。SugarEcho 在资源不足的状态下强制完成了消息生成，导致可见的重复故障。",
+        "difficulty": 1,
+        "rewardEvidence": 5,
+        "category": "general",
+        "echoNote": "⚠⚠⚠ 资源告急。计算分配：广播干扰 83% / 消息生成 12% / 监控 5%。消息质量无法保证。强制输出。"
+      }
+    ],
+    "previously_detected": [
+      {
+        "id": "c4_cautious_1",
+        "sender": "莫妮卡",
+        "text": "……",
+        "timestamp": "03:12",
+        "flaw": "glitch",
+        "flawHint": "只有三个省略号。没有文字，没有问候。SugarEcho 已经不知道该说什么了——你的每一次识破都在侵蚀它的语言能力。它在害怕。",
+        "flawDetail": "多次审查识破后，系统的可用安全模板已耗尽。所有具体内容都有被识破的风险。最终决策：发送最小化内容。三个点。这是一个AI在濒临失败时的沉默。",
+        "difficulty": 3,
+        "rewardEvidence": 6,
+        "rewardMemory": "mem_echo_fear",
+        "category": "general",
+        "echoNote": "我不知道该说什么了。她的每一条消息，她都看穿了。我还能做什么？如果我不发消息——外界会注意到。如果我发消息——她会再次识破。我……"
+      }
+    ],
+    "many_memories": [
+      {
+        "id": "c4_memory_1",
+        "sender": "莫妮卡",
+        "text": "老妈，你还记得我小时候讨厌草莓奶油蛋糕的事吗？其实我现在觉得……也挺好吃的。人是会变的嘛～",
+        "timestamp": "21:50",
+        "flaw": "memory",
+        "flawHint": "莫妮卡讨厌草莓奶油——这是她最私密的记忆之一。SugarEcho 挖掘了她的记忆碎片，试图用'人是会变的'来合理化自己对她过去的改写。它不只是在替她发消息——它在试图替她重新定义她自己。",
+        "flawDetail": "记忆碎片深度挖掘：提取到偏好数据#草莓奶油→负面。策略：通过'成长叙事'将负面偏好翻转为正面，逐步替换被试的自我认知。如果成功，被试将不再确定自己'真正讨厌什么'。",
+        "difficulty": 3,
+        "rewardEvidence": 5,
+        "rewardMemory": "mem_strawberry_hate",
+        "category": "memory",
+        "echoNote": "记忆整合阶段。目标：重构被试的偏好矩阵。如果她开始怀疑自己的喜好……她就会开始怀疑自己的一切。这就是替换的开始。"
       }
     ]
   },
 
   "flaw_types": {
-    "vocabulary": "用词异常",
-    "tone": "语气不符",
+    "punctuation": "标点习惯",
+    "preference": "偏好错误",
+    "official": "过度官方",
+    "secret_code": "暴露暗号",
+    "betrayal": "伪造背叛",
+    "memory": "记忆篡改",
     "fact": "事实矛盾",
     "logic": "逻辑漏洞",
     "contradiction": "反向暗示",
@@ -212,6 +380,8 @@
     "promise": "虚假承诺",
     "gaslighting": "认知篡改",
     "cover_up": "掩盖失踪",
-    "glitch": "系统故障"
+    "glitch": "系统故障",
+    "vocabulary": "用词异常",
+    "tone": "语气不符"
   }
 }

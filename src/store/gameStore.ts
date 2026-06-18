@@ -1,5 +1,11 @@
 import { create } from 'zustand';
-import type { GamePhase, SaveData, StoryNode, StoryTrigger, Ending, EndingCondition, CraftRecipe, FakeMessage, Hotspot, Room, MemoryFragment } from '../types/game';
+import type { GamePhase, SaveData, StoryNode, StoryTrigger, Ending, EndingCondition, CraftRecipe, FakeMessage, Hotspot, Room, MemoryFragment, BondLevel, AlertLevel } from '../types/game';
+import { getBondLevel, getAlertLevel } from '../types/game';
+
+/** 将值 clamp 到 [0, 100] */
+function clamp100(v: number): number {
+  return Math.max(0, Math.min(100, v));
+}
 import memoryData from '../data/memoryFragments.json';
 import storyData from '../data/dialogues.json';
 import roomsData from '../data/scenes.json';
@@ -7,7 +13,7 @@ import itemsData from '../data/items.json';
 import puzzlesData from '../data/puzzles.json';
 import endingsData from '../data/endings.json';
 import recipesData from '../data/recipes.json';
-import { selectFakeMessage, generateFlawOptions } from './sugarEchoEngine';
+import { selectFakeMessage, generateFlawOptions, getDetectionReward } from './sugarEchoEngine';
 
 const SAVE_KEY = 'candy_wrapper_cage_save';
 
@@ -90,6 +96,12 @@ interface GameState {
 
   getStoryNode: (id: string) => StoryNode | null;
   getCurrentNode: () => StoryNode | null;
+
+  // 羁绊等级
+  getBondLevels: () => { medusa: BondLevel; xuheng: BondLevel; qiaoqing: BondLevel };
+  getHighBondCount: () => number;
+  // 警戒等级
+  getAlertLevel: () => AlertLevel;
 }
 
 export const useGameStore = create<GameState>((set, get) => ({
@@ -334,16 +346,16 @@ export const useGameStore = create<GameState>((set, get) => ({
       updates.evidence = s.evidence + trigger.evidence;
     }
     if (trigger.alert) {
-      updates.alert = s.alert + trigger.alert;
+      updates.alert = clamp100(s.alert + trigger.alert);
     }
     if (trigger.trust_medusa) {
-      updates.trust_medusa = s.trust_medusa + trigger.trust_medusa;
+      updates.trust_medusa = clamp100(s.trust_medusa + trigger.trust_medusa);
     }
     if (trigger.trust_xuheng) {
-      updates.trust_xuheng = s.trust_xuheng + trigger.trust_xuheng;
+      updates.trust_xuheng = clamp100(s.trust_xuheng + trigger.trust_xuheng);
     }
     if (trigger.trust_qiaoqing) {
-      updates.trust_qiaoqing = s.trust_qiaoqing + trigger.trust_qiaoqing;
+      updates.trust_qiaoqing = clamp100(s.trust_qiaoqing + trigger.trust_qiaoqing);
     }
     if (trigger.setFlag) {
       const flags = [...(updates.flags || s.flags)];
@@ -490,6 +502,18 @@ export const useGameStore = create<GameState>((set, get) => ({
     const hotspot = room.hotspots.find(h => h.id === interactionId);
     if (!hotspot) return { handled: false, reason: 'hotspot_not_found' };
 
+    // 警戒值限制检查
+    if (hotspot.maxAlert !== undefined && s.alert > hotspot.maxAlert) {
+      // 高羁绊NPC可以抵消：任一NPC ≥ 70 时放宽限制 +15
+      const bondBonus = get().getHighBondCount() > 0 ? 15 : 0;
+      if (s.alert > hotspot.maxAlert + bondBonus) {
+        get().showMessage('⚠️ 警戒太高了，这里已经被加强监控……无法操作。');
+        return { handled: false, reason: 'alert_too_high' };
+      } else {
+        get().showMessage('🐍 多亏了同伴的掩护，你勉强可以操作这里。');
+      }
+    }
+
     // 前置条件检查
     if (hotspot.requireFlag && !s.flags.includes(hotspot.requireFlag)) {
       get().showMessage('还不能操作这里……也许需要先完成其他事情。');
@@ -550,18 +574,34 @@ export const useGameStore = create<GameState>((set, get) => ({
     // 检查本章是否已经触发过
     if (s.fakeMessageHistory.some(h => h.chapter === s.chapter)) return;
 
+    // 高警戒时，SugarEcho 反制：删除一点弱证据
+    if (s.alert >= 70) {
+      const loss = get().getHighBondCount() > 0 ? 1 : 2; // 有高羁绊NPC则减轻损失
+      const newEvidence = Math.max(0, s.evidence - loss);
+      if (newEvidence < s.evidence) {
+        set({ evidence: newEvidence });
+        get().showMessage(`🛡️ SugarEcho 反制：系统自动清除了部分可疑记录。证据 -${s.evidence - newEvidence}`);
+      }
+    }
+
+    // 重新读取最新状态（可能被上面的证据删除修改过）
+    const latest = get();
+    const detectedCount = latest.fakeMessageHistory.filter(h => h.detected).length;
+
     const msg = selectFakeMessage({
-      chapter: s.chapter,
-      evidence: s.evidence,
-      alert: s.alert,
-      trust_medusa: s.trust_medusa,
-      trust_xuheng: s.trust_xuheng,
-      trust_qiaoqing: s.trust_qiaoqing,
-      flags: s.flags,
-      inventory: s.inventory,
+      chapter: latest.chapter,
+      evidence: latest.evidence,
+      alert: latest.alert,
+      trust_medusa: latest.trust_medusa,
+      trust_xuheng: latest.trust_xuheng,
+      trust_qiaoqing: latest.trust_qiaoqing,
+      flags: latest.flags,
+      inventory: latest.inventory,
+      memoryFragments: latest.memoryFragments,
+      detectedCount,
     });
 
-    const options = generateFlawOptions(msg.flaw);
+    const options = generateFlawOptions(msg.flaw, msg.difficulty ?? 1);
 
     set({
       currentFakeMessage: msg,
@@ -582,8 +622,8 @@ export const useGameStore = create<GameState>((set, get) => ({
     }];
 
     if (correct) {
-      // 识破成功：+evidence，设置标记
-      const newEvidence = s.evidence + 3;
+      const reward = getDetectionReward(s.currentFakeMessage, history.filter(h => h.detected).length);
+      const newEvidence = s.evidence + reward.evidence;
       const flags = [...s.flags];
       const flagKey = `detected_echo_ch${s.chapter}`;
       if (!flags.includes(flagKey)) flags.push(flagKey);
@@ -593,15 +633,22 @@ export const useGameStore = create<GameState>((set, get) => ({
         evidence: newEvidence,
         flags,
         fakeMessageHistory: history,
-        message: `🔍 识破成功！SugarEcho 的伪装被你发现了。证据 +3`,
+        message: `🔍 识破成功！${reward.bonusText}`,
       });
+
+      // 识破后获得记忆碎片
+      if (reward.memoryId) {
+        setTimeout(() => get().addMemoryFragment(reward.memoryId!), 500);
+      }
     } else {
-      // 判断错误：+alert
-      const newAlert = s.alert + 2;
+      // 判断错误：+alert（难度越高惩罚越轻）
+      const difficulty = s.currentFakeMessage.difficulty ?? 1;
+      const alertPenalty = difficulty >= 3 ? 1 : 2;
+      const newAlert = clamp100(s.alert + alertPenalty);
       set({
         alert: newAlert,
         fakeMessageHistory: history,
-        message: `⚠️ 判断失误。SugarEcho 注意到了你的审查行为。警戒 +2`,
+        message: `⚠️ 判断失误。SugarEcho 注意到了你的审查行为。警戒 +${alertPenalty}`,
       });
     }
   },
@@ -652,6 +699,7 @@ export const useGameStore = create<GameState>((set, get) => ({
       }
       if (c.hasItem && !s.inventory.includes(c.hasItem)) match = false;
       if (c.minMemoryFragments !== undefined && s.memoryFragments.length < c.minMemoryFragments) match = false;
+      if (c.minHighBondCount !== undefined && get().getHighBondCount() < c.minHighBondCount) match = false;
 
       if (match) {
         set({ currentEnding: ending.id, phase: 'ending' });
@@ -671,5 +719,27 @@ export const useGameStore = create<GameState>((set, get) => ({
 
   getCurrentNode: () => {
     return (storyData as Record<string, StoryNode>)[get().currentNode] || null;
+  },
+
+  getBondLevels: () => {
+    const s = get();
+    return {
+      medusa: getBondLevel(s.trust_medusa),
+      xuheng: getBondLevel(s.trust_xuheng),
+      qiaoqing: getBondLevel(s.trust_qiaoqing),
+    };
+  },
+
+  getHighBondCount: () => {
+    const s = get();
+    let count = 0;
+    if (s.trust_medusa >= 70) count++;
+    if (s.trust_xuheng >= 70) count++;
+    if (s.trust_qiaoqing >= 70) count++;
+    return count;
+  },
+
+  getAlertLevel: () => {
+    return getAlertLevel(get().alert);
   },
 }));

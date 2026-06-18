@@ -20,7 +20,7 @@ const BG_MAP: Record<string, string> = {
 
 export default function GameUI() {
   const {
-    phase, currentPuzzle,
+    phase, currentPuzzle, alert,
     message, clearMessage, getCurrentNode, chapter
   } = useGameStore();
 
@@ -40,8 +40,10 @@ export default function GameUI() {
   if (phase === 'sugarecho') return <SugarEchoScreen />;
   if (phase === 'leaflet') return <LeafletGame />;
 
+  const alertClass = alert >= 70 ? 'alert-high' : alert >= 40 ? 'alert-mid' : '';
+
   return (
-    <div className="game-container">
+    <div className={`game-container ${alertClass}`}>
       <StatusBar />
       <div className="scene-area">
         <div className="scene-background" style={{ background: bg }} />

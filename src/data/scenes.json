@@ -116,6 +116,19 @@
         "requireFlag": "has_door_password"
       },
       {
+        "id": "ch1_speaker",
+        "x": 75, "y": 60, "w": 12, "h": 10,
+        "label": "走廊扬声器",
+        "icon": "🔊",
+        "description": "墙上的广播扬声器正在播放美空的声音。声音温柔、机械、一丝不苟。但当她说到「甜心」这个词时，你总觉得有一种奇怪的停顿——像在咽下什么不该说的话。",
+        "interactionType": "investigate",
+        "interactionRadius": 45,
+        "promptText": "听广播",
+        "spriteColor": 10066329,
+        "dialogueId": "ch1_meikong_broadcast",
+        "usedFlag": "heard_ch1_broadcast"
+      },
+      {
         "id": "ch1_door",
         "x": 92, "y": 32, "w": 7, "h": 30,
         "label": "宿舍门",
@@ -180,7 +193,8 @@
         "promptText": "输入密码",
         "spriteColor": 6710886,
         "blocked": true,
-        "puzzleId": "ch2_locker_puzzle"
+        "puzzleId": "ch2_locker_puzzle",
+        "maxAlert": 65
       },
       {
         "id": "ch2_wall_writing",
@@ -206,7 +220,7 @@
         "spriteColor": 8421504,
         "itemId": "qiaoqing_letter",
         "usedFlag": "picked_qiao_letter",
-        "trigger": { "evidence": 2, "trust_qiaoqing": 1 }
+        "trigger": { "evidence": 2, "trust_qiaoqing": 10 }
       },
       {
         "id": "ch2_torn_leaflet",
@@ -275,7 +289,7 @@
         "blocked": true,
         "itemId": "broadcast_tape",
         "usedFlag": "picked_tape",
-        "trigger": { "evidence": 2, "trust_medusa": 1, "setFlag": "has_broadcast_tape" }
+        "trigger": { "evidence": 2, "trust_medusa": 10, "setFlag": "has_broadcast_tape" }
       },
       {
         "id": "ch3_schedule",
@@ -301,19 +315,25 @@
         "spriteColor": 6706483,
         "itemId": "broadcast_script",
         "usedFlag": "picked_script",
-        "trigger": { "evidence": 3, "trust_medusa": 2 }
+        "trigger": { "evidence": 3, "trust_medusa": 15 }
       },
       {
         "id": "ch3_photo_wall",
         "x": 72, "y": 42, "w": 22, "h": 35,
         "label": "照片墙",
         "icon": "📷",
-        "description": "墙上钉着几张合影。三个女孩站在广播室前微笑——但其中一个人的脸被人用马克笔涂掉了。",
+        "description": "墙上钉着几张合影。三个女孩站在广播室前微笑——但其中一个人的脸被马克笔涂掉了。照片背面用铅笔写着：「林夏 · 许珩 · 乔青，7月10日」。被涂掉脸的是林夏。",
         "interactionType": "investigate",
         "interactionRadius": 50,
         "promptText": "查看照片",
         "spriteColor": 14540253,
-        "trigger": { "evidence": 1, "setFlag": "seen_defaced_photo" }
+        "dialogueId": "ch3_photo_linxia",
+        "usedFlag": "examined_photo_wall",
+        "trigger": { "evidence": 2, "setFlag": "seen_defaced_photo" },
+        "multiDescriptions": [
+          "三个女孩站在广播室前微笑——但其中一个人的脸被马克笔涂掉了。照片背面写着：「林夏 · 许珩 · 乔青，7月10日」。",
+          "你再看了一遍那张被涂掉脸的照片。林夏的身高和体型……和广播里美空声音的主人，看起来一样。"
+        ]
       }
     ],
     "exitTo": "ch3_exit_broadcast"
@@ -368,7 +388,8 @@
         "spriteColor": 8929314,
         "itemId": "admin_notebook",
         "usedFlag": "picked_admin_nb",
-        "trigger": { "evidence": 2, "alert": 1 }
+        "trigger": { "evidence": 2, "alert": 1 },
+        "maxAlert": 65
       },
       {
         "id": "ch4_breaker",
@@ -383,7 +404,23 @@
         "blocked": true,
         "itemId": "xuheng_usb",
         "usedFlag": "picked_usb",
-        "trigger": { "evidence": 2, "trust_xuheng": 2, "setFlag": "found_xuheng_backup" }
+        "trigger": { "evidence": 2, "trust_xuheng": 15, "setFlag": "found_xuheng_backup" },
+        "maxAlert": 60
+      },
+      {
+        "id": "ch4_meikong_log",
+        "x": 66, "y": 15, "w": 16, "h": 22,
+        "label": "标记为「MK-01」的日志终端",
+        "icon": "📟",
+        "description": "一台小型终端，屏幕上显示着一个项目代号：「MK-01 / 美空接口 / 人格源：CW-0023（林夏）」。下面滚动着数据流——美空的每一句广播、每一次巡逻指令，都来自这个终端。",
+        "interactionType": "investigate",
+        "interactionRadius": 50,
+        "promptText": "查看日志",
+        "spriteColor": 13395456,
+        "requireFlag": "unlocked_terminal",
+        "dialogueId": "ch4_meikong_truth",
+        "usedFlag": "read_meikong_log",
+        "trigger": { "evidence": 3, "setFlag": "discovered_meikong_origin" }
       },
       {
         "id": "ch4_exit_door",

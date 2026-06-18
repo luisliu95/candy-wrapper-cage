@@ -15,8 +15,8 @@ export default function PhaserRoom() {
   const gameRef = useRef<Phaser.Game | null>(null);
   const {
     currentRoom, exitRoom, addItem, applyTrigger, openPuzzle, goToNode,
-    isHotspotUsed, useHotspot, showMessage, hasItem, hasFlag,
-    incrementExamineCount, getHotspotExamineCount, triggerInteraction
+    isHotspotUsed, useHotspot, showMessage, hasItem, hasFlag, alert,
+    incrementExamineCount, getHotspotExamineCount, triggerInteraction, getHighBondCount
   } = useGameStore();
 
   // 当前交互中的热区
@@ -77,7 +77,14 @@ export default function PhaserRoom() {
 
   const isUsed = (h: Hotspot) => h.usedFlag ? isHotspotUsed(h.usedFlag) : false;
 
+  const isAlertLocked = (h: Hotspot): boolean => {
+    if (h.maxAlert === undefined) return false;
+    const bondBonus = getHighBondCount() > 0 ? 15 : 0;
+    return alert > h.maxAlert + bondBonus;
+  };
+
   const canInteract = (h: Hotspot): boolean => {
+    if (isAlertLocked(h)) return false;
     if (h.puzzleId) return true;
     if (h.usedFlag && isHotspotUsed(h.usedFlag)) return false;
     return true;
@@ -125,6 +132,12 @@ export default function PhaserRoom() {
                 {activeHotspot.trigger.alert && (
                   <span className="effect-tag alert">+{activeHotspot.trigger.alert} 警戒</span>
                 )}
+              </div>
+            )}
+            {isAlertLocked(activeHotspot) && (
+              <div className="hotspot-alert-locked">
+                ⚠️ 警戒过高，此处已被加强监控，无法操作
+                {getHighBondCount() > 0 && <span>（同伴正在努力掩护……）</span>}
               </div>
             )}
             <div className="hotspot-tooltip-actions">

@@ -9,8 +9,8 @@ const methods = methodsData as SteganMethod[];
 
 export default function LeafletGame() {
   const {
-    evidence, alert, trust_medusa, inventory, flags,
-    applyTrigger, showMessage, goToNode, hasItem
+    evidence, alert, trust_medusa, trust_qiaoqing, inventory, flags,
+    applyTrigger, showMessage, goToNode, hasItem, hasFlag
   } = useGameStore();
   const setPhase = useGameStore(s => s.phase === 'leaflet' ? true : false);
 
@@ -30,12 +30,18 @@ export default function LeafletGame() {
     if (m.bonusItem && hasItem(m.bonusItem)) {
       rate += m.bonusRate;
     }
+    // 乔青高羁绊加成
+    if (m.qiaoBonusFlag && flags.includes(m.qiaoBonusFlag) && m.qiaoBonusRate) {
+      rate += m.qiaoBonusRate;
+    }
     // 高证据时稍有加成（你更了解这个地方）
     if (evidence >= 8) rate += 5;
-    // 高警戒时降低（AI 更警惕）
-    if (alert >= 5) rate -= 10;
+    // 警戒等级影响成功率
+    if (alert >= 70) rate -= 25;       // 高警戒：-25%
+    else if (alert >= 40) rate -= 15;  // 中警戒：-15%
+    else if (alert >= 5) rate -= 5;    // 微警戒：-5%
     return Math.max(5, Math.min(95, rate));
-  }, [evidence, alert, hasItem]);
+  }, [evidence, alert, hasItem, flags]);
 
   // 制作进度动画
   useEffect(() => {
@@ -134,6 +140,13 @@ export default function LeafletGame() {
               <span className="effect-tag evidence">当前证据 {evidence}</span>
               <span className="effect-tag alert">当前警戒 {alert}</span>
             </div>
+            {alert >= 40 && (
+              <div className="leaflet-alert-warning">
+                ⚠️ {alert >= 70
+                  ? '高警戒状态！SugarEcho扫描强度极高，成功率大幅降低（-25%）'
+                  : '中警戒状态。SugarEcho已加强扫描，成功率降低（-15%）'}
+              </div>
+            )}
             <button className="pixel-btn" onClick={() => setStage('select')}>
               选择暗号方式 →
             </button>
@@ -189,6 +202,12 @@ export default function LeafletGame() {
                   {hasBonus && (
                     <div className="method-bonus">
                       ✦ 物品加成：成功率 +{m.bonusRate}%
+                    </div>
+                  )}
+                  {m.qiaoBonusFlag && flags.includes(m.qiaoBonusFlag) && m.qiaoBonusRate && (
+                    <div className="method-bonus" style={{ color: '#00ff88' }}>
+                      🎙️ 乔青加成：成功率 +{m.qiaoBonusRate}%
+                      {m.qiaoBonusHint && <div style={{ fontSize: '0.8em', opacity: 0.8 }}>{m.qiaoBonusHint}</div>}
                     </div>
                   )}
                   {hintAvailable && selected?.id === m.id && (

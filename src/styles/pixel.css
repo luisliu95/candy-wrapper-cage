@@ -2129,6 +2129,243 @@ body {
   color: var(--text-dim);
 }
 
+/* ===== 警戒等级 UI 效果 ===== */
+
+/* 状态栏警戒等级底色 */
+.status-bar.alert-level-mid {
+  border-bottom-color: var(--accent-orange);
+  background: linear-gradient(90deg, var(--bg-medium) 0%, rgba(255,170,0,0.08) 50%, var(--bg-medium) 100%);
+}
+
+.status-bar.alert-level-high {
+  border-bottom-color: var(--accent-red);
+  background: linear-gradient(90deg, var(--bg-medium) 0%, rgba(255,68,68,0.12) 50%, var(--bg-medium) 100%);
+  animation: alert-bar-pulse 2s ease-in-out infinite;
+}
+
+@keyframes alert-bar-pulse {
+  0%, 100% { background: linear-gradient(90deg, var(--bg-medium) 0%, rgba(255,68,68,0.08) 50%, var(--bg-medium) 100%); }
+  50% { background: linear-gradient(90deg, var(--bg-medium) 0%, rgba(255,68,68,0.18) 50%, var(--bg-medium) 100%); }
+}
+
+.alert-level-tag {
+  font-size: 9px;
+  padding: 1px 6px;
+  border: 1px solid;
+  margin-left: 4px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.alert-level-tag[data-level="mid"] {
+  border-color: var(--accent-orange);
+  color: var(--accent-orange);
+}
+
+.alert-level-tag[data-level="high"] {
+  border-color: var(--accent-red);
+  color: var(--accent-red);
+  animation: blink 1s infinite;
+}
+
+/* 游戏容器警戒滤镜 */
+.game-container.alert-mid .scene-background::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(255, 170, 0, 0.03);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.game-container.alert-high .scene-background::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(255, 0, 0, 0.06);
+  pointer-events: none;
+  z-index: 1;
+  animation: alert-vignette 3s ease-in-out infinite;
+}
+
+@keyframes alert-vignette {
+  0%, 100% { background: rgba(255, 0, 0, 0.04); }
+  50% { background: rgba(255, 0, 0, 0.08); }
+}
+
+/* 美空广播条 */
+.meikong-broadcast {
+  position: fixed;
+  top: 40px;
+  left: 0; right: 0;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 50;
+  font-size: 12px;
+  cursor: pointer;
+  animation: broadcast-slide-in 0.5s ease-out;
+}
+
+@keyframes broadcast-slide-in {
+  from { transform: translateY(-100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.meikong-broadcast.alert-mid {
+  background: rgba(255, 170, 0, 0.12);
+  border-bottom: 2px solid var(--accent-orange);
+  color: var(--accent-orange);
+}
+
+.meikong-broadcast.alert-high {
+  background: rgba(255, 68, 68, 0.15);
+  border-bottom: 2px solid var(--accent-red);
+  color: var(--accent-red);
+  animation: broadcast-slide-in 0.5s ease-out, alert-bar-pulse 2s 0.5s ease-in-out infinite;
+}
+
+.broadcast-icon {
+  font-size: 16px;
+}
+
+.broadcast-speaker {
+  font-weight: bold;
+  font-size: 11px;
+  padding: 1px 8px;
+  border: 1px solid currentColor;
+  white-space: nowrap;
+}
+
+.broadcast-text {
+  flex: 1;
+  line-height: 1.5;
+}
+
+/* 热区高警戒锁定提示 */
+.hotspot-alert-locked {
+  font-size: 11px;
+  color: var(--accent-red);
+  padding: 8px 10px;
+  margin-bottom: 12px;
+  border: 1px dashed rgba(255, 68, 68, 0.4);
+  background: rgba(255, 68, 68, 0.06);
+  line-height: 1.5;
+}
+
+.hotspot-alert-locked span {
+  display: block;
+  font-size: 10px;
+  color: var(--accent-green);
+  margin-top: 4px;
+}
+
+/* ===== SugarEcho 增强样式 ===== */
+
+/* SugarEcho 学习进度条 */
+.echo-learning-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  width: 200px;
+}
+
+.echo-learning-label {
+  font-size: 9px;
+  color: var(--accent-pink);
+  white-space: nowrap;
+}
+
+.echo-learning-track {
+  flex: 1;
+  height: 4px;
+  background: rgba(255, 107, 157, 0.15);
+  overflow: hidden;
+}
+
+.echo-learning-fill {
+  height: 100%;
+  background: var(--accent-pink);
+  transition: width 1s ease;
+}
+
+.echo-learning-pct {
+  font-size: 9px;
+  color: var(--accent-pink);
+  min-width: 28px;
+}
+
+/* SugarEcho 内心独白 */
+.echo-inner-note {
+  margin: 0 12px 12px;
+  padding: 8px 10px;
+  background: rgba(255, 107, 157, 0.06);
+  border: 1px solid rgba(255, 107, 157, 0.15);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.echo-inner-note:hover {
+  background: rgba(255, 107, 157, 0.1);
+}
+
+.echo-note-toggle {
+  font-size: 9px;
+  color: var(--accent-pink);
+  letter-spacing: 1px;
+}
+
+.echo-note-content {
+  font-size: 10px;
+  color: rgba(255, 107, 157, 0.7);
+  line-height: 1.6;
+  margin-top: 6px;
+  font-style: italic;
+  animation: echo-fade-in 0.3s ease-out;
+}
+
+/* 消息元信息区域 */
+.echo-message-meta {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.echo-diff-tag {
+  font-size: 9px;
+  padding: 2px 8px;
+  border: 1px solid;
+}
+
+.echo-category-tag {
+  font-size: 9px;
+  padding: 2px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-dim);
+}
+
+/* 审查难度警告 */
+.echo-inspect-warning {
+  font-size: 10px;
+  margin-top: 6px;
+  animation: blink 2s ease-in-out infinite;
+}
+
+/* 传单隐写警戒警告 */
+.leaflet-alert-warning {
+  font-size: 11px;
+  color: var(--accent-red);
+  padding: 8px 14px;
+  border: 1px solid rgba(255, 68, 68, 0.3);
+  background: rgba(255, 68, 68, 0.06);
+  line-height: 1.5;
+  max-width: 380px;
+  text-align: center;
+}
+
 /* 响应式 */
 @media (max-width: 600px) {
   .game-title {
