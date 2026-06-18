@@ -1,5 +1,6 @@
 import { create } from 'zustand';
-import type { GamePhase, SaveData, StoryNode, StoryTrigger, Ending, EndingCondition, CraftRecipe, FakeMessage, Hotspot, Room } from '../types/game';
+import type { GamePhase, SaveData, StoryNode, StoryTrigger, Ending, EndingCondition, CraftRecipe, FakeMessage, Hotspot, Room, MemoryFragment } from '../types/game';
+import memoryData from '../data/memoryFragments.json';
 import storyData from '../data/dialogues.json';
 import roomsData from '../data/scenes.json';
 import itemsData from '../data/items.json';
@@ -36,8 +37,13 @@ interface GameState {
   currentFakeMessage: FakeMessage | null;
   fakeMessageHistory: { chapter: number; messageId: string; detected: boolean }[];
   sugarEchoFlawOptions: { type: string; label: string }[];
+  // 记忆碎片
+  memoryFragments: string[];
 
   // Actions
+  addMemoryFragment: (memoryId: string) => void;
+  hasMemory: (memoryId: string) => boolean;
+  getMemoryCount: () => number;
   startGame: () => void;
   loadGame: () => boolean;
   saveGame: () => void;
@@ -108,6 +114,28 @@ export const useGameStore = create<GameState>((set, get) => ({
   currentFakeMessage: null,
   fakeMessageHistory: [],
   sugarEchoFlawOptions: [],
+  memoryFragments: [],
+
+  addMemoryFragment: (memoryId: string) => {
+    const s = get();
+    if (s.memoryFragments.includes(memoryId)) return;
+    const mem = (memoryData as MemoryFragment[]).find(m => m.id === memoryId);
+    const fragments = [...s.memoryFragments, memoryId];
+    const evidenceBonus = mem?.evidenceBonus || 0;
+    set({
+      memoryFragments: fragments,
+      evidence: s.evidence + evidenceBonus,
+      message: `🧠 记忆碎片：${mem?.title || memoryId}（证据 +${evidenceBonus}）`,
+    });
+  },
+
+  hasMemory: (memoryId: string) => {
+    return get().memoryFragments.includes(memoryId);
+  },
+
+  getMemoryCount: () => {
+    return get().memoryFragments.length;
+  },
 
   startGame: () => {
     set({
@@ -132,6 +160,7 @@ export const useGameStore = create<GameState>((set, get) => ({
       currentFakeMessage: null,
       fakeMessageHistory: [],
       sugarEchoFlawOptions: [],
+      memoryFragments: [],
     });
   },
 
@@ -156,6 +185,7 @@ export const useGameStore = create<GameState>((set, get) => ({
         flags: save.flags,
         usedHotspots: save.usedHotspots || [],
         hotspotExamineCount: (save as any).hotspotExamineCount || {},
+        memoryFragments: save.memoryFragments || [],
         message: '存档读取成功！',
         combineMode: false,
         combineSlots: [],
@@ -180,6 +210,7 @@ export const useGameStore = create<GameState>((set, get) => ({
       flags: [...s.flags],
       usedHotspots: [...s.usedHotspots],
       hotspotExamineCount: { ...s.hotspotExamineCount },
+      memoryFragments: [...s.memoryFragments],
       chapter: s.chapter,
       timestamp: Date.now(),
     };
@@ -332,6 +363,11 @@ export const useGameStore = create<GameState>((set, get) => ({
     }
 
     set(updates as any);
+
+    // 记忆碎片
+    if (trigger.addMemory) {
+      get().addMemoryFragment(trigger.addMemory);
+    }
 
     // SugarEcho 触发（需要在 set 之后，因为引擎读最新状态）
     if (trigger.triggerSugarEcho) {
@@ -615,6 +651,7 @@ export const useGameStore = create<GameState>((set, get) => ({
         }
       }
       if (c.hasItem && !s.inventory.includes(c.hasItem)) match = false;
+      if (c.minMemoryFragments !== undefined && s.memoryFragments.length < c.minMemoryFragments) match = false;
 
       if (match) {
         set({ currentEnding: ending.id, phase: 'ending' });

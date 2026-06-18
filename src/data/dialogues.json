@@ -152,8 +152,34 @@
     "chapter": 1,
     "speaker": "美杜莎",
     "text": "「走吧。有些东西你需要亲眼看看。地下室的印刷间——那里藏着她们不想让你知道的东西。」",
-    "next": "ch1_to_ch2",
+    "next": "ch1_medusa_trust_check",
     "trigger": { "setFlag": "medusa_joined" }
+  },
+  "ch1_medusa_trust_check": {
+    "id": "ch1_medusa_trust_check",
+    "chapter": 1,
+    "speaker": "美杜莎",
+    "text": "她停下脚步，回头看了你一眼。",
+    "choices": [
+      {
+        "text": "（美杜莎似乎想说什么——）",
+        "next": "ch1_medusa_bonus_hint",
+        "requireFlag": "discovered_echo_system",
+        "trigger": { "trust_medusa": 1 }
+      },
+      {
+        "text": "（跟上她的脚步）",
+        "next": "ch1_to_ch2"
+      }
+    ]
+  },
+  "ch1_medusa_bonus_hint": {
+    "id": "ch1_medusa_bonus_hint",
+    "chapter": 1,
+    "speaker": "美杜莎",
+    "text": "「你发现了 SugarEcho 的事？」她的语气突然变了。「……那就更要小心了。它在学习你的行为模式。别让它预测到你的下一步。」",
+    "next": "ch1_to_ch2",
+    "trigger": { "evidence": 2, "setFlag": "medusa_echo_warning" }
   },
   "ch1_to_ch2": {
     "id": "ch1_to_ch2",
@@ -268,8 +294,68 @@
     "chapter": 2,
     "speaker": "乔青",
     "text": "「广播室还能用——我一直偷偷维护着设备。如果你能找到美杜莎之前录的那盘磁带，也许我们能做点什么。」",
-    "next": "ch2_to_ch3",
+    "next": "ch2_alert_check",
     "trigger": { "setFlag": "qiaoqing_joined", "trust_qiaoqing": 1 }
+  },
+  "ch2_alert_check": {
+    "id": "ch2_alert_check",
+    "chapter": 2,
+    "speaker": "旁白",
+    "text": "你们准备前往广播室。但走廊里的气氛似乎有些不对劲。",
+    "choices": [
+      {
+        "text": "（走廊尽头传来脚步声——有人在巡逻）",
+        "next": "ch2_high_alert_event",
+        "requireFlag": "seen_monitor",
+        "trigger": { "alert": 1 }
+      },
+      {
+        "text": "（一切安静。继续前进。）",
+        "next": "ch2_xuheng_clue_check"
+      }
+    ]
+  },
+  "ch2_high_alert_event": {
+    "id": "ch2_high_alert_event",
+    "chapter": 2,
+    "speaker": "美杜莎",
+    "text": "美杜莎拉住你的手臂，示意你蹲下。「巡逻的频率变了……有人在加强监控。」她的声音压得很低。「是因为我们动了太多东西？」",
+    "next": "ch2_xuheng_clue_check",
+    "trigger": { "evidence": 1, "setFlag": "noticed_patrol" }
+  },
+  "ch2_xuheng_clue_check": {
+    "id": "ch2_xuheng_clue_check",
+    "chapter": 2,
+    "speaker": "旁白",
+    "text": "前往广播室的路上，美杜莎突然停下来。",
+    "choices": [
+      {
+        "text": "（美杜莎看着许珩的笔记，表情变了）",
+        "next": "ch2_xuheng_reveal",
+        "requireFlag": "solved_locker",
+        "trigger": { "trust_medusa": 1 }
+      },
+      {
+        "text": "（继续走向广播室）",
+        "next": "ch2_to_ch3"
+      }
+    ]
+  },
+  "ch2_xuheng_reveal": {
+    "id": "ch2_xuheng_reveal",
+    "chapter": 2,
+    "speaker": "美杜莎",
+    "text": "「这些笔记……许珩记录的比我想象的多得多。她甚至画出了整个'糖纸计划'的组织架构。」她的手在微微发抖。「这个人……比我们所有人都勇敢。」",
+    "next": "ch2_xuheng_reveal_2",
+    "trigger": { "evidence": 2, "trust_xuheng": 2 }
+  },
+  "ch2_xuheng_reveal_2": {
+    "id": "ch2_xuheng_reveal_2",
+    "chapter": 2,
+    "speaker": "美杜莎",
+    "text": "「笔记最后一页写着一个地址。如果我们能出去……也许可以找到她。」她把笔记本合上，塞回你的背包。",
+    "next": "ch2_to_ch3",
+    "trigger": { "setFlag": "xuheng_address_found", "trust_medusa": 1 }
   },
   "ch2_to_ch3": {
     "id": "ch2_to_ch3",
@@ -369,10 +455,80 @@
     "id": "ch3_to_ch4",
     "chapter": 3,
     "speaker": "旁白",
-    "text": "雷声在远处响起。雨点开始敲打铁皮屋顶。你们走下最后一段楼梯，空调的嗡鸣声越来越大。",
-    "next": "ch4_enter",
-    "background": "ch4_server",
+    "text": "雷声在远处响起。雨点开始敲打铁皮屋顶。",
+    "next": "ch3_before_descent",
     "trigger": { "triggerSugarEcho": true }
+  },
+  "ch3_before_descent": {
+    "id": "ch3_before_descent",
+    "chapter": 3,
+    "speaker": "旁白",
+    "text": "下楼之前，走廊里出现了短暂的沉默。三个人各怀心事。",
+    "choices": [
+      {
+        "text": "和美杜莎说说话",
+        "next": "ch3_talk_medusa_pre",
+        "trigger": { "trust_medusa": 1 }
+      },
+      {
+        "text": "和乔青说说话",
+        "next": "ch3_talk_qiao_pre",
+        "trigger": { "trust_qiaoqing": 1 }
+      },
+      {
+        "text": "一个人安静地想一想",
+        "next": "ch3_solo_reflect",
+        "trigger": { "evidence": 1 }
+      }
+    ]
+  },
+  "ch3_talk_medusa_pre": {
+    "id": "ch3_talk_medusa_pre",
+    "chapter": 3,
+    "speaker": "美杜莎",
+    "text": "「你知道为什么我叫自己美杜莎吗？」她看着窗外的雨。「因为在希腊神话里，美杜莎也是受害者。所有人只记得她的诅咒，没人问她为什么变成那样。」",
+    "next": "ch3_medusa_pre_2",
+    "trigger": { "trust_medusa": 1 }
+  },
+  "ch3_medusa_pre_2": {
+    "id": "ch3_medusa_pre_2",
+    "chapter": 3,
+    "speaker": "美杜莎",
+    "text": "「如果我们今晚能把真相传出去……也许以后没有人需要再给自己取一个假名字。」",
+    "next": "ch3_descent",
+    "trigger": { "setFlag": "medusa_opened_up" }
+  },
+  "ch3_talk_qiao_pre": {
+    "id": "ch3_talk_qiao_pre",
+    "chapter": 3,
+    "speaker": "乔青",
+    "text": "「我以前觉得声音是最脆弱的东西。说完就消失了，谁也抓不住。」她调了调眼镜。「但录音不一样。录下来的声音会变成证据。」",
+    "next": "ch3_qiao_pre_2",
+    "trigger": { "trust_qiaoqing": 1 }
+  },
+  "ch3_qiao_pre_2": {
+    "id": "ch3_qiao_pre_2",
+    "chapter": 3,
+    "speaker": "乔青",
+    "text": "「许珩用文字记录，美杜莎用声音记录。我呢……我负责让设备一直转着。」她笑了一下。「听起来很不起眼，但如果机器坏了，什么都留不下。」",
+    "next": "ch3_descent",
+    "trigger": { "setFlag": "qiao_opened_up" }
+  },
+  "ch3_solo_reflect": {
+    "id": "ch3_solo_reflect",
+    "chapter": 3,
+    "speaker": "旁白",
+    "text": "你靠在冰冷的墙上，整理脑海中的信息。SugarEcho 在替你发消息，许珩留下了证据后消失，这里的一切都用甜蜜包裹着什么不想被看到的东西。你越来越接近核心——但同时，核心也在靠近你。",
+    "next": "ch3_descent",
+    "trigger": { "evidence": 1, "setFlag": "reflected_alone" }
+  },
+  "ch3_descent": {
+    "id": "ch3_descent",
+    "chapter": 3,
+    "speaker": "旁白",
+    "text": "你们走下最后一段楼梯，空调的嗡鸣声越来越大。闪电的白光从缝隙中刺进来，又瞬间消失。",
+    "next": "ch4_enter",
+    "background": "ch4_server"
   },
 
   "ch4_enter": {
@@ -426,29 +582,35 @@
     "id": "ch4_final_choice",
     "chapter": 4,
     "speaker": "旁白",
-    "text": "警报声中，你面前有三条路。时间只够做一件事。",
+    "text": "警报声中，你面前有几条路。时间只够做一件事。你的选择，将决定糖纸牢笼的命运。",
     "choices": [
       {
-        "text": "启动广播，把真相传出去（需要磁带和广播稿）",
+        "text": "📡 启动广播，把真相传出去（需要磁带）",
         "next": "ending_check_broadcast",
         "require": "broadcast_tape",
         "trigger": { "evidence": 5, "alert": 2, "setFlag": "chose_broadcast" }
       },
       {
-        "text": "带着证据从紧急出口逃走",
+        "text": "🏃 带着证据从紧急出口逃走",
         "next": "ending_check_escape",
         "trigger": { "setFlag": "chose_escape" }
       },
       {
-        "text": "销毁服务器，让数据和这一切一起消失",
+        "text": "💥 销毁服务器，让数据和这一切一起消失",
         "next": "ending_check_destroy",
         "trigger": { "alert": 3, "setFlag": "chose_destroy" }
       },
       {
-        "text": "把U盘交给美杜莎，相信她会做出正确的决定",
+        "text": "🤝 把U盘交给美杜莎（需要U盘）",
         "next": "ending_check_trust",
         "require": "xuheng_usb",
         "trigger": { "trust_medusa": 3, "setFlag": "chose_trust_medusa" }
+      },
+      {
+        "text": "🔍 按照许珩笔记的地址去找她",
+        "next": "ending_check_xuheng",
+        "requireFlag": "xuheng_address_found",
+        "trigger": { "trust_xuheng": 3, "setFlag": "chose_find_xuheng" }
       }
     ]
   },
@@ -479,6 +641,13 @@
     "chapter": 4,
     "speaker": "旁白",
     "text": "你把U盘放在美杜莎手心。她低头看了看，然后紧紧握住。「我知道该怎么做。」",
+    "checkEnding": true
+  },
+  "ending_check_xuheng": {
+    "id": "ending_check_xuheng",
+    "chapter": 4,
+    "speaker": "旁白",
+    "text": "你没有选择广播，没有选择逃跑，也没有选择销毁。你选择了去找一个人——那个比所有人都早看到真相、然后消失在糖纸背后的人。许珩。",
     "checkEnding": true
   },
 

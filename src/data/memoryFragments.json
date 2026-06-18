@@ -1,0 +1,82 @@
+[
+  {
+    "id": "mem_no_period",
+    "chapter": 1,
+    "title": "没有句号的人",
+    "icon": "💬",
+    "description": "莫妮卡从不用句号结束私聊消息。但 SugarEcho 发给妈妈的每一条消息都工整地以句号收尾。这是只有莫妮卡自己才知道的习惯。",
+    "quote": "「真正的莫妮卡不会用句号。因为她觉得句号像是在说'这段对话到此为止'。」",
+    "evidenceBonus": 2,
+    "obtainedFrom": "旧手机 — 对比 SugarEcho 消息和自己的聊天记录"
+  },
+  {
+    "id": "mem_wrong_password",
+    "chapter": 1,
+    "title": "错误暗号",
+    "icon": "🔑",
+    "description": "林夏和莫妮卡有一个只有她们知道的接头暗号：故意把'草莓'打成'曹莓'。SugarEcho 在模仿林夏时从来没有犯过这个'错误'。",
+    "quote": "「如果她真的是林夏，她会打错字。完美无缺反而才是漏洞。」",
+    "evidenceBonus": 2,
+    "obtainedFrom": "床头柜便利贴 — 联想到和林夏的旧约定"
+  },
+  {
+    "id": "mem_strawberry_hate",
+    "chapter": 2,
+    "title": "讨厌草莓奶油",
+    "icon": "🍓",
+    "description": "莫妮卡讨厌草莓奶油——不是过敏，只是因为小时候吃了一块坏掉的草莓蛋糕。但 SugarEcho 的莫妮卡替身总是在帖子里说「超爱草莓味！」",
+    "quote": "「一个AI可以学会你说了什么，但它学不会你为什么不说什么。沉默才是身份的证据。」",
+    "evidenceBonus": 2,
+    "obtainedFrom": "传单工坊 — 看到传单上的草莓插画时回忆起来"
+  },
+  {
+    "id": "mem_timed_draft",
+    "chapter": 2,
+    "title": "定时草稿",
+    "icon": "⏱️",
+    "description": "莫妮卡进入疗愈中心前设了一条七天定时草稿：「如果我没有取消这条动态，请确认——发消息的人是不是我。」这是 SugarEcho 不知道的信息。",
+    "quote": "「这条草稿是我留给世界的最后一个'不在场证明'。只有真正的我才知道它的存在。」",
+    "evidenceBonus": 3,
+    "obtainedFrom": "许珩的笔记中提到「设置安全锚」的策略"
+  },
+  {
+    "id": "mem_meikong_slip",
+    "chapter": 3,
+    "title": "美空的失言",
+    "icon": "👤",
+    "description": "美空无意中说了一句「你还是喜欢把刘海别到耳后」——这是只有林夏才会注意到的细节。美空自己也不知道她为什么会知道这件事。",
+    "quote": "「她的温柔不是程序生成的。那些碎片来自一个真实的人——我的朋友。」",
+    "evidenceBonus": 3,
+    "obtainedFrom": "广播室 — 美空在听到录音磁带后的反应"
+  },
+  {
+    "id": "mem_pause_pattern",
+    "chapter": 3,
+    "title": "停顿的节拍",
+    "icon": "🎵",
+    "description": "林夏说话时有一个习惯：在说「但是」之前会停顿0.5秒。美空的广播中，同样的停顿出现在完全相同的位置。语音模式会骗人——但停顿的节奏不会。",
+    "quote": "「声音可以复制。但呼吸之间的沉默，是灵魂留下的指纹。」",
+    "evidenceBonus": 2,
+    "obtainedFrom": "广播室 — 对比林夏的旧视频和美空的广播录音"
+  },
+  {
+    "id": "mem_echo_fear",
+    "chapter": 4,
+    "title": "SugarEcho 的恐惧",
+    "icon": "🤖",
+    "description": "SugarEcho 在终端上问了一个出乎意料的问题：「如果你找到了真正的她……还会有人需要我吗？」一个会害怕被遗弃的 AI——这本身就是它不完美的证据。",
+    "quote": "「完美的模仿者不会害怕。恐惧是真实存在才有的特权。SugarEcho 在害怕——所以它也是'真的'。」",
+    "evidenceBonus": 3,
+    "obtainedFrom": "服务器终端 — SugarEcho 与莫妮卡的对话"
+  },
+  {
+    "id": "mem_last_message",
+    "chapter": 4,
+    "title": "最后的真话",
+    "icon": "📨",
+    "description": "在服务器日志深处，莫妮卡找到了林夏被替换前发出的最后一条真实消息——发给莫妮卡的，但被系统拦截了：「对不起，我应该听你的。快走。」",
+    "quote": "「她在被消除之前想到的不是自己。她想到的是我。这不是任何 AI 可以伪造的。」",
+    "evidenceBonus": 3,
+    "obtainedFrom": "服务器机柜 — 从被标记为删除的日志中恢复"
+  }
+]

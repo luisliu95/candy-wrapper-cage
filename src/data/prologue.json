@@ -1,0 +1,82 @@
+[
+  {
+    "id": "pro_1",
+    "bg": "city_night",
+    "bgColor": "#0a0a1e",
+    "icon": "🌙",
+    "speaker": null,
+    "text": "三个月前。",
+    "subtext": "城市边缘，深夜",
+    "duration": 4000
+  },
+  {
+    "id": "pro_2",
+    "bg": "phone_screen",
+    "bgColor": "#1a1a2e",
+    "icon": "📱",
+    "speaker": null,
+    "text": "莫妮卡刷到了「糖纸观察室」的最新更新。这是她和林夏一起做的甜品测评账号。",
+    "subtext": null,
+    "duration": 5000
+  },
+  {
+    "id": "pro_3",
+    "bg": "phone_post",
+    "bgColor": "#2a1a3e",
+    "icon": "📝",
+    "speaker": "莫妮卡（内心）",
+    "text": "林夏的帖子？不对。她从来不用感叹号开头。而且……她是素食主义者，为什么在推荐肉松面包？",
+    "subtext": "「！今天尝了超好吃的肉松贝果！推荐指数满分～」",
+    "duration": 7000
+  },
+  {
+    "id": "pro_4",
+    "bg": "calendar",
+    "bgColor": "#1e1e3e",
+    "icon": "📅",
+    "speaker": null,
+    "text": "林夏三个月没有接过电话。没有出现在任何线下聚会。但她的账号每天都在更新，语气和她一模一样。",
+    "subtext": "未接来电：林夏（×17）",
+    "duration": 6000
+  },
+  {
+    "id": "pro_5",
+    "bg": "email",
+    "bgColor": "#1a2a1a",
+    "icon": "✉️",
+    "speaker": null,
+    "text": "一封合作邀请函到达了莫妮卡的邮箱。发件人：甜味疗愈中心。和林夏当初收到的一模一样。",
+    "subtext": "「诚邀「糖纸观察室」参与为期7天的沉浸式疗愈体验……」",
+    "duration": 6000
+  },
+  {
+    "id": "pro_6",
+    "bg": "desk_lamp",
+    "bgColor": "#2a2a1a",
+    "icon": "💡",
+    "speaker": "莫妮卡（内心）",
+    "text": "如果我不去，就永远不知道林夏到底怎么了。那些帖子背后的人……是她吗？还是别的什么？",
+    "subtext": null,
+    "duration": 6000
+  },
+  {
+    "id": "pro_7",
+    "bg": "draft_post",
+    "bgColor": "#3a1a2e",
+    "icon": "⏱️",
+    "speaker": null,
+    "text": "莫妮卡设好了一条七天后自动发布的定时草稿。",
+    "subtext": "「如果我七天后没有取消这条动态，请确认——发消息的人是不是我。」",
+    "duration": 7000
+  },
+  {
+    "id": "pro_8",
+    "bg": "gate",
+    "bgColor": "#0a0a0a",
+    "icon": "🚪",
+    "speaker": null,
+    "text": "她关上手机，走进了甜味疗愈中心的大门。空气中弥漫着一股甜腻的味道。",
+    "subtext": "第七天开始倒计时。",
+    "duration": 5000
+  }
+]

@@ -1,12 +1,17 @@
 import { useGameStore } from '../store/gameStore';
 
 export default function StartScreen() {
-  const { startGame, loadGame, hasSave } = useGameStore();
+  const { loadGame, hasSave } = useGameStore();
+
+  const handleNewGame = () => {
+    // 新游戏先播放序章
+    useGameStore.setState({ phase: 'prologue' });
+  };
 
   const handleContinue = () => {
     const success = loadGame();
     if (!success) {
-      startGame();
+      handleNewGame();
     }
   };
 
@@ -16,7 +21,7 @@ export default function StartScreen() {
       <h1 className="game-title">糖纸牢笼</h1>
       <p className="game-subtitle">CANDY WRAPPER CAGE</p>
       <div className="start-menu">
-        <button className="pixel-btn" onClick={startGame}>
+        <button className="pixel-btn" onClick={handleNewGame}>
           ▶ 新游戏
         </button>
         {hasSave() && (

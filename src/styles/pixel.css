@@ -1826,6 +1826,309 @@ body {
   letter-spacing: 0.5px;
 }
 
+/* ===== 记忆碎片面板 ===== */
+.memory-toggle {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  z-index: 10;
+  font-size: 24px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.memory-panel {
+  position: fixed;
+  bottom: 76px;
+  left: 16px;
+  width: 320px;
+  max-height: 420px;
+  background: rgba(10, 10, 30, 0.97);
+  border: 3px solid var(--accent-cyan);
+  z-index: 12;
+  box-shadow:
+    inset -3px -3px 0 0 #0088aa,
+    4px 4px 0 0 rgba(0, 0, 0, 0.6),
+    0 0 20px rgba(0, 212, 255, 0.1);
+  overflow-y: auto;
+}
+
+.memory-panel-title {
+  padding: 10px 14px;
+  border-bottom: 2px solid var(--accent-cyan);
+  font-weight: bold;
+  color: var(--accent-cyan);
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.memory-counter {
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.memory-progress-bar {
+  margin: 8px 14px 4px;
+  height: 6px;
+  background: rgba(0, 212, 255, 0.1);
+}
+
+.memory-progress-fill {
+  height: 100%;
+  background: var(--accent-cyan);
+  transition: width 0.5s ease;
+}
+
+.memory-progress-hint {
+  padding: 0 14px 8px;
+  font-size: 9px;
+  color: var(--text-dim);
+}
+
+.memory-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  padding: 8px 14px;
+}
+
+.memory-cell {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  border: 2px solid rgba(0, 212, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.memory-cell.owned {
+  border-color: var(--accent-cyan);
+  background: rgba(0, 212, 255, 0.08);
+}
+
+.memory-cell.owned:hover {
+  background: rgba(0, 212, 255, 0.18);
+  box-shadow: 0 0 8px rgba(0, 212, 255, 0.3);
+}
+
+.memory-cell.active {
+  border-color: var(--text-primary);
+  background: rgba(255, 215, 0, 0.1);
+}
+
+.memory-cell.locked {
+  border-color: rgba(255, 255, 255, 0.08);
+  cursor: default;
+  opacity: 0.4;
+}
+
+.memory-cell-icon {
+  font-size: 20px;
+}
+
+.memory-cell-ch {
+  font-size: 8px;
+  color: var(--text-dim);
+}
+
+.memory-detail {
+  padding: 12px 14px;
+  border-top: 1px solid rgba(0, 212, 255, 0.15);
+  animation: prologue-sub-in 0.3s ease-out;
+}
+
+.memory-detail-title {
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--accent-cyan);
+  margin-bottom: 8px;
+}
+
+.memory-detail-desc {
+  font-size: 11px;
+  line-height: 1.7;
+  color: var(--text-white);
+  margin: 0 0 10px 0;
+}
+
+.memory-detail-quote {
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--accent-pink);
+  border-left: 2px solid var(--accent-pink);
+  padding: 6px 10px;
+  margin: 0 0 8px 0;
+  background: rgba(255, 107, 157, 0.05);
+  font-style: italic;
+}
+
+.memory-detail-from {
+  font-size: 9px;
+  color: var(--text-dim);
+}
+
+/* ===== 序章 ===== */
+.prologue-screen {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: background 0.6s ease;
+}
+
+.prologue-bg-effect {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+.prologue-bg-effect.city_night {
+  background:
+    radial-gradient(1px 1px at 20% 30%, #fff 50%, transparent 50%),
+    radial-gradient(1px 1px at 60% 70%, #fff 50%, transparent 50%),
+    radial-gradient(1px 1px at 80% 20%, #fff 50%, transparent 50%),
+    radial-gradient(1px 1px at 40% 80%, #fff 50%, transparent 50%),
+    radial-gradient(1px 1px at 10% 60%, #fff 50%, transparent 50%);
+}
+
+.prologue-bg-effect.phone_screen,
+.prologue-bg-effect.phone_post {
+  background: radial-gradient(ellipse at center, rgba(100,100,255,0.1) 0%, transparent 60%);
+}
+
+.prologue-bg-effect.email {
+  background: radial-gradient(ellipse at center, rgba(100,200,100,0.08) 0%, transparent 60%);
+}
+
+.prologue-bg-effect.desk_lamp {
+  background: radial-gradient(ellipse at 50% 40%, rgba(255,200,100,0.12) 0%, transparent 50%);
+}
+
+.prologue-bg-effect.draft_post {
+  background: radial-gradient(ellipse at center, rgba(255,100,150,0.1) 0%, transparent 60%);
+}
+
+.prologue-bg-effect.gate {
+  background: linear-gradient(180deg, transparent 60%, rgba(255,150,200,0.08) 100%);
+}
+
+.prologue-frame {
+  position: relative;
+  z-index: 2;
+  max-width: 520px;
+  padding: 0 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.prologue-fade-in {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.prologue-fade-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.prologue-fade-out {
+  opacity: 0;
+  transform: translateY(-12px);
+}
+
+.prologue-icon {
+  font-size: 40px;
+  margin-bottom: 4px;
+}
+
+.prologue-speaker {
+  font-size: 11px;
+  color: var(--accent-pink);
+  letter-spacing: 2px;
+  padding: 2px 14px;
+  border: 1px solid rgba(255,107,157,0.3);
+}
+
+.prologue-text {
+  font-size: 15px;
+  line-height: 2;
+  color: var(--text-white);
+}
+
+.prologue-subtext {
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--accent-cyan);
+  padding: 10px 16px;
+  border-left: 3px solid var(--accent-cyan);
+  background: rgba(0,212,255,0.06);
+  text-align: left;
+  max-width: 400px;
+  animation: prologue-sub-in 0.4s ease-out;
+}
+
+@keyframes prologue-sub-in {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.prologue-controls {
+  position: absolute;
+  bottom: 20px;
+  left: 0; right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+  z-index: 5;
+}
+
+.prologue-progress {
+  font-size: 10px;
+  color: rgba(255,255,255,0.25);
+}
+
+.prologue-hint {
+  font-size: 11px;
+  color: var(--text-dim);
+  animation: bounce-arrow 1.5s infinite;
+}
+
+.prologue-skip-btn {
+  font-family: var(--cn-font);
+  font-size: 10px;
+  padding: 4px 12px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.3);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.prologue-skip-btn:hover {
+  border-color: var(--text-dim);
+  color: var(--text-dim);
+}
+
 /* 响应式 */
 @media (max-width: 600px) {
   .game-title {

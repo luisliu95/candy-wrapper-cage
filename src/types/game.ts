@@ -36,8 +36,9 @@ export interface StoryTrigger {
   setFlag?: string;
   setFlags?: string[];    // 批量设置标记
   removeFlag?: string;
-  triggerSugarEcho?: boolean; // 触发 SugarEcho 消息审查
-  triggerLeaflet?: boolean;   // 触发传单隐写小游戏
+  triggerSugarEcho?: boolean;
+  triggerLeaflet?: boolean;
+  addMemory?: string;         // 获得记忆碎片 ID
 }
 
 /** 场景（房间） */
@@ -150,8 +151,9 @@ export interface EndingCondition {
   minTrustQiaoqing?: number;
   maxTrustQiaoqing?: number;
   hasFlag?: string;
-  hasFlags?: string[];    // 需要同时拥有多个标记
+  hasFlags?: string[];
   hasItem?: string;
+  minMemoryFragments?: number; // 最少记忆碎片数量
 }
 
 /** 游戏存档 */
@@ -166,6 +168,7 @@ export interface SaveData {
   trust_qiaoqing: number;
   flags: string[];
   usedHotspots: string[];
+  memoryFragments: string[];
   chapter: number;
   timestamp: number;
 }
@@ -222,5 +225,17 @@ export interface LeafletResult {
   alertDelta: number;
 }
 
+/** 私人记忆碎片 */
+export interface MemoryFragment {
+  id: string;
+  chapter: number;
+  title: string;
+  icon: string;
+  description: string;
+  quote: string;            // 莫妮卡的感悟引语
+  evidenceBonus: number;    // 获得时额外 +evidence
+  obtainedFrom: string;     // 获取来源说明
+}
+
 /** 游戏阶段 */
-export type GamePhase = 'start' | 'story' | 'topdown' | 'puzzle' | 'ending' | 'sugarecho' | 'leaflet';
+export type GamePhase = 'start' | 'prologue' | 'story' | 'topdown' | 'puzzle' | 'ending' | 'sugarecho' | 'leaflet';
