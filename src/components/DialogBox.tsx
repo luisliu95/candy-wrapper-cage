@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function DialogBox({ node, onTypingDone }: Props) {
-  const { goToNode, enterRoom } = useGameStore();
+  const { goToNode, enterRoom, playbackRate } = useGameStore();
   const [displayText, setDisplayText] = useState('');
   const [isTyping, setIsTyping] = useState(true);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -25,6 +25,7 @@ export default function DialogBox({ node, onTypingDone }: Props) {
     const tryPlay = (ext: string): Promise<HTMLAudioElement> => {
       const audio = new Audio(`/audio/dialogues/${node.id}.${ext}`);
       audio.volume = 0.8;
+      audio.playbackRate = playbackRate;
       return audio.play().then(() => audio);
     };
 
@@ -59,9 +60,9 @@ export default function DialogBox({ node, onTypingDone }: Props) {
       } else {
         setDisplayText(fullText.slice(0, i));
       }
-    }, 40);
+    }, Math.round(40 / playbackRate));
     return () => clearInterval(timer);
-  }, [fullText]);
+  }, [fullText, playbackRate]);
 
   // 判断是否有可点击的下一步
   const hasNextAction = !!(node.next || node.enterRoom);

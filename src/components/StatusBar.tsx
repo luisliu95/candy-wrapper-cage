@@ -16,8 +16,15 @@ const ALERT_COLORS: Record<string, string> = {
   high: '#ff4444',
 };
 
+const SPEED_OPTIONS = [
+  { label: '正常', value: 1.0 },
+  { label: '1.1倍', value: 1.1 },
+  { label: '1.2倍', value: 1.2 },
+  { label: '1.5倍', value: 1.5 },
+];
+
 export default function StatusBar() {
-  const { evidence, alert, trust_medusa, trust_xuheng, trust_qiaoqing, chapter, saveGame } = useGameStore();
+  const { evidence, alert, trust_medusa, trust_xuheng, trust_qiaoqing, chapter, saveGame, playbackRate, setPlaybackRate } = useGameStore();
   const [showBroadcast, setShowBroadcast] = useState(false);
   const [lastAlertLevel, setLastAlertLevel] = useState(() => getAlertLevel(alert));
 
@@ -77,6 +84,17 @@ export default function StatusBar() {
           </div>
         </div>
         <div className="status-actions">
+          <button
+            className="pixel-btn btn-small"
+            onClick={() => {
+              const idx = SPEED_OPTIONS.findIndex(s => s.value === playbackRate);
+              const next = SPEED_OPTIONS[(idx + 1) % SPEED_OPTIONS.length];
+              setPlaybackRate(next.value);
+            }}
+            title="对白语速"
+          >
+            ⏩ {SPEED_OPTIONS.find(s => s.value === playbackRate)?.label || '正常'}
+          </button>
           <button className="pixel-btn btn-small" onClick={saveGame}>
             💾 存档
           </button>

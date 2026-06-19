@@ -35,9 +35,7 @@ export default function StartScreen() {
 
   return (
     <div className="start-screen">
-      <div className="pixel-candy">🍬</div>
-      <h1 className="game-title">糖纸牢笼</h1>
-      <p className="game-subtitle">CANDY WRAPPER CAGE</p>
+      <img className="game-logo" src="/assets/name_logo.png" alt="糖纸牢笼" />
       <div className="start-menu">
         <button className="pixel-btn" onClick={handleNewGame}>
           ▶ 新游戏

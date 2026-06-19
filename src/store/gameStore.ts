@@ -45,6 +45,9 @@ interface GameState {
   sugarEchoFlawOptions: { type: string; label: string }[];
   // 记忆碎片
   memoryFragments: string[];
+  // 对白播放速率（1.0=正常，1.5=1.5倍速）
+  playbackRate: number;
+  setPlaybackRate: (rate: number) => void;
 
   // Actions
   addMemoryFragment: (memoryId: string) => void;
@@ -127,6 +130,8 @@ export const useGameStore = create<GameState>((set, get) => ({
   fakeMessageHistory: [],
   sugarEchoFlawOptions: [],
   memoryFragments: [],
+  playbackRate: 1.0,
+  setPlaybackRate: (rate: number) => set({ playbackRate: rate }),
 
   addMemoryFragment: (memoryId: string) => {
     const s = get();

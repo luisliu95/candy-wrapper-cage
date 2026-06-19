@@ -57,7 +57,7 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background: var(--bg-dark);
+  background: url('/assets/menu_background.png') center/cover no-repeat;
   position: relative;
   overflow: hidden;
 }
@@ -66,36 +66,18 @@ body {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(255, 215, 0, 0.03) 2px,
-      rgba(255, 215, 0, 0.03) 4px
-    );
+  background: rgba(0, 0, 0, 0.4);
   pointer-events: none;
 }
 
-.game-title {
-  font-family: var(--pixel-font);
-  font-size: 36px;
-  color: var(--text-primary);
-  text-shadow:
-    4px 4px 0 #b8860b,
-    8px 8px 0 rgba(0, 0, 0, 0.5);
-  margin-bottom: 8px;
+.game-logo {
+  width: 400px;
+  max-width: 60vw;
+  margin-bottom: 40px;
+  image-rendering: pixelated;
   animation: title-float 3s ease-in-out infinite;
-  letter-spacing: 4px;
-}
-
-.game-subtitle {
-  font-family: var(--pixel-font);
-  font-size: 10px;
-  color: var(--accent-pink);
-  letter-spacing: 3px;
-  margin-bottom: 60px;
-  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 1;
 }
 
 @keyframes title-float {
