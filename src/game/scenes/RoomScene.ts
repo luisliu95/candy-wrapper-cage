@@ -25,7 +25,7 @@ const DEFAULT_INTERACTION_RADIUS = 50;
 const DEFAULT_SPRITE_COLOR = 0x997755;
 const SPRITE_W = 140;
 const SPRITE_H = 260;
-const PLAYER_SCALE = 0.18; // 140*0.18≈25px 宽，260*0.18≈47px 高
+const PLAYER_SCALE = 0.25; // 140*0.18≈25px 宽，260*0.18≈47px 高
 const FRAME_COUNT = 4; // 每方向4帧
 
 interface EntityObj {

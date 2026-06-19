@@ -53,7 +53,7 @@
       },
       {
         "id": "ch1_old_phone",
-        "x": 24, "y": 41, "w": 5, "h": 12,
+        "x": 24, "y": 45, "w": 5, "h": 12,
         "label": "旧手机",
         "icon": "📱",
         "description": "床头柜上有一台旧手机，屏幕裂了一道缝。解锁后只有一个 app 可以打开——「SweetConnect」。",
@@ -100,7 +100,7 @@
       },
       {
         "id": "ch1_monitor",
-        "x": 64, "y": 9, "w": 11, "h": 33,
+        "x": 64, "y": 9, "w": 11, "h": 32,
         "label": "监控屏",
         "icon": "📺",
         "description": "墙上的 SugarEcho 监控屏，正在循环播放走廊和公共区域的画面。画面右上角写着「SugarEcho 监控系统 v2.7」。",
@@ -145,7 +145,7 @@
       },
       {
         "id": "ch1_door",
-        "x": 79, "y": 17, "w": 9, "h": 25,
+        "x": 79, "y": 17, "w": 9, "h": 24,
         "label": "宿舍门",
         "icon": "🚪",
         "description": "厚重的铁门，从外面上了电子锁。面板上的指示灯是红色的——门禁未解除。",
@@ -275,11 +275,22 @@
     "name": "广播室",
     "description": "封闭的广播室，设备陈旧但仍能运作。墙上贴着一张节目时间表，最后一期的标题被涂黑了。",
     "background": "linear-gradient(180deg, #1a1a3e 0%, #2d2d6b 30%, #1e1e5a 70%, #0a0a2e 100%)",
-    "playerSpawn": { "x": 50, "y": 80 },
+    "boundaries": [
+      { "x": 20, "y": 5, "w": 1, "h": 93 },
+      { "x": 21, "y": 95, "w": 49, "h": 2 },
+      { "x": 67, "y": 70, "w": 2, "h": 24 },
+      { "x": 69, "y": 70, "w": 27, "h": 3 },
+      { "x": 67, "y": 93, "w": 4, "h": 4 },
+      { "x": 65, "y": 28, "w": 2, "h": 2 },
+      { "x": 66, "y": 28, "w": 2, "h": 2 },
+      { "x": 85, "y": 4, "w": 1, "h": 68 },
+      { "x": 52, "y": 36, "w": 1, "h": 2 }
+    ],
+    "playerSpawn": { "x": 42, "y": 75 },
     "hotspots": [
       {
         "id": "ch3_console",
-        "x": 10, "y": 35, "w": 30, "h": 35,
+        "x": 21, "y": 11, "w": 31, "h": 49,
         "label": "广播控制台",
         "icon": "🎛️",
         "description": "布满灰尘的混音台和话筒。电源指示灯还在微微闪烁，也许还能用。",
@@ -293,7 +304,7 @@
       },
       {
         "id": "ch3_tape_shelf",
-        "x": 45, "y": 20, "w": 20, "h": 40,
+        "x": 53, "y": 11, "w": 10, "h": 34,
         "label": "磁带架",
         "icon": "📼",
         "description": "几十盒磁带整齐排列。大部分标签已经褪色，只有一盒写着「最后的广播 —— 美杜莎」。",
@@ -308,7 +319,7 @@
       },
       {
         "id": "ch3_schedule",
-        "x": 70, "y": 10, "w": 25, "h": 25,
+        "x": 68, "y": 11, "w": 17, "h": 25,
         "label": "节目表",
         "icon": "📋",
         "description": "时间表最后一行：「7月12日 22:00 —— 特别节目：真相。」后面用红笔写着：「已取消。」",
@@ -316,11 +327,13 @@
         "interactionRadius": 50,
         "promptText": "阅读节目表",
         "spriteColor": 13421721,
+        "blocked": true,
+        "usedFlag": "examined_schedule",
         "trigger": { "evidence": 2, "setFlag": "seen_schedule_0712" }
       },
       {
         "id": "ch3_drawer",
-        "x": 8, "y": 72, "w": 22, "h": 18,
+        "x": 22, "y": 76, "w": 12, "h": 19,
         "label": "控制台抽屉",
         "icon": "🗃️",
         "description": "抽屉里有一份手写稿，是美杜莎准备的广播稿。标题：「致所有被糖纸包裹的人。」",
@@ -328,13 +341,14 @@
         "interactionRadius": 45,
         "promptText": "打开抽屉",
         "spriteColor": 6706483,
+        "blocked": true,
         "itemId": "broadcast_script",
         "usedFlag": "picked_script",
         "trigger": { "evidence": 3, "trust_medusa": 15 }
       },
       {
         "id": "ch3_photo_wall",
-        "x": 72, "y": 42, "w": 22, "h": 35,
+        "x": 70, "y": 42, "w": 14, "h": 23,
         "label": "照片墙",
         "icon": "📷",
         "description": "墙上钉着几张合影。三个女孩站在广播室前微笑——但其中一个人的脸被马克笔涂掉了。照片背面用铅笔写着：「林夏 · 许珩 · 乔青，7月10日」。被涂掉脸的是林夏。",
@@ -342,6 +356,7 @@
         "interactionRadius": 50,
         "promptText": "查看照片",
         "spriteColor": 14540253,
+        "blocked": true,
         "dialogueId": "ch3_photo_linxia",
         "usedFlag": "examined_photo_wall",
         "trigger": { "evidence": 2, "setFlag": "seen_defaced_photo" },
@@ -360,11 +375,20 @@
     "name": "服务器雨夜",
     "description": "地下服务器机房。荧光灯忽明忽灭，空调嗡嗡作响。窗外暴雨如注，雷声隐约可闻。",
     "background": "linear-gradient(180deg, #0a0a1a 0%, #1a1a2e 30%, #0d0d2a 70%, #050510 100%)",
-    "playerSpawn": { "x": 50, "y": 85 },
+    "boundaries": [
+      { "x": 8, "y": 85, "w": 89, "h": 1 },
+      { "x": 88, "y": 60, "w": 1, "h": 25 },
+      { "x": 89, "y": 36, "w": 2, "h": 24 },
+      { "x": 90, "y": 5, "w": 2, "h": 30 },
+      { "x": 57, "y": 11, "w": 33, "h": 3 },
+      { "x": 10, "y": 12, "w": 47, "h": 1 },
+      { "x": 10, "y": 12, "w": 1, "h": 74 }
+    ],
+    "playerSpawn": { "x": 50, "y": 75 },
     "hotspots": [
       {
         "id": "ch4_terminal",
-        "x": 8, "y": 30, "w": 28, "h": 40,
+        "x": 18, "y": 26, "w": 20, "h": 31,
         "label": "主终端",
         "icon": "🖥️",
         "description": "服务器主控终端，屏幕上闪烁着登录提示。这里存储着所有的监控记录和通讯日志。",
@@ -377,7 +401,7 @@
       },
       {
         "id": "ch4_rack",
-        "x": 40, "y": 15, "w": 22, "h": 55,
+        "x": 45, "y": 21, "w": 11, "h": 53,
         "label": "服务器机柜",
         "icon": "🗄️",
         "description": "机柜标签写着「CANDY-SRV-07」。第七层的硬盘指示灯异常闪烁——那里存着7月12日的数据。",
@@ -393,7 +417,7 @@
       },
       {
         "id": "ch4_notebook",
-        "x": 66, "y": 45, "w": 18, "h": 25,
+        "x": 65, "y": 61, "w": 14, "h": 18,
         "label": "管理员笔记本",
         "icon": "📕",
         "description": "一本翻旧的笔记本。最后一页写着：「系统会在凌晨3点自动清除日志。他们什么都想删掉。」",
@@ -401,6 +425,7 @@
         "interactionRadius": 45,
         "promptText": "翻阅笔记",
         "spriteColor": 8929314,
+        "blocked": true,
         "itemId": "admin_notebook",
         "usedFlag": "picked_admin_nb",
         "trigger": { "evidence": 2, "alert": 1 },
@@ -408,7 +433,7 @@
       },
       {
         "id": "ch4_breaker",
-        "x": 88, "y": 25, "w": 10, "h": 30,
+        "x": 14, "y": 69, "w": 5, "h": 17,
         "label": "配电箱",
         "icon": "⚡",
         "description": "配电箱的门虚掩着。里面除了开关，还藏着一个U盘，上面贴着标签：「备份 —— 许珩」。",
@@ -424,7 +449,7 @@
       },
       {
         "id": "ch4_meikong_log",
-        "x": 66, "y": 15, "w": 16, "h": 22,
+        "x": 67, "y": 13, "w": 15, "h": 20,
         "label": "标记为「MK-01」的日志终端",
         "icon": "📟",
         "description": "一台小型终端，屏幕上显示着一个项目代号：「MK-01 / 美空接口 / 人格源：CW-0023（林夏）」。下面滚动着数据流——美空的每一句广播、每一次巡逻指令，都来自这个终端。",
@@ -432,6 +457,7 @@
         "interactionRadius": 50,
         "promptText": "查看日志",
         "spriteColor": 13395456,
+        "blocked": true,
         "requireFlag": "unlocked_terminal",
         "dialogueId": "ch4_meikong_truth",
         "usedFlag": "read_meikong_log",
@@ -439,7 +465,7 @@
       },
       {
         "id": "ch4_exit_door",
-        "x": 3, "y": 70, "w": 15, "h": 22,
+        "x": 82, "y": 11, "w": 9, "h": 25,
         "label": "紧急出口",
         "icon": "🚪",
         "description": "通往地面的紧急出口。门上的电子锁还在运作——也许终端里能找到解锁密码。",
