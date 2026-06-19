@@ -5,44 +5,58 @@
     "id": "start",
     "chapter": 1,
     "speaker": "旁白",
-    "text": "你在一阵刺鼻的甜味中醒来。粉色的天花板，粉色的墙壁。这是一间四人宿舍，但只有你一个人。",
+    "text": "你在一阵刺鼻的甜味中醒来。粉色的天花板，粉色的墙壁。这是昨天美空带你来的宿舍。",
     "next": "ch1_wake_2",
     "background": "ch1_dorm"
   },
   "ch1_wake_2": {
     "id": "ch1_wake_2",
     "chapter": 1,
-    "speaker": "旁白",
-    "text": "你的手腕上系着一条糖纸编的手环，上面写着一个编号：「CW-0042」。你不记得自己是怎么来到这里的。",
-    "next": "ch1_wake_remember"
-  },
-  "ch1_wake_remember": {
-    "id": "ch1_wake_remember",
-    "chapter": 1,
-    "speaker": "旁白",
-    "text": "不……你记得一些。你叫莫妮卡。你和林夏一起运营一个叫「糖纸观察室」的甜品测评账号。三个月前林夏参加了某个「疗愈体验」后失踪了——但她的账号每天都在更新，语气和她一模一样。",
-    "next": "ch1_wake_remember_2"
-  },
-  "ch1_wake_remember_2": {
-    "id": "ch1_wake_remember_2",
-    "chapter": 1,
     "speaker": "莫妮卡（内心）",
-    "text": "「我是自愿来的。我要找到林夏……或者找到她消失的真相。」你攥紧了手腕上的糖纸手环。邀请函上写的是七天体验。今天是第一天。",
-    "next": "ch1_wake_3",
-    "trigger": { "setFlag": "remembered_purpose", "addMemory": "mem_no_period" }
+    "text": "感官放松课程……之后的事，完全想不起来。我什么时候睡着的？",
+    "next": "ch1_wake_3"
   },
   "ch1_wake_3": {
     "id": "ch1_wake_3",
     "chapter": 1,
-    "speaker": "系统",
-    "text": "「欢迎回来，0042号甜心。今日任务已更新，请前往公共区域领取糖纸配额。」",
+    "speaker": "旁白",
+    "text": "你的手腕上多了一条糖纸编的手环，编号「CW-0042」。这不是登记时给你的东西。",
     "next": "ch1_wake_4"
   },
   "ch1_wake_4": {
     "id": "ch1_wake_4",
     "chapter": 1,
     "speaker": "旁白",
-    "text": "广播的声音冰冷而甜腻。你觉得这一切不对劲——也许该先看看房间里有什么线索。",
+    "text": "门——从外面锁住了。你试了一下把手，纹丝不动。旁边有一个电子密码面板。",
+    "next": "ch1_wake_5"
+  },
+  "ch1_wake_5": {
+    "id": "ch1_wake_5",
+    "chapter": 1,
+    "speaker": "莫妮卡（内心）",
+    "text": "「这事有点怪。我是自愿来参加七天体验的——为什么门会从外面锁上？」",
+    "next": "ch1_wake_6"
+  },
+  "ch1_wake_6": {
+    "id": "ch1_wake_6",
+    "chapter": 1,
+    "speaker": "旁白",
+    "text": "桌上的旧手机亮了一下。屏幕上有一条新通知——似乎有人替你发送了消息。",
+    "next": "ch1_wake_7",
+    "trigger": { "setFlag": "remembered_purpose", "addMemory": "mem_no_period" }
+  },
+  "ch1_wake_7": {
+    "id": "ch1_wake_7",
+    "chapter": 1,
+    "speaker": "系统",
+    "text": "「欢迎回来，0042号甜心。今日任务已更新，请前往公共区域领取糖纸配额。」",
+    "next": "ch1_wake_8"
+  },
+  "ch1_wake_8": {
+    "id": "ch1_wake_8",
+    "chapter": 1,
+    "speaker": "莫妮卡（内心）",
+    "text": "「别急，我记一下。门被锁了。手机替我发了消息。课程之后的记忆断片。——先确认谁在替我发消息，然后想办法离开这里。」",
     "enterRoom": "ch1_dorm"
   },
 
@@ -50,28 +64,29 @@
     "id": "ch1_phone_echo",
     "chapter": 1,
     "speaker": "旁白",
-    "text": "手机屏幕上显示着一条「莫妮卡」发给妈妈的消息：「妈，我到了！环境挺好的，别担心我～」发送时间是昨天 18:42。",
-    "next": "ch1_phone_echo_2"
+    "text": "手机屏幕上显示着一条以「莫妮卡」名义发给阿岚的消息。发送时间是昨天 22:17——你已经失去意识的时候。",
+    "next": "ch1_phone_echo_msg"
   },
-  "ch1_phone_echo_2": {
-    "id": "ch1_phone_echo_2",
+  "ch1_phone_echo_msg": {
+    "id": "ch1_phone_echo_msg",
     "chapter": 1,
     "speaker": "旁白",
-    "text": "但你不记得发过这条消息。你甚至不记得昨天发生了什么。这条消息……是谁替你发的？",
-    "next": "ch1_phone_linxia_check"
+    "text": "消息内容：「我今天很好，吃到了薄荷巧克力慕斯，意外地喜欢。晚点再回你。」",
+    "next": "ch1_phone_echo_react"
   },
-  "ch1_phone_linxia_check": {
-    "id": "ch1_phone_linxia_check",
-    "chapter": 1,
-    "speaker": "旁白",
-    "text": "你翻到了「糖纸观察室」的账号页面。林夏的头像还亮着在线状态。最新一条动态是昨天发的，配图是一杯草莓奶昔，文案写着：「超爱草莓味！每天都想喝～」",
-    "next": "ch1_phone_linxia_react"
-  },
-  "ch1_phone_linxia_react": {
-    "id": "ch1_phone_linxia_react",
+  "ch1_phone_echo_react": {
+    "id": "ch1_phone_echo_react",
     "chapter": 1,
     "speaker": "莫妮卡（内心）",
-    "text": "林夏讨厌草莓。她从来不喝草莓味的任何东西。这条动态……不是她发的。但语气完美地模仿了她的风格——除了这一个偏好错误。正是这个错误让你来到了这里。",
+    "text": "薄荷巧克力？我最讨厌的东西。我绝对不会说「意外地喜欢」——这不是我发的。",
+    "next": "ch1_phone_echo_react_2",
+    "trigger": { "evidence": 2, "setFlag": "noticed_first_fake_msg" }
+  },
+  "ch1_phone_echo_react_2": {
+    "id": "ch1_phone_echo_react_2",
+    "chapter": 1,
+    "speaker": "莫妮卡（内心）",
+    "text": "而且——没有窗边照片，没有「到了」。这不是我和阿岚的方式。是谁在冒充我？",
     "next": "ch1_phone_echo_3",
     "trigger": { "evidence": 1, "addMemory": "mem_wrong_password", "setFlag": "noticed_linxia_fake_post" }
   },
@@ -80,8 +95,16 @@
     "chapter": 1,
     "speaker": "系统",
     "text": "「SweetConnect 提示：为保护您的隐私，本设备已限制外部通讯功能。所有消息将由 SugarEcho 系统代为管理。」",
-    "enterRoom": "ch1_dorm",
+    "next": "ch1_phone_echo_4",
     "trigger": { "evidence": 1, "alert": 1, "setFlag": "discovered_echo_system" }
+  },
+  "ch1_phone_echo_4": {
+    "id": "ch1_phone_echo_4",
+    "chapter": 1,
+    "speaker": "莫妮卡（内心）",
+    "text": "SugarEcho……所以是系统在替我发消息。它知道我的联系人，但不知道我讨厌薄荷巧克力。这就是线索。",
+    "enterRoom": "ch1_dorm",
+    "trigger": { "addMemory": "mem_no_period" }
   },
 
   "ch1_drawer_opened": {

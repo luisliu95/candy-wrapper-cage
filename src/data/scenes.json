@@ -51,6 +51,7 @@
         "interactionRadius": 40,
         "promptText": "查看手机",
         "spriteColor": 4473924,
+        "blocked": true,
         "dialogueId": "ch1_phone_echo",
         "usedFlag": "checked_old_phone",
         "trigger": { "evidence": 2, "setFlag": "seen_sugar_echo_msg" }
@@ -65,6 +66,7 @@
         "interactionRadius": 50,
         "promptText": "查看海报",
         "spriteColor": 16737894,
+        "blocked": true,
         "usedFlag": "examined_candy_poster",
         "trigger": { "evidence": 1, "setFlag": "seen_color_sequence" },
         "multiDescriptions": [
@@ -114,6 +116,7 @@
         "interactionRadius": 40,
         "promptText": "输入密码",
         "spriteColor": 2263842,
+        "blocked": true,
         "puzzleId": "ch1_door_puzzle"
       },
       {
@@ -126,6 +129,7 @@
         "interactionRadius": 45,
         "promptText": "听广播",
         "spriteColor": 10066329,
+        "blocked": true,
         "dialogueId": "ch1_meikong_broadcast",
         "usedFlag": "heard_ch1_broadcast"
       },

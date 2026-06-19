@@ -47,10 +47,12 @@ export default function StatusBar() {
         <div className="status-values">
           <div className="status-item" title="证据值">
             <span className="status-label">🔍</span>
+            <span className="status-name">证据</span>
             <span className="status-value evidence">{evidence}</span>
           </div>
           <div className="status-item" title={`警戒 ${alert}/100 [${getAlertLevelLabel(alertLevel)}]`}>
             <span className="status-label">⚠️</span>
+            <span className="status-name">警戒</span>
             <span className="status-value" style={{ color: ALERT_COLORS[alertLevel] }}>{alert}</span>
             {alertLevel !== 'low' && (
               <span className="alert-level-tag" data-level={alertLevel}>
@@ -60,14 +62,17 @@ export default function StatusBar() {
           </div>
           <div className="status-item" title={`美杜莎羁绊 ${trust_medusa}/100 [${getBondLevelLabel(bondM)}]`}>
             <span className="status-label">🐍</span>
+            <span className="status-name">羁绊·美杜莎</span>
             <span className="status-value" style={{ color: BOND_COLORS[bondM] }}>{trust_medusa}</span>
           </div>
           <div className="status-item" title={`许珩羁绊 ${trust_xuheng}/100 [${getBondLevelLabel(bondX)}]`}>
             <span className="status-label">📝</span>
+            <span className="status-name">羁绊·许珩</span>
             <span className="status-value" style={{ color: BOND_COLORS[bondX] }}>{trust_xuheng}</span>
           </div>
           <div className="status-item" title={`乔青羁绊 ${trust_qiaoqing}/100 [${getBondLevelLabel(bondQ)}]`}>
             <span className="status-label">🎙️</span>
+            <span className="status-name">羁绊·乔青</span>
             <span className="status-value" style={{ color: BOND_COLORS[bondQ] }}>{trust_qiaoqing}</span>
           </div>
         </div>

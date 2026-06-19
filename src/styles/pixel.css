@@ -258,6 +258,12 @@ body {
   font-size: 12px;
 }
 
+.status-name {
+  font-size: 10px;
+  color: var(--text-dim);
+  opacity: 0.8;
+}
+
 .status-value {
   font-weight: bold;
   min-width: 16px;
