@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>糖纸牢笼 · 行走禁区编辑器</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #1a1a2e; color: #fff; font-family: monospace; overflow: hidden; }
+    
+    .container { display: flex; height: 100vh; }
+    
+    .canvas-area {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #111;
+    }
+    
+    .canvas-wrapper { position: relative; display: inline-block; }
+    
+    .canvas-wrapper img {
+      display: block;
+      max-width: 100%;
+      max-height: 90vh;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    
+    .overlay-canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      cursor: crosshair;
+    }
+    
+    .sidebar {
+      width: 380px;
+      background: #0d0d1a;
+      border-left: 2px solid #333;
+      padding: 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    h2 { color: #ff4444; font-size: 16px; }
+    h3 { color: #ffcc00; font-size: 13px; margin-bottom: 6px; }
+    
+    .instructions {
+      font-size: 11px;
+      color: #aaa;
+      line-height: 1.6;
+      border: 1px solid #333;
+      padding: 10px;
+      background: #1a1a2e;
+    }
+    
+    .zone-list { flex: 1; overflow-y: auto; }
+    
+    .zone-item {
+      background: #1a1a2e;
+      border: 1px solid #444;
+      padding: 8px 10px;
+      margin-bottom: 6px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .zone-item:hover { border-color: #ff4444; }
+    .zone-item.active { border-color: #00ff88; background: #1a2a1a; }
+    .zone-item .name { font-weight: bold; color: #ff6666; }
+    .zone-item .coords { color: #888; margin-top: 4px; }
+    
+    .btn {
+      padding: 8px 14px;
+      border: 2px solid #ff6b9d;
+      background: transparent;
+      color: #ff6b9d;
+      font-family: monospace;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn:hover { background: #ff6b9d; color: #000; }
+    .btn-green { border-color: #00ff88; color: #00ff88; }
+    .btn-green:hover { background: #00ff88; color: #000; }
+    .btn-blue { border-color: #00d4ff; color: #00d4ff; }
+    .btn-blue:hover { background: #00d4ff; color: #000; }
+    
+    .output-area {
+      background: #000;
+      border: 1px solid #333;
+      padding: 10px;
+      font-size: 10px;
+      color: #00ff88;
+      max-height: 200px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    
+    .coord-display {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.85);
+      color: #ff4444;
+      padding: 6px 14px;
+      font-size: 12px;
+      border: 1px solid #ff4444;
+      z-index: 100;
+    }
+    
+    .walkable-info {
+      padding: 8px 10px;
+      font-size: 11px;
+      border: 1px solid #00ff88;
+      color: #00ff88;
+      background: rgba(0, 255, 136, 0.05);
+    }
+
+    .legend {
+      display: flex; gap: 16px; font-size: 11px;
+    }
+    .legend-item { display: flex; align-items: center; gap: 6px; }
+    .legend-color {
+      width: 14px; height: 14px; border: 1px solid #555;
+    }
+  </style>
+</head>
+<body>
+
+<div class="coord-display" id="coordDisplay">鼠标位置: --, --</div>
+
+<div class="container">
+  <div class="canvas-area">
+    <div class="canvas-wrapper" id="canvasWrapper">
+      <img id="roomImg" src="/assets/rooms/ch1_dorm.png" alt="room" />
+      <canvas class="overlay-canvas" id="overlayCanvas"></canvas>
+    </div>
+  </div>
+  
+  <div class="sidebar">
+    <h2>🚫 行走禁区编辑器</h2>
+    
+    <div class="instructions">
+      <b>操作说明：</b><br>
+      1. 在图上<b>拖拽框选</b>莫妮卡<b>不能走到</b>的区域<br>
+      2. 例如：墙壁、家具占地、门边等<br>
+      3. 绿色区域 = 可行走区域（留空即可）<br>
+      4. 红色区域 = 禁区（碰撞墙壁）<br>
+      5. 右键点击删除选中的禁区<br>
+      6. 完成后点"导出JSON"复制数据
+    </div>
+
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-color" style="background:rgba(255,0,0,0.3)"></div>
+        <span>禁区（不可行走）</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background:rgba(0,255,0,0.15)"></div>
+        <span>可行走区域</span>
+      </div>
+    </div>
+    
+    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <button class="btn btn-green" onclick="exportJSON()">📋 导出 JSON</button>
+      <button class="btn btn-blue" onclick="addWalls()">🧱 一键添加四面墙</button>
+      <button class="btn" onclick="clearAll()">🗑️ 清空全部</button>
+    </div>
+
+    <div class="walkable-info" id="walkableInfo">
+      可行走区域：未定义禁区时全部可走
+    </div>
+    
+    <h3>禁区列表 (<span id="zoneCount">0</span>)</h3>
+    
+    <div class="zone-list" id="zoneList"></div>
+    
+    <h3>导出结果</h3>
+    <div class="output-area" id="outputArea">// 点击"导出JSON"生成禁区数据</div>
+  </div>
+</div>
+
+<script>
+const img = document.getElementById('roomImg');
+const canvas = document.getElementById('overlayCanvas');
+const ctx = canvas.getContext('2d');
+const coordDisplay = document.getElementById('coordDisplay');
+const zoneList = document.getElementById('zoneList');
+const zoneCount = document.getElementById('zoneCount');
+const outputArea = document.getElementById('outputArea');
+
+let zones = [];
+let drawing = false;
+let startX = 0, startY = 0;
+let selectedIdx = -1;
+let nameIndex = 0;
+
+img.onload = () => {
+  canvas.width = img.clientWidth;
+  canvas.height = img.clientHeight;
+  redraw();
+};
+
+window.addEventListener('resize', () => {
+  canvas.width = img.clientWidth;
+  canvas.height = img.clientHeight;
+  redraw();
+});
+
+function getPercent(e) {
+  const rect = canvas.getBoundingClientRect();
+  const x = ((e.clientX - rect.left) / rect.width) * 100;
+  const y = ((e.clientY - rect.top) / rect.height) * 100;
+  return { x: Math.round(x * 10) / 10, y: Math.round(y * 10) / 10 };
+}
+
+canvas.addEventListener('mousemove', (e) => {
+  const p = getPercent(e);
+  coordDisplay.textContent = `鼠标位置: x=${p.x}%, y=${p.y}%`;
+  
+  if (drawing) {
+    redraw();
+    const rect = canvas.getBoundingClientRect();
+    const sx = (startX / 100) * canvas.width;
+    const sy = (startY / 100) * canvas.height;
+    const ex = (p.x / 100) * canvas.width;
+    const ey = (p.y / 100) * canvas.height;
+    ctx.strokeStyle = '#ff4444';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([5, 3]);
+    ctx.strokeRect(sx, sy, ex - sx, ey - sy);
+    ctx.setLineDash([]);
+    ctx.fillStyle = 'rgba(255, 0, 0, 0.15)';
+    ctx.fillRect(sx, sy, ex - sx, ey - sy);
+  }
+});
+
+canvas.addEventListener('mousedown', (e) => {
+  if (e.button !== 0) return;
+  const p = getPercent(e);
+  startX = p.x;
+  startY = p.y;
+  drawing = true;
+});
+
+canvas.addEventListener('mouseup', (e) => {
+  if (!drawing) return;
+  drawing = false;
+  const p = getPercent(e);
+  
+  let x = Math.round(Math.min(startX, p.x));
+  let y = Math.round(Math.min(startY, p.y));
+  let w = Math.round(Math.abs(p.x - startX));
+  let h = Math.round(Math.abs(p.y - startY));
+  
+  if (w < 1 || h < 1) { redraw(); return; }
+  
+  const name = prompt('禁区名称（如 wall_top, furniture_bed 等）：', `boundary_${nameIndex}`);
+  if (!name) { redraw(); return; }
+  
+  nameIndex++;
+  zones.push({ id: name, x, y, w, h });
+  renderList();
+  redraw();
+});
+
+canvas.addEventListener('contextmenu', (e) => {
+  e.preventDefault();
+  if (selectedIdx >= 0) {
+    zones.splice(selectedIdx, 1);
+    selectedIdx = -1;
+    renderList();
+    redraw();
+  }
+});
+
+function redraw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  zones.forEach((z, i) => {
+    const px = (z.x / 100) * canvas.width;
+    const py = (z.y / 100) * canvas.height;
+    const pw = (z.w / 100) * canvas.width;
+    const ph = (z.h / 100) * canvas.height;
+    
+    const isSelected = i === selectedIdx;
+    
+    // 填充红色
+    ctx.fillStyle = isSelected ? 'rgba(255, 68, 68, 0.35)' : 'rgba(255, 0, 0, 0.2)';
+    ctx.fillRect(px, py, pw, ph);
+    
+    // 边框
+    ctx.strokeStyle = isSelected ? '#00ff88' : '#ff4444';
+    ctx.lineWidth = isSelected ? 3 : 1.5;
+    ctx.strokeRect(px, py, pw, ph);
+    
+    // 标签
+    ctx.fillStyle = isSelected ? '#00ff88' : '#ff6666';
+    ctx.font = '10px monospace';
+    ctx.fillText(z.id, px + 3, py + 12);
+    ctx.fillStyle = '#aaa';
+    ctx.font = '9px monospace';
+    ctx.fillText(`(${z.x},${z.y}) ${z.w}×${z.h}`, px + 3, py + 23);
+  });
+  
+  zoneCount.textContent = zones.length;
+}
+
+function renderList() {
+  zoneList.innerHTML = zones.map((z, i) => `
+    <div class="zone-item ${i === selectedIdx ? 'active' : ''}" onclick="selectZone(${i})">
+      <div class="name">🚫 ${z.id}</div>
+      <div class="coords">"x": ${z.x}, "y": ${z.y}, "w": ${z.w}, "h": ${z.h}</div>
+    </div>
+  `).join('');
+}
+
+function selectZone(i) {
+  selectedIdx = (selectedIdx === i) ? -1 : i;
+  renderList();
+  redraw();
+}
+
+function addWalls() {
+  // 根据图片的石墙边界，一键添加四面墙
+  zones.push(
+    { id: 'wall_top', x: 0, y: 0, w: 100, h: 8 },
+    { id: 'wall_bottom', x: 0, y: 88, w: 100, h: 12 },
+    { id: 'wall_left', x: 0, y: 0, w: 7, h: 100 },
+    { id: 'wall_right', x: 94, y: 0, w: 6, h: 100 }
+  );
+  nameIndex += 4;
+  renderList();
+  redraw();
+}
+
+function exportJSON() {
+  const arr = zones.map(z => 
+    `    { "x": ${z.x}, "y": ${z.y}, "w": ${z.w}, "h": ${z.h} }`
+  ).join(',\n');
+  const output = `"boundaries": [\n${arr}\n]`;
+  outputArea.textContent = output;
+  
+  navigator.clipboard.writeText(output).then(() => {
+    alert('已复制到剪贴板！把结果发给我即可。');
+  }).catch(() => {});
+}
+
+function clearAll() {
+  if (confirm('确定清空所有禁区？')) {
+    zones = [];
+    selectedIdx = -1;
+    nameIndex = 0;
+    renderList();
+    redraw();
+  }
+}
+</script>
+</body>
+</html>

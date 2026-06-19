@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>糖纸牢笼 · 热区编辑器</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #1a1a2e; color: #fff; font-family: monospace; overflow: hidden; }
+    
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+    
+    .canvas-area {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #111;
+    }
+    
+    .canvas-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .canvas-wrapper img {
+      display: block;
+      max-width: 100%;
+      max-height: 90vh;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    
+    .overlay-canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      cursor: crosshair;
+    }
+    
+    .sidebar {
+      width: 360px;
+      background: #0d0d1a;
+      border-left: 2px solid #333;
+      padding: 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    h2 { color: #ff6b9d; font-size: 16px; }
+    h3 { color: #ffcc00; font-size: 13px; margin-bottom: 6px; }
+    
+    .instructions {
+      font-size: 11px;
+      color: #aaa;
+      line-height: 1.6;
+      border: 1px solid #333;
+      padding: 10px;
+      background: #1a1a2e;
+    }
+    
+    .hotspot-list {
+      flex: 1;
+      overflow-y: auto;
+    }
+    
+    .hotspot-item {
+      background: #1a1a2e;
+      border: 1px solid #444;
+      padding: 8px 10px;
+      margin-bottom: 6px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    
+    .hotspot-item:hover { border-color: #ff6b9d; }
+    .hotspot-item.active { border-color: #00ff88; background: #1a2a1a; }
+    
+    .hotspot-item .name { font-weight: bold; color: #ffd700; }
+    .hotspot-item .coords { color: #888; margin-top: 4px; }
+    
+    .btn {
+      padding: 8px 14px;
+      border: 2px solid #ff6b9d;
+      background: transparent;
+      color: #ff6b9d;
+      font-family: monospace;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn:hover { background: #ff6b9d; color: #000; }
+    .btn-green { border-color: #00ff88; color: #00ff88; }
+    .btn-green:hover { background: #00ff88; color: #000; }
+    
+    .output-area {
+      background: #000;
+      border: 1px solid #333;
+      padding: 10px;
+      font-size: 10px;
+      color: #00ff88;
+      max-height: 200px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    
+    .drawing-rect {
+      position: absolute;
+      border: 2px dashed #00ff88;
+      background: rgba(0, 255, 136, 0.1);
+      pointer-events: none;
+    }
+    
+    .coord-display {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.85);
+      color: #00ff88;
+      padding: 6px 14px;
+      font-size: 12px;
+      border: 1px solid #00ff88;
+      z-index: 100;
+    }
+    
+    .mode-indicator {
+      padding: 6px 10px;
+      text-align: center;
+      font-size: 12px;
+      border: 1px solid;
+    }
+    .mode-draw { border-color: #00ff88; color: #00ff88; }
+    .mode-select { border-color: #ffcc00; color: #ffcc00; }
+  </style>
+</head>
+<body>
+
+<div class="coord-display" id="coordDisplay">鼠标位置: --, --</div>
+
+<div class="container">
+  <div class="canvas-area">
+    <div class="canvas-wrapper" id="canvasWrapper">
+      <img id="roomImg" src="/assets/rooms/ch1_dorm.png" alt="room" />
+      <canvas class="overlay-canvas" id="overlayCanvas"></canvas>
+    </div>
+  </div>
+  
+  <div class="sidebar">
+    <h2>🍬 热区编辑器</h2>
+    
+    <div class="instructions">
+      <b>操作说明：</b><br>
+      1. 在图片上拖拽框选物品区域<br>
+      2. 输入热区名称（如 ch1_bed）<br>
+      3. 框选完成后自动添加到列表<br>
+      4. 点击列表项高亮显示对应热区<br>
+      5. 右键删除选中的热区<br>
+      6. 点"导出JSON"复制坐标数据
+    </div>
+    
+    <div style="display:flex; gap:8px;">
+      <button class="btn btn-green" onclick="exportJSON()">📋 导出 JSON</button>
+      <button class="btn" onclick="clearAll()">🗑️ 清空全部</button>
+    </div>
+    
+    <div class="mode-indicator mode-draw">模式：绘制热区（拖拽框选）</div>
+    
+    <h3>已定义热区 (<span id="hotspotCount">0</span>)</h3>
+    
+    <div class="hotspot-list" id="hotspotList"></div>
+    
+    <h3>导出结果</h3>
+    <div class="output-area" id="outputArea">// 点击"导出JSON"生成坐标数据</div>
+  </div>
+</div>
+
+<script>
+const img = document.getElementById('roomImg');
+const canvas = document.getElementById('overlayCanvas');
+const ctx = canvas.getContext('2d');
+const coordDisplay = document.getElementById('coordDisplay');
+const hotspotList = document.getElementById('hotspotList');
+const hotspotCount = document.getElementById('hotspotCount');
+const outputArea = document.getElementById('outputArea');
+
+let hotspots = [];
+let drawing = false;
+let startX = 0, startY = 0;
+let currentX = 0, currentY = 0;
+let selectedIdx = -1;
+
+// 预设热区名称
+const PRESET_NAMES = [
+  'ch1_bed', 'ch1_nightstand', 'ch1_old_phone', 'ch1_candy_poster',
+  'ch1_desk_drawer', 'ch1_monitor', 'ch1_door_panel', 'ch1_speaker', 'ch1_door'
+];
+let nameIndex = 0;
+
+img.onload = () => {
+  canvas.width = img.clientWidth;
+  canvas.height = img.clientHeight;
+  redraw();
+};
+
+window.addEventListener('resize', () => {
+  canvas.width = img.clientWidth;
+  canvas.height = img.clientHeight;
+  redraw();
+});
+
+// 获取相对于图片的百分比坐标
+function getPercent(e) {
+  const rect = canvas.getBoundingClientRect();
+  const x = ((e.clientX - rect.left) / rect.width) * 100;
+  const y = ((e.clientY - rect.top) / rect.height) * 100;
+  return { x: Math.round(x * 10) / 10, y: Math.round(y * 10) / 10 };
+}
+
+canvas.addEventListener('mousemove', (e) => {
+  const p = getPercent(e);
+  coordDisplay.textContent = `鼠标位置: x=${p.x}%, y=${p.y}%`;
+  
+  if (drawing) {
+    currentX = p.x;
+    currentY = p.y;
+    redraw();
+    // 绘制当前框选
+    const sx = (startX / 100) * canvas.width;
+    const sy = (startY / 100) * canvas.height;
+    const ex = (currentX / 100) * canvas.width;
+    const ey = (currentY / 100) * canvas.height;
+    ctx.strokeStyle = '#00ff88';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([5, 3]);
+    ctx.strokeRect(sx, sy, ex - sx, ey - sy);
+    ctx.setLineDash([]);
+    ctx.fillStyle = 'rgba(0, 255, 136, 0.1)';
+    ctx.fillRect(sx, sy, ex - sx, ey - sy);
+  }
+});
+
+canvas.addEventListener('mousedown', (e) => {
+  if (e.button !== 0) return;
+  const p = getPercent(e);
+  startX = p.x;
+  startY = p.y;
+  drawing = true;
+});
+
+canvas.addEventListener('mouseup', (e) => {
+  if (!drawing) return;
+  drawing = false;
+  const p = getPercent(e);
+  currentX = p.x;
+  currentY = p.y;
+  
+  // 计算 x, y, w, h（确保正数）
+  let x = Math.min(startX, currentX);
+  let y = Math.min(startY, currentY);
+  let w = Math.abs(currentX - startX);
+  let h = Math.abs(currentY - startY);
+  
+  // 太小的框忽略
+  if (w < 1 || h < 1) { redraw(); return; }
+  
+  // 取整
+  x = Math.round(x);
+  y = Math.round(y);
+  w = Math.round(w);
+  h = Math.round(h);
+  
+  const name = prompt('热区名称：', PRESET_NAMES[nameIndex] || `hotspot_${hotspots.length}`);
+  if (!name) { redraw(); return; }
+  
+  nameIndex++;
+  hotspots.push({ id: name, x, y, w, h });
+  renderList();
+  redraw();
+});
+
+canvas.addEventListener('contextmenu', (e) => {
+  e.preventDefault();
+  if (selectedIdx >= 0) {
+    hotspots.splice(selectedIdx, 1);
+    selectedIdx = -1;
+    renderList();
+    redraw();
+  }
+});
+
+function redraw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  hotspots.forEach((hs, i) => {
+    const px = (hs.x / 100) * canvas.width;
+    const py = (hs.y / 100) * canvas.height;
+    const pw = (hs.w / 100) * canvas.width;
+    const ph = (hs.h / 100) * canvas.height;
+    
+    const isSelected = i === selectedIdx;
+    ctx.strokeStyle = isSelected ? '#00ff88' : '#ffd700';
+    ctx.lineWidth = isSelected ? 3 : 2;
+    ctx.strokeRect(px, py, pw, ph);
+    
+    ctx.fillStyle = isSelected ? 'rgba(0,255,136,0.15)' : 'rgba(255,215,0,0.08)';
+    ctx.fillRect(px, py, pw, ph);
+    
+    // 标签
+    ctx.fillStyle = isSelected ? '#00ff88' : '#ffd700';
+    ctx.font = '11px monospace';
+    ctx.fillText(hs.id, px + 3, py + 13);
+    ctx.fillStyle = '#fff';
+    ctx.font = '9px monospace';
+    ctx.fillText(`(${hs.x},${hs.y}) ${hs.w}×${hs.h}`, px + 3, py + 25);
+  });
+  
+  hotspotCount.textContent = hotspots.length;
+}
+
+function renderList() {
+  hotspotList.innerHTML = hotspots.map((hs, i) => `
+    <div class="hotspot-item ${i === selectedIdx ? 'active' : ''}" onclick="selectHotspot(${i})">
+      <div class="name">${hs.id}</div>
+      <div class="coords">"x": ${hs.x}, "y": ${hs.y}, "w": ${hs.w}, "h": ${hs.h}</div>
+    </div>
+  `).join('');
+}
+
+function selectHotspot(i) {
+  selectedIdx = (selectedIdx === i) ? -1 : i;
+  renderList();
+  redraw();
+}
+
+function exportJSON() {
+  const lines = hotspots.map(hs => 
+    `  "${hs.id}": { "x": ${hs.x}, "y": ${hs.y}, "w": ${hs.w}, "h": ${hs.h} }`
+  ).join(',\n');
+  const output = `{\n${lines}\n}`;
+  outputArea.textContent = output;
+  
+  // 复制到剪贴板
+  navigator.clipboard.writeText(output).then(() => {
+    alert('已复制到剪贴板！');
+  }).catch(() => {
+    // fallback
+    outputArea.select && outputArea.select();
+  });
+}
+
+function clearAll() {
+  if (confirm('确定清空所有热区？')) {
+    hotspots = [];
+    selectedIdx = -1;
+    nameIndex = 0;
+    renderList();
+    redraw();
+  }
+}
+</script>
+</body>
+</html>

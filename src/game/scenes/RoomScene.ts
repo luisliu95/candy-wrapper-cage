@@ -138,9 +138,11 @@ export default class RoomScene extends Phaser.Scene {
         const color = hs.spriteColor ?? DEFAULT_SPRITE_COLOR;
         const isUsed = hs.usedFlag ? store.usedHotspots.includes(hs.usedFlag) : false;
 
-        const alpha = isUsed ? 0.3 : 0.6;
+        // 有背景图时热区几乎透明，只保留碰撞；无背景图时显示色块
+        const alpha = this.hasRoomBg ? (isUsed ? 0.0 : 0.08) : (isUsed ? 0.3 : 0.6);
+        const strokeAlpha = this.hasRoomBg ? (isUsed ? 0.0 : 0.2) : (isUsed ? 0.15 : 0.5);
         const rect = this.add.rectangle(pos.x, pos.y, pos.w, pos.h, color, alpha);
-        rect.setStrokeStyle(2, 0xffd700, isUsed ? 0.15 : 0.5);
+        rect.setStrokeStyle(this.hasRoomBg ? 1 : 2, 0xffd700, strokeAlpha);
         rect.setDepth(1);
 
         if (hs.blocked) {
@@ -165,6 +167,24 @@ export default class RoomScene extends Phaser.Scene {
 
         const radius = hs.interactionRadius ?? DEFAULT_INTERACTION_RADIUS;
         this.entities.push({ rect, hotspot: hs, label, iconText, radius });
+      }
+    }
+
+    // ===== 行走禁区（隐形碰撞墙） =====
+    const boundaries = (room as any)?.boundaries;
+    if (boundaries && Array.isArray(boundaries)) {
+      for (const b of boundaries) {
+        const bx = (b.x / 100) * W + ((b.w / 100) * W) / 2;
+        const by = (b.y / 100) * H + ((b.h / 100) * H) / 2;
+        const bw = (b.w / 100) * W;
+        const bh = (b.h / 100) * H;
+        const wall = this.add.rectangle(bx, by, bw, bh, 0xff0000, 0); // 完全透明
+        wall.setDepth(0);
+        this.physics.world.enable(wall);
+        const wb = wall.body as Phaser.Physics.Arcade.Body;
+        wb.setImmovable(true);
+        wb.moves = false;
+        this.collisionRects.push(wall);
       }
     }
 
