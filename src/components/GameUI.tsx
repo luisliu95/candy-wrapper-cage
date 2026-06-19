@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useGameStore } from '../store/gameStore';
 import StatusBar from './StatusBar';
 import DialogBox from './DialogBox';
@@ -11,6 +11,15 @@ import SugarEchoScreen from './SugarEchoScreen';
 import LeafletGame from './LeafletGame';
 import MemoryPanel from './MemoryPanel';
 
+// BGM 路径映射
+const BGM_ROOM: Record<number, string> = {
+  1: '/audio/bgm_ch1.mp3',
+  2: '/audio/bgm_ch2.mp3',
+  3: '/audio/bgm_ch3.mp3',
+  4: '/audio/bgm_ch4.mp3',
+};
+const BGM_STORY = '/audio/bgm_story.mp3';
+
 const BG_MAP: Record<string, string> = {
   ch1_dorm: 'linear-gradient(180deg, #3d1f3f 0%, #6b2d5b 50%, #2a0e2e 100%)',
   ch2_workshop: 'linear-gradient(180deg, #1a2a1a 0%, #2d4a2d 50%, #0a1a0a 100%)',
@@ -20,17 +29,58 @@ const BG_MAP: Record<string, string> = {
 
 export default function GameUI() {
   const {
-    phase, currentPuzzle, alert,
+    phase, currentPuzzle, alert, currentRoom,
     message, clearMessage, getCurrentNode, chapter
   } = useGameStore();
 
   const node = getCurrentNode();
   const [typingDone, setTypingDone] = useState(false);
+  const bgmRef = useRef<HTMLAudioElement | null>(null);
+  const bgmPathRef = useRef<string>('');
 
   // 节点切换时重置
   useEffect(() => {
     setTypingDone(false);
   }, [node?.id]);
+
+  // BGM 管理
+  useEffect(() => {
+    // 确定当前应播放的 BGM
+    let targetBgm = '';
+    if (phase === 'topdown') {
+      targetBgm = BGM_ROOM[chapter] || '';
+    } else if (phase === 'story' || phase === 'sugarecho' || phase === 'leaflet') {
+      targetBgm = BGM_STORY;
+    }
+    // ending 时不播放
+
+    // 如果目标和当前一致，不切换
+    if (targetBgm === bgmPathRef.current) return;
+
+    // 停止当前 BGM
+    if (bgmRef.current) {
+      bgmRef.current.pause();
+      bgmRef.current = null;
+    }
+    bgmPathRef.current = targetBgm;
+
+    // 播放新 BGM
+    if (targetBgm) {
+      const audio = new Audio(targetBgm);
+      audio.loop = true;
+      audio.volume = 0.4;
+      audio.play().catch(() => {});
+      bgmRef.current = audio;
+    }
+
+    return () => {
+      if (bgmRef.current) {
+        bgmRef.current.pause();
+        bgmRef.current = null;
+        bgmPathRef.current = '';
+      }
+    };
+  }, [phase, chapter]);
 
   useEffect(() => {
     if (message) {
@@ -53,7 +103,11 @@ export default function GameUI() {
       <StatusBar />
       <div className="scene-area">
         <div className="scene-background" style={{ background: bg }} />
-        {phase === 'topdown' && <PhaserRoom />}
+        {currentRoom && (
+          <div style={{ display: phase === 'topdown' ? 'block' : 'none' }}>
+            <PhaserRoom />
+          </div>
+        )}
         {phase === 'story' && node && (
           <>
             <DialogBox node={node} onTypingDone={() => setTypingDone(true)} />

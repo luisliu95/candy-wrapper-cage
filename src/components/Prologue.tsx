@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import prologueData from '../data/prologue.json';
 
 interface PrologueFrame {
@@ -24,6 +24,22 @@ export default function Prologue({ onComplete }: Props) {
   const [showSubtext, setShowSubtext] = useState(false);
   const [isTyping, setIsTyping] = useState(true);
   const [fadeState, setFadeState] = useState<'in' | 'visible' | 'out'>('in');
+  const bgmRef = useRef<HTMLAudioElement | null>(null);
+
+  // 序章 BGM
+  useEffect(() => {
+    const audio = new Audio('/audio/bgm_story.mp3');
+    audio.loop = true;
+    audio.volume = 0.4;
+    audio.play().catch(() => {});
+    bgmRef.current = audio;
+    return () => {
+      if (bgmRef.current) {
+        bgmRef.current.pause();
+        bgmRef.current = null;
+      }
+    };
+  }, []);
 
   const frame = frames[currentFrame];
   const isLastFrame = currentFrame >= frames.length - 1;

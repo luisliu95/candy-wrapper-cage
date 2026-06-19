@@ -89,8 +89,21 @@ export default function DialogBox({ node, onTypingDone }: Props) {
     }
   }, [isTyping, fullText, node, goToNode, enterRoom]);
 
+  // 立绘匹配
+  const getPortrait = (speaker: string | undefined): string | null => {
+    if (!speaker) return null;
+    const portraitMap = ['莫妮卡', '美杜莎', '乔青', '美空'];
+    const match = portraitMap.find(name => speaker.includes(name));
+    return match ? `/sprites/portraits/${match}.png` : null;
+  };
+
+  const portrait = getPortrait(node.speaker);
+
   return (
     <div className="dialog-container" onClick={handleClick}>
+      {portrait && (
+        <img className="dialog-portrait" src={portrait} alt={node.speaker || ''} />
+      )}
       <div className="dialog-box">
         <div className="dialog-speaker">{node.speaker}</div>
         <div className="dialog-text">

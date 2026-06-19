@@ -138,11 +138,10 @@ export default class RoomScene extends Phaser.Scene {
         const color = hs.spriteColor ?? DEFAULT_SPRITE_COLOR;
         const isUsed = hs.usedFlag ? store.usedHotspots.includes(hs.usedFlag) : false;
 
-        // 有背景图时热区几乎透明，只保留碰撞；无背景图时显示色块
-        const alpha = this.hasRoomBg ? (isUsed ? 0.0 : 0.08) : (isUsed ? 0.3 : 0.6);
-        const strokeAlpha = this.hasRoomBg ? (isUsed ? 0.0 : 0.2) : (isUsed ? 0.15 : 0.5);
+        // 热区默认完全透明，按空格时高亮
+        const alpha = this.hasRoomBg ? 0 : (isUsed ? 0.3 : 0.6);
         const rect = this.add.rectangle(pos.x, pos.y, pos.w, pos.h, color, alpha);
-        rect.setStrokeStyle(this.hasRoomBg ? 1 : 2, 0xffd700, strokeAlpha);
+        rect.setStrokeStyle(2, 0xffd700, 0); // 默认无边框
         rect.setDepth(1);
 
         if (hs.blocked) {
@@ -165,7 +164,7 @@ export default class RoomScene extends Phaser.Scene {
           color: isUsed ? '#666666' : '#ffd700',
           stroke: '#000',
           strokeThickness: 2,
-        }).setOrigin(0.5).setDepth(3);
+        }).setOrigin(0.5).setDepth(3).setVisible(false);
 
         const radius = hs.interactionRadius ?? DEFAULT_INTERACTION_RADIUS;
         this.entities.push({ rect, hotspot: hs, label, iconText, radius });
@@ -225,6 +224,25 @@ export default class RoomScene extends Phaser.Scene {
       D: this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.D),
     };
     this.interactKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+    const spaceKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+    // 空格键：按住时高亮所有热区
+    spaceKey.on('down', () => {
+      for (const e of this.entities) {
+        const store = useGameStore.getState();
+        const isUsed = e.hotspot.usedFlag ? store.usedHotspots.includes(e.hotspot.usedFlag) : false;
+        e.rect.setStrokeStyle(2, 0xffd700, isUsed ? 0.3 : 0.7);
+        e.rect.setAlpha(isUsed ? 0.05 : 0.15);
+        e.label.setVisible(true);
+      }
+    });
+    spaceKey.on('up', () => {
+      for (const e of this.entities) {
+        e.rect.setStrokeStyle(2, 0xffd700, 0);
+        e.rect.setAlpha(0);
+        e.label.setVisible(false);
+      }
+    });
 
     // E 键提示
     this.promptText = this.add.text(W / 2, H - 28, '', {
