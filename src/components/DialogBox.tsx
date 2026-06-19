@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useGameStore } from '../store/gameStore';
 import type { StoryNode } from '../types/game';
 
@@ -10,8 +10,33 @@ export default function DialogBox({ node }: Props) {
   const { goToNode, enterRoom } = useGameStore();
   const [displayText, setDisplayText] = useState('');
   const [isTyping, setIsTyping] = useState(true);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const fullText = node.text;
+
+  // 播放对话音频
+  useEffect(() => {
+    // 停止上一段音频
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+    }
+
+    const audioPath = `/audio/dialogues/${node.id}.wav`;
+    const audio = new Audio(audioPath);
+    audio.volume = 0.8;
+    audio.play().catch(() => {
+      // 音频文件不存在或无法播放，静默忽略
+    });
+    audioRef.current = audio;
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, [node.id]);
 
   useEffect(() => {
     setDisplayText('');

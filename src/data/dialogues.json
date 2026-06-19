@@ -298,14 +298,14 @@
     "id": "ch2_monika_observe",
     "chapter": 2,
     "speaker": "莫妮卡（内心）",
-    "text": "传单上印着精美的甜品插画——草莓塔、马卡龙、棉花糖。你认出了这些风格。这些插画和「糖纸观察室」的配图风格一模一样。林夏画的。",
+    "text": "传单上印着精美的甜品插画——草莓塔、马卡龙、棉花糖。我认出了这些风格。这些插画和「糖纸观察室」的配图风格一模一样。林夏画的。",
     "next": "ch2_monika_observe_2"
   },
   "ch2_monika_observe_2": {
     "id": "ch2_monika_observe_2",
     "chapter": 2,
     "speaker": "莫妮卡（内心）",
-    "text": "他们在用林夏的画来制作招募传单。她的作品被用来引诱新的受害者进来。你握紧了拳头。",
+    "text": "他们在用林夏的画来制作招募传单。她的作品被用来引诱新的受害者进来……我握紧了拳头。",
     "next": "ch2_medusa_explain",
     "trigger": { "evidence": 1, "setFlag": "recognized_linxia_art", "addMemory": "mem_strawberry_hate" }
   },
