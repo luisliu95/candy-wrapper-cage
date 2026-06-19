@@ -371,12 +371,12 @@
     "chapter": 2,
     "speaker": "美杜莎",
     "text": "「但要小心。SugarEcho 会扫描所有传单。暗号太明显的话，我们都完了。」",
-    "trigger": { "triggerLeaflet": true },
     "next": "ch2_choice_investigate"
   },
   "ch2_choice_investigate": {
     "id": "ch2_choice_investigate",
     "chapter": 2,
+    "trigger": { "triggerLeaflet": true },
     "speaker": "旁白",
     "text": "印刷间里也许藏着许珩留下的线索。你决定仔细搜索一番。",
     "enterRoom": "ch2_workshop"

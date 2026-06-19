@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useGameStore } from '../store/gameStore';
 import StatusBar from './StatusBar';
 import DialogBox from './DialogBox';
@@ -25,6 +25,12 @@ export default function GameUI() {
   } = useGameStore();
 
   const node = getCurrentNode();
+  const [typingDone, setTypingDone] = useState(false);
+
+  // 节点切换时重置
+  useEffect(() => {
+    setTypingDone(false);
+  }, [node?.id]);
 
   useEffect(() => {
     if (message) {
@@ -50,16 +56,16 @@ export default function GameUI() {
         {phase === 'topdown' && <PhaserRoom />}
         {phase === 'story' && node && (
           <>
-            <DialogBox node={node} />
-            {node.choices && node.choices.length > 0 && (
+            <DialogBox node={node} onTypingDone={() => setTypingDone(true)} />
+            {typingDone && node.choices && node.choices.length > 0 && (
               <ChoicePanel choices={node.choices} />
             )}
           </>
         )}
       </div>
       {currentPuzzle && <PuzzleModal />}
-      <MemoryPanel />
-      <Inventory />
+      {phase !== 'story' && <MemoryPanel />}
+      {phase !== 'story' && <Inventory />}
       {message && <div className="message-toast">{message}</div>}
       <div className="scanlines" />
     </div>

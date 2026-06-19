@@ -153,7 +153,9 @@ export default class RoomScene extends Phaser.Scene {
           this.collisionRects.push(rect);
         }
 
-        const iconText = this.add.text(pos.x, pos.y, hs.icon || '', {
+        // 有背景图时不显示emoji图标
+        const iconStr = this.hasRoomBg ? '' : (hs.icon || '');
+        const iconText = this.add.text(pos.x, pos.y, iconStr, {
           fontSize: '18px',
         }).setOrigin(0.5).setDepth(3);
 

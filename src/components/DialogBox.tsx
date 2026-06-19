@@ -4,9 +4,10 @@ import type { StoryNode } from '../types/game';
 
 interface Props {
   node: StoryNode;
+  onTypingDone?: () => void;
 }
 
-export default function DialogBox({ node }: Props) {
+export default function DialogBox({ node, onTypingDone }: Props) {
   const { goToNode, enterRoom } = useGameStore();
   const [displayText, setDisplayText] = useState('');
   const [isTyping, setIsTyping] = useState(true);
@@ -14,21 +15,27 @@ export default function DialogBox({ node }: Props) {
 
   const fullText = node.text;
 
-  // 播放对话音频
+  // 播放对话音频（支持 wav 和 mp3）
   useEffect(() => {
-    // 停止上一段音频
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current = null;
     }
 
-    const audioPath = `/audio/dialogues/${node.id}.wav`;
-    const audio = new Audio(audioPath);
-    audio.volume = 0.8;
-    audio.play().catch(() => {
-      // 音频文件不存在或无法播放，静默忽略
+    const tryPlay = (ext: string): Promise<HTMLAudioElement> => {
+      const audio = new Audio(`/audio/dialogues/${node.id}.${ext}`);
+      audio.volume = 0.8;
+      return audio.play().then(() => audio);
+    };
+
+    // 先尝试 wav，失败则尝试 mp3
+    tryPlay('wav').then(audio => {
+      audioRef.current = audio;
+    }).catch(() => {
+      tryPlay('mp3').then(audio => {
+        audioRef.current = audio;
+      }).catch(() => {});
     });
-    audioRef.current = audio;
 
     return () => {
       if (audioRef.current) {
@@ -48,6 +55,7 @@ export default function DialogBox({ node }: Props) {
         setDisplayText(fullText);
         setIsTyping(false);
         clearInterval(timer);
+        onTypingDone?.();
       } else {
         setDisplayText(fullText.slice(0, i));
       }
@@ -60,9 +68,16 @@ export default function DialogBox({ node }: Props) {
 
   const handleClick = useCallback(() => {
     if (isTyping) {
+      // 第一次点击：跳过打字机动画，显示完整文本
       setDisplayText(fullText);
       setIsTyping(false);
+      onTypingDone?.();
       return;
+    }
+    // 第二次点击：停止音频并跳转
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
     }
     // 有选项时不自动跳转
     if (node.choices && node.choices.length > 0) return;
@@ -70,7 +85,6 @@ export default function DialogBox({ node }: Props) {
     if (node.next) {
       goToNode(node.next);
     } else if (node.enterRoom) {
-      // 没有 next 但有 enterRoom —— 直接进入房间
       enterRoom(node.enterRoom);
     }
   }, [isTyping, fullText, node, goToNode, enterRoom]);
