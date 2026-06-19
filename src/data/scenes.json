@@ -65,6 +65,7 @@
         "interactionRadius": 50,
         "promptText": "查看海报",
         "spriteColor": 16737894,
+        "usedFlag": "examined_candy_poster",
         "trigger": { "evidence": 1, "setFlag": "seen_color_sequence" },
         "multiDescriptions": [
           "墙上贴着一张色彩鲜艳的海报：「甜味疗愈中心 —— 让每个孩子重新变得甜蜜。」海报边缘有五种颜色的糖果排列：粉、紫、白、粉、粉。",
@@ -83,7 +84,7 @@
         "spriteColor": 7829367,
         "blocked": true,
         "puzzleId": "ch1_drawer_puzzle",
-        "requireFlag": "seen_color_sequence"
+        "usedFlag": "solved_drawer"
       },
       {
         "id": "ch1_monitor",
@@ -96,6 +97,7 @@
         "promptText": "查看监控",
         "spriteColor": 3355443,
         "blocked": true,
+        "usedFlag": "examined_monitor",
         "trigger": { "evidence": 2, "alert": 1, "setFlag": "seen_monitor" },
         "multiDescriptions": [
           "墙角上方有一台小型监控屏，正在循环播放走廊和公共区域的画面。你注意到走廊编号是「D-04」，画面右上角写着「SugarEcho 监控系统 v2.7」。",
@@ -112,8 +114,7 @@
         "interactionRadius": 40,
         "promptText": "输入密码",
         "spriteColor": 2263842,
-        "puzzleId": "ch1_door_puzzle",
-        "requireFlag": "has_door_password"
+        "puzzleId": "ch1_door_puzzle"
       },
       {
         "id": "ch1_speaker",

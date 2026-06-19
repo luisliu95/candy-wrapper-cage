@@ -538,13 +538,15 @@ export const useGameStore = create<GameState>((set, get) => ({
       return { handled: true };
     }
 
-    // 剧情跳转
-    if (hotspot.storyJump) {
-      get().goToNode(hotspot.storyJump);
-      return { handled: true };
-    }
-    if (hotspot.dialogueId) {
-      get().goToNode(hotspot.dialogueId);
+    // 剧情跳转（跳转前先标记已使用 + 触发 trigger）
+    if (hotspot.storyJump || hotspot.dialogueId) {
+      if (hotspot.trigger && (!hotspot.usedFlag || !s.usedHotspots.includes(hotspot.usedFlag))) {
+        get().applyTrigger(hotspot.trigger);
+      }
+      if (hotspot.usedFlag && !s.usedHotspots.includes(hotspot.usedFlag)) {
+        get().useHotspot(hotspot.usedFlag);
+      }
+      get().goToNode(hotspot.storyJump || hotspot.dialogueId!);
       return { handled: true };
     }
 

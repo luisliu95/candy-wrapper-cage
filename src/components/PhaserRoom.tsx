@@ -14,10 +14,12 @@ export default function PhaserRoom() {
   const containerRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<Phaser.Game | null>(null);
   const {
-    currentRoom, exitRoom, addItem, applyTrigger, openPuzzle, goToNode,
+    currentRoom, addItem, applyTrigger, openPuzzle, goToNode,
     isHotspotUsed, useHotspot, showMessage, hasItem, hasFlag, alert,
     incrementExamineCount, getHotspotExamineCount, triggerInteraction, getHighBondCount
   } = useGameStore();
+
+
 
   // 当前交互中的热区
   const [activeHotspot, setActiveHotspot] = useState<Hotspot | null>(null);
@@ -107,9 +109,7 @@ export default function PhaserRoom() {
         <span className="phaser-room-controls">
           WASD / 方向键移动 ｜ E 交互 ｜ ESC 离开
         </span>
-        <button className="pixel-btn btn-small" onClick={exitRoom}>
-          ✕ 离开房间
-        </button>
+
       </div>
 
       {/* 交互弹窗（React 浮层，覆盖在 Phaser 画布上） */}
