@@ -47,23 +47,7 @@ export default function StartScreen() {
         )}
       </div>
 
-      {DEV_MODE && (
-        <div style={{ marginTop: '24px', borderTop: '1px dashed #555', paddingTop: '16px' }}>
-          <p style={{ fontSize: '10px', color: '#888', marginBottom: '8px' }}>🛠️ 开发调试（仅开发环境可见）</p>
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'center' }}>
-            {DEBUG_CHAPTERS.map(ch => (
-              <button
-                key={ch.node}
-                className="pixel-btn btn-small"
-                onClick={() => jumpToChapter(ch.node, ch.chapter)}
-                style={{ fontSize: '11px' }}
-              >
-                {ch.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
+      {/* 开发调试按钮已隐藏 */}
     </div>
   );
 }
