@@ -21,10 +21,17 @@ const BGM_ROOM: Record<number, string> = {
 const BGM_STORY = '/audio/bgm_story.mp3';
 
 const BG_MAP: Record<string, string> = {
+  // 第1章房间探索用的渐变（有背景图时被Phaser覆盖）
   ch1_dorm: 'linear-gradient(180deg, #3d1f3f 0%, #6b2d5b 50%, #2a0e2e 100%)',
   ch2_workshop: 'linear-gradient(180deg, #1a2a1a 0%, #2d4a2d 50%, #0a1a0a 100%)',
   ch3_broadcast: 'linear-gradient(180deg, #1a1a3e 0%, #2d2d6b 50%, #0a0a2e 100%)',
   ch4_server: 'linear-gradient(180deg, #0a0a1a 0%, #1a1a2e 50%, #050510 100%)',
+  // 剧情对话背景图
+  part1_background: 'url(/assets/backgrounds/part1_background.png) center/cover no-repeat',
+  corridor: 'url(/assets/backgrounds/corridor.png) center/cover no-repeat',
+  basement: 'url(/assets/backgrounds/basement.png) center/cover no-repeat',
+  broadcasting_room: 'url(/assets/backgrounds/broadcasting_room.png) center/cover no-repeat',
+  server: 'url(/assets/backgrounds/server.png) center/cover no-repeat',
 };
 
 export default function GameUI() {
@@ -89,8 +96,15 @@ export default function GameUI() {
     }
   }, [message, clearMessage]);
 
-  const bgKey = node?.background || `ch${chapter}_dorm`;
-  const bg = BG_MAP[bgKey] || BG_MAP[`ch${chapter}_dorm`] || BG_MAP['ch1_dorm'];
+  // 章节默认背景图映射
+  const CHAPTER_DEFAULT_BG: Record<number, string> = {
+    1: 'part1_background',
+    2: 'basement',
+    3: 'broadcasting_room',
+    4: 'server',
+  };
+  const bgKey = node?.background || CHAPTER_DEFAULT_BG[chapter] || 'part1_background';
+  const bg = BG_MAP[bgKey] || BG_MAP['part1_background'];
 
   if (phase === 'ending') return <EndingScreen />;
   if (phase === 'sugarecho') return <SugarEchoScreen />;

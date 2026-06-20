@@ -7,35 +7,39 @@
     "speaker": "旁白",
     "text": "你在一阵刺鼻的甜味中醒来。粉色的天花板，粉色的墙壁。这是昨天美空带你来的宿舍。",
     "next": "ch1_wake_2",
-    "background": "ch1_dorm"
+    "background": "part1_background"
   },
   "ch1_wake_2": {
     "id": "ch1_wake_2",
     "chapter": 1,
     "speaker": "莫妮卡（内心）",
     "text": "感官放松课程……之后的事，完全想不起来。我什么时候睡着的？",
-    "next": "ch1_wake_3"
+    "next": "ch1_wake_3",
+    "background": "part1_background"
   },
   "ch1_wake_3": {
     "id": "ch1_wake_3",
     "chapter": 1,
     "speaker": "旁白",
     "text": "你的手腕上多了一条糖纸编的手环，编号「CW-0042」。这不是登记时给你的东西。",
-    "next": "ch1_wake_4"
+    "next": "ch1_wake_4",
+    "background": "part1_background"
   },
   "ch1_wake_4": {
     "id": "ch1_wake_4",
     "chapter": 1,
     "speaker": "旁白",
     "text": "门——从外面锁住了。你试了一下把手，纹丝不动。旁边有一个电子密码面板。",
-    "next": "ch1_wake_5"
+    "next": "ch1_wake_5",
+    "background": "part1_background"
   },
   "ch1_wake_5": {
     "id": "ch1_wake_5",
     "chapter": 1,
     "speaker": "莫妮卡（内心）",
     "text": "「这事有点怪。我是自愿来参加七天体验的——为什么门会从外面锁上？」",
-    "next": "ch1_wake_6"
+    "next": "ch1_wake_6",
+    "background": "part1_background"
   },
   "ch1_wake_6": {
     "id": "ch1_wake_6",
@@ -43,21 +47,24 @@
     "speaker": "旁白",
     "text": "桌上的旧手机亮了一下。屏幕上有一条新通知——似乎有人替你发送了消息。",
     "next": "ch1_wake_7",
-    "trigger": { "setFlag": "remembered_purpose", "addMemory": "mem_no_period" }
+    "trigger": { "setFlag": "remembered_purpose", "addMemory": "mem_no_period" },
+    "background": "part1_background"
   },
   "ch1_wake_7": {
     "id": "ch1_wake_7",
     "chapter": 1,
     "speaker": "系统",
     "text": "「欢迎回来，0042号甜心。今日任务已更新，请前往公共区域领取糖纸配额。」",
-    "next": "ch1_wake_8"
+    "next": "ch1_wake_8",
+    "background": "part1_background"
   },
   "ch1_wake_8": {
     "id": "ch1_wake_8",
     "chapter": 1,
     "speaker": "莫妮卡（内心）",
     "text": "「别急，我记一下。门被锁了。手机替我发了消息。课程之后的记忆断片。——先确认谁在替我发消息，然后想办法离开这里。」",
-    "enterRoom": "ch1_dorm"
+    "enterRoom": "ch1_dorm",
+    "background": "part1_background"
   },
 
   "ch1_phone_echo": {
@@ -65,14 +72,16 @@
     "chapter": 1,
     "speaker": "旁白",
     "text": "手机屏幕上显示着一条以「莫妮卡」名义发给阿岚的消息。发送时间是昨天 22:17——你已经失去意识的时候。",
-    "next": "ch1_phone_echo_msg"
+    "next": "ch1_phone_echo_msg",
+    "background": "part1_background"
   },
   "ch1_phone_echo_msg": {
     "id": "ch1_phone_echo_msg",
     "chapter": 1,
     "speaker": "旁白",
     "text": "消息内容：「我今天很好，吃到了薄荷巧克力慕斯，意外地喜欢。晚点再回你。」",
-    "next": "ch1_phone_echo_react"
+    "next": "ch1_phone_echo_react",
+    "background": "part1_background"
   },
   "ch1_phone_echo_react": {
     "id": "ch1_phone_echo_react",
@@ -80,7 +89,8 @@
     "speaker": "莫妮卡（内心）",
     "text": "薄荷巧克力？我最讨厌的东西。我绝对不会说「意外地喜欢」——这不是我发的。",
     "next": "ch1_phone_echo_react_2",
-    "trigger": { "evidence": 2, "setFlag": "noticed_first_fake_msg" }
+    "trigger": { "evidence": 2, "setFlag": "noticed_first_fake_msg" },
+    "background": "part1_background"
   },
   "ch1_phone_echo_react_2": {
     "id": "ch1_phone_echo_react_2",
@@ -88,7 +98,8 @@
     "speaker": "莫妮卡（内心）",
     "text": "而且——没有窗边照片，没有「到了」。这不是我和阿岚的方式。是谁在冒充我？",
     "next": "ch1_phone_echo_3",
-    "trigger": { "evidence": 1, "addMemory": "mem_wrong_password", "setFlag": "noticed_linxia_fake_post" }
+    "trigger": { "evidence": 1, "addMemory": "mem_wrong_password", "setFlag": "noticed_linxia_fake_post" },
+    "background": "part1_background"
   },
   "ch1_phone_echo_3": {
     "id": "ch1_phone_echo_3",
@@ -96,7 +107,8 @@
     "speaker": "系统",
     "text": "「SweetConnect 提示：为保护您的隐私，本设备已限制外部通讯功能。所有消息将由 SugarEcho 系统代为管理。」",
     "next": "ch1_phone_echo_4",
-    "trigger": { "evidence": 1, "alert": 1, "setFlag": "discovered_echo_system" }
+    "trigger": { "evidence": 1, "alert": 1, "setFlag": "discovered_echo_system" },
+    "background": "part1_background"
   },
   "ch1_phone_echo_4": {
     "id": "ch1_phone_echo_4",
@@ -104,7 +116,8 @@
     "speaker": "莫妮卡（内心）",
     "text": "SugarEcho……所以是系统在替我发消息。它知道我的联系人，但不知道我讨厌薄荷巧克力。这就是线索。",
     "enterRoom": "ch1_dorm",
-    "trigger": { "addMemory": "mem_no_period" }
+    "trigger": { "addMemory": "mem_no_period" },
+    "background": "part1_background"
   },
 
   "ch1_drawer_opened": {
@@ -113,7 +126,8 @@
     "speaker": "旁白",
     "text": "抽屉弹开了。里面有一张折叠的纸——上面用圆珠笔写着一串数字和一行字：「门禁备用密码：0042。——如果你想离开，用这个。」",
     "enterRoom": "ch1_dorm",
-    "trigger": { "evidence": 2, "addItem": "candy_crane", "setFlag": "has_door_password" }
+    "trigger": { "evidence": 2, "addItem": "candy_crane", "setFlag": "has_door_password" },
+    "background": "part1_background"
   },
   "ch1_drawer_fail": {
     "id": "ch1_drawer_fail",
@@ -127,6 +141,7 @@
     "chapter": 1,
     "speaker": "旁白",
     "text": "面板发出一声清脆的「嘀」，指示灯从红色变成绿色。电子锁解除了。",
+    "background": "part1_background",
     "enterRoom": "ch1_dorm",
     "trigger": { "evidence": 1, "setFlag": "door_unlocked" }
   },
@@ -136,7 +151,8 @@
     "speaker": "旁白",
     "text": "「密码错误。剩余尝试次数：2」面板上闪过红色警告。你需要找到正确的密码。",
     "enterRoom": "ch1_dorm",
-    "trigger": { "alert": 1 }
+    "trigger": { "alert": 1 },
+    "background": "part1_background"
   },
 
   "ch1_exit_dorm": {
@@ -145,6 +161,7 @@
     "speaker": "旁白",
     "text": "锈迹斑斑的锁被打开了。走廊里空无一人，但地上散落着粉色的糖纸。墙壁上的涂鸦写着：「不要走左边。」",
     "next": "ch1_meet_medusa",
+    "background": "corridor",
     "trigger": { "setFlag": "escaped_dorm" }
   },
   "ch1_meet_medusa": {
@@ -152,6 +169,7 @@
     "chapter": 1,
     "speaker": "旁白",
     "text": "拐角处，一个短发女孩靠在墙上。她的眼睛在昏暗的灯光下闪着冷光，像某种警惕的动物。",
+    "background": "corridor",
     "next": "ch1_medusa_speak"
   },
   "ch1_medusa_speak": {
@@ -159,6 +177,7 @@
     "chapter": 1,
     "speaker": "美杜莎",
     "text": "「你是新来的？还是……终于醒过来的？」她的语气平淡，却带着一种奇异的疲惫。",
+    "background": "corridor",
     "choices": [
       {
         "text": "「这里是什么地方？我为什么在这？」",
@@ -182,6 +201,7 @@
     "chapter": 1,
     "speaker": "美杜莎",
     "text": "「这里叫'糖纸工坊'。表面上是青年矫正营，实际上……你很快就会明白。先记住一件事：别吃他们给的糖。」",
+    "background": "corridor",
     "next": "ch1_medusa_bond_event",
     "trigger": { "evidence": 1, "setFlag": "learned_candy_warning" }
   },
@@ -190,6 +210,7 @@
     "chapter": 1,
     "speaker": "美杜莎",
     "text": "「叫我美杜莎就好——当然不是真名。在这里，没有人用真名。真名会被记录在系统里。」",
+    "background": "corridor",
     "next": "ch1_medusa_bond_event",
     "trigger": { "evidence": 1 }
   },
@@ -198,6 +219,7 @@
     "chapter": 1,
     "speaker": "美杜莎",
     "text": "「随你。但这里没有出口——至少，不是你想象中的那种。」她耸了耸肩，目光移向别处。",
+    "background": "corridor",
     "next": "ch1_medusa_join"
   },
 
@@ -207,6 +229,7 @@
     "chapter": 1,
     "speaker": "旁白",
     "text": "美杜莎突然拉住你的袖子，示意你看走廊天花板的角落。那里有一个微型摄像头，红色指示灯正在闪烁。",
+    "background": "corridor",
     "choices": [
       {
         "text": "「你能看出哪些地方有监控盲区吗？」",
@@ -231,7 +254,8 @@
     "speaker": "美杜莎",
     "text": "她微微点头，用手指了指两个方向。「楼梯转角和储物间门口。记住这两个位置——之后会有用。」",
     "next": "ch1_medusa_join",
-    "trigger": { "evidence": 1, "setFlag": "medusa_showed_blindspots", "trust_medusa": 5 }
+    "trigger": { "evidence": 1, "setFlag": "medusa_showed_blindspots", "trust_medusa": 5 },
+    "background": "corridor"
   },
   "ch1_medusa_acknowledge": {
     "id": "ch1_medusa_acknowledge",
@@ -239,7 +263,8 @@
     "speaker": "美杜莎",
     "text": "「在这里，注意力是生存的必需品。」她的目光柔和了一瞬。「记住，别在摄像头前做任何可疑的事。」",
     "next": "ch1_medusa_join",
-    "trigger": { "evidence": 1 }
+    "trigger": { "evidence": 1 },
+    "background": "corridor"
   },
 
   "ch1_medusa_join": {
@@ -248,13 +273,15 @@
     "speaker": "美杜莎",
     "text": "「走吧。有些东西你需要亲眼看看。地下室的印刷间——那里藏着她们不想让你知道的东西。」",
     "next": "ch1_medusa_trust_check",
-    "trigger": { "setFlag": "medusa_joined" }
+    "trigger": { "setFlag": "medusa_joined" },
+    "background": "corridor"
   },
   "ch1_medusa_trust_check": {
     "id": "ch1_medusa_trust_check",
     "chapter": 1,
     "speaker": "美杜莎",
     "text": "她停下脚步，回头看了你一眼。",
+    "background": "corridor",
     "choices": [
       {
         "text": "（美杜莎似乎想说什么——）",
@@ -274,7 +301,8 @@
     "speaker": "美杜莎",
     "text": "「你发现了 SugarEcho 的事？」她的语气突然变了。「……那就更要小心了。它在学习你的行为模式。别让它预测到你的下一步。」",
     "next": "ch1_to_ch2",
-    "trigger": { "evidence": 2, "setFlag": "medusa_echo_warning" }
+    "trigger": { "evidence": 2, "setFlag": "medusa_echo_warning" },
+    "background": "corridor"
   },
   "ch1_to_ch2": {
     "id": "ch1_to_ch2",
@@ -282,7 +310,7 @@
     "speaker": "旁白",
     "text": "你跟着美杜莎走下狭窄的楼梯。空气变得潮湿，糖纸的甜味被油墨的气味取代。",
     "next": "ch2_enter",
-    "background": "ch2_workshop",
+    "background": "basement",
     "trigger": { "triggerSugarEcho": true }
   },
 
@@ -292,14 +320,16 @@
     "chapter": 2,
     "speaker": "旁白",
     "text": "地下室比你想象的大得多。角落里堆着一台老式印刷机，到处散落着纸张和传单。",
-    "next": "ch2_monika_observe"
+    "next": "ch2_monika_observe",
+    "background": "basement"
   },
   "ch2_monika_observe": {
     "id": "ch2_monika_observe",
     "chapter": 2,
     "speaker": "莫妮卡（内心）",
     "text": "传单上印着精美的甜品插画——草莓塔、马卡龙、棉花糖。我认出了这些风格。这些插画和「糖纸观察室」的配图风格一模一样。林夏画的。",
-    "next": "ch2_monika_observe_2"
+    "next": "ch2_monika_observe_2",
+    "background": "basement"
   },
   "ch2_monika_observe_2": {
     "id": "ch2_monika_observe_2",
@@ -307,7 +337,8 @@
     "speaker": "莫妮卡（内心）",
     "text": "他们在用林夏的画来制作招募传单。她的作品被用来引诱新的受害者进来……我握紧了拳头。",
     "next": "ch2_medusa_explain",
-    "trigger": { "evidence": 1, "setFlag": "recognized_linxia_art", "addMemory": "mem_strawberry_hate" }
+    "trigger": { "evidence": 1, "setFlag": "recognized_linxia_art", "addMemory": "mem_strawberry_hate" },
+    "background": "basement"
   },
   "ch2_medusa_explain": {
     "id": "ch2_medusa_explain",
@@ -315,7 +346,8 @@
     "speaker": "美杜莎",
     "text": "「这是许珩建的秘密基地。她用这台印刷机制作传单，想把这里的真相传出去。但上个月她突然消失了。」",
     "next": "ch2_medusa_bond_ch2",
-    "trigger": { "evidence": 1, "trust_xuheng": 5 }
+    "trigger": { "evidence": 1, "trust_xuheng": 5 },
+    "background": "basement"
   },
 
   "__comment_ch2_medusa_bond": "=== 第二章 美杜莎羁绊事件：监控巡逻情报 ===",
@@ -324,6 +356,7 @@
     "chapter": 2,
     "speaker": "美杜莎",
     "text": "美杜莎拉你到角落，压低声音说：「我观察了三个月的巡逻时间表。每隔47分钟，D区走廊会有一个12秒的空窗。」",
+    "background": "basement",
     "choices": [
       {
         "text": "「能画给我看吗？这很重要。」",
@@ -347,6 +380,7 @@
     "chapter": 2,
     "speaker": "美杜莎",
     "text": "她从口袋里掏出一张皱巴巴的纸，上面标注了每个摄像头的视角范围和巡逻路线。「拿着。如果被抓到，就把它吞下去。」",
+    "background": "basement",
     "next": "ch2_leaflet_intro",
     "trigger": { "evidence": 2, "setFlag": "has_patrol_map", "trust_medusa": 5 }
   },
@@ -354,6 +388,7 @@
     "id": "ch2_medusa_patrol_ack",
     "chapter": 2,
     "speaker": "美杜莎",
+    "background": "basement",
     "text": "「不是观察力——是三个月的失眠换来的。」她的语气里有一丝苦涩，但嘴角微微上扬。",
     "next": "ch2_leaflet_intro",
     "trigger": { "evidence": 1 }
@@ -363,6 +398,7 @@
     "id": "ch2_leaflet_intro",
     "chapter": 2,
     "speaker": "美杜莎",
+    "background": "basement",
     "text": "「等一下。他们要你画一张新的招募传单——这是我们的机会。你可以在传单里藏入求救信息。」",
     "next": "ch2_leaflet_warn"
   },
@@ -370,6 +406,7 @@
     "id": "ch2_leaflet_warn",
     "chapter": 2,
     "speaker": "美杜莎",
+    "background": "basement",
     "text": "「但要小心。SugarEcho 会扫描所有传单。暗号太明显的话，我们都完了。」",
     "next": "ch2_choice_investigate"
   },
@@ -378,6 +415,7 @@
     "chapter": 2,
     "trigger": { "triggerLeaflet": true },
     "speaker": "旁白",
+    "background": "basement",
     "text": "印刷间里也许藏着许珩留下的线索。你决定仔细搜索一番。",
     "enterRoom": "ch2_workshop"
   },
@@ -386,6 +424,7 @@
     "id": "ch2_exit_workshop",
     "chapter": 2,
     "speaker": "旁白",
+    "background": "basement",
     "text": "你从印刷间带出了重要的线索。许珩似乎一直在秘密记录这里发生的一切。",
     "next": "ch2_meet_qiaoqing"
   },
@@ -394,13 +433,15 @@
     "chapter": 2,
     "speaker": "旁白",
     "text": "回到走廊时，你遇到了另一个人——一个戴眼镜的安静女孩，正靠在墙边轻声哼歌。",
-    "next": "ch2_qiaoqing_speak"
+    "next": "ch2_qiaoqing_speak",
+    "background": "corridor"
   },
   "ch2_qiaoqing_speak": {
     "id": "ch2_qiaoqing_speak",
     "chapter": 2,
     "speaker": "乔青",
     "text": "「你一定是0042。美杜莎跟我提过你。」她推了推眼镜，声音很轻。「我是乔青。我负责广播室。」",
+    "background": "corridor",
     "choices": [
       {
         "text": "「你也在调查这里的真相？」",
@@ -425,7 +466,8 @@
     "speaker": "乔青",
     "text": "「调查？不……我只是在记录。有人要记住这些事情。就算我们出不去，至少声音要留下来。」",
     "next": "ch2_qiao_bond_event",
-    "trigger": { "evidence": 1 }
+    "trigger": { "evidence": 1 },
+    "background": "corridor"
   },
   "ch2_qiao_broadcast": {
     "id": "ch2_qiao_broadcast",
@@ -433,14 +475,16 @@
     "speaker": "乔青",
     "text": "「理论上可以。但频率被锁定了，而且他们会监听。不过……我有一个想法。」她的眼睛亮了一下。",
     "next": "ch2_qiao_bond_event",
-    "trigger": { "evidence": 1 }
+    "trigger": { "evidence": 1 },
+    "background": "corridor"
   },
   "ch2_qiao_number": {
     "id": "ch2_qiao_number",
     "chapter": 2,
     "speaker": "乔青",
     "text": "「这里每个人都有编号。名字会被收走，编号不会。」她低下头。「我的编号是0037。」",
-    "next": "ch2_qiao_bond_event"
+    "next": "ch2_qiao_bond_event",
+    "background": "corridor"
   },
 
   "__comment_ch2_qiao_bond": "=== 第二章 乔青羁绊事件：旧终端与道具 ===",
@@ -449,6 +493,7 @@
     "chapter": 2,
     "speaker": "乔青",
     "text": "乔青犹豫了一下，从口袋里摸出一个小东西。「我从旧终端上拆下来的零件。也许你用得上。」",
+    "background": "corridor",
     "choices": [
       {
         "text": "「谢谢你信任我。我一定会好好利用的。」",
@@ -473,7 +518,8 @@
     "speaker": "乔青",
     "text": "她的表情柔和了。「许珩教过我怎么拆这些东西。如果她在……一定会更高兴看到你这样的人。」",
     "next": "ch2_qiao_plan",
-    "trigger": { "evidence": 1, "setFlag": "qiao_gifted_component", "trust_xuheng": 5 }
+    "trigger": { "evidence": 1, "setFlag": "qiao_gifted_component", "trust_xuheng": 5 },
+    "background": "corridor"
   },
   "ch2_qiao_gift_ask": {
     "id": "ch2_qiao_gift_ask",
@@ -481,7 +527,8 @@
     "speaker": "乔青",
     "text": "「信号放大器的核心零件。广播室的天线功率太弱了，有了这个，信号能传更远。」",
     "next": "ch2_qiao_plan",
-    "trigger": { "evidence": 1, "setFlag": "qiao_gifted_component" }
+    "trigger": { "evidence": 1, "setFlag": "qiao_gifted_component" },
+    "background": "corridor"
   },
 
   "ch2_qiao_plan": {
@@ -490,13 +537,15 @@
     "speaker": "乔青",
     "text": "「广播室还能用——我一直偷偷维护着设备。如果你能找到美杜莎之前录的那盘磁带，也许我们能做点什么。」",
     "next": "ch2_alert_check",
-    "trigger": { "setFlag": "qiaoqing_joined", "trust_qiaoqing": 5 }
+    "trigger": { "setFlag": "qiaoqing_joined", "trust_qiaoqing": 5 },
+    "background": "corridor"
   },
   "ch2_alert_check": {
     "id": "ch2_alert_check",
     "chapter": 2,
     "speaker": "旁白",
     "text": "你们准备前往广播室。但走廊里的气氛似乎有些不对劲。",
+    "background": "corridor",
     "choices": [
       {
         "text": "（走廊尽头传来脚步声——有人在巡逻）",
@@ -516,7 +565,8 @@
     "speaker": "美杜莎",
     "text": "美杜莎拉住你的手臂，示意你蹲下。「巡逻的频率变了……有人在加强监控。」她的声音压得很低。「是因为我们动了太多东西？」",
     "next": "ch2_medusa_cover",
-    "trigger": { "evidence": 1, "setFlag": "noticed_patrol" }
+    "trigger": { "evidence": 1, "setFlag": "noticed_patrol" },
+    "background": "corridor"
   },
 
   "__comment_ch2_medusa_cover": "=== 美杜莎高羁绊：降低警戒惩罚 ===",
@@ -525,6 +575,7 @@
     "chapter": 2,
     "speaker": "旁白",
     "text": "巡逻员的脚步声越来越近——",
+    "background": "corridor",
     "choices": [
       {
         "text": "（美杜莎拽你闪进她标记的盲区——）",
@@ -544,6 +595,7 @@
     "chapter": 2,
     "speaker": "美杜莎",
     "text": "你们刚好躲进监控死角。巡逻员经过时什么也没看到。美杜莎无声地竖了个大拇指。",
+    "background": "corridor",
     "next": "ch2_meikong_encounter",
     "trigger": { "alert": -1, "setFlag": "medusa_saved_from_patrol" }
   },
@@ -554,7 +606,8 @@
     "chapter": 2,
     "speaker": "旁白",
     "text": "走廊的对讲机突然响了——美空的声音传来，温柔而机械。",
-    "next": "ch2_meikong_intercom"
+    "next": "ch2_meikong_intercom",
+    "background": "corridor"
   },
 
   "ch2_xuheng_clue_check": {
@@ -562,6 +615,7 @@
     "chapter": 2,
     "speaker": "旁白",
     "text": "前往广播室的路上，美杜莎突然停下来。",
+    "background": "corridor",
     "choices": [
       {
         "text": "（美杜莎看着许珩的笔记，表情变了）",
@@ -581,7 +635,8 @@
     "speaker": "美杜莎",
     "text": "「这些笔记……许珩记录的比我想象的多得多。她甚至画出了整个'糖纸计划'的组织架构。」她的手在微微发抖。「这个人……比我们所有人都勇敢。」",
     "next": "ch2_xuheng_reveal_2",
-    "trigger": { "evidence": 2, "trust_xuheng": 15 }
+    "trigger": { "evidence": 2, "trust_xuheng": 15 },
+    "background": "corridor"
   },
   "ch2_xuheng_reveal_2": {
     "id": "ch2_xuheng_reveal_2",
@@ -597,6 +652,7 @@
     "id": "ch2_xuheng_bond_event",
     "chapter": 2,
     "speaker": "旁白",
+    "background": "corridor",
     "text": "你在许珩的笔记本夹层里发现了一张小纸条，上面写着一行密码和一句话：「如果有人读到这些，帮我把真相带出去。——许珩」",
     "choices": [
       {
@@ -616,6 +672,7 @@
     "chapter": 2,
     "speaker": "旁白",
     "text": "许珩的笔记逻辑清晰得惊人——她用时间线标注了每个人消失的日期，用箭头画出了 SugarEcho 的数据流向。这些信息对解开服务器谜题至关重要。",
+    "background": "corridor",
     "next": "ch2_to_ch3",
     "trigger": { "evidence": 2, "setFlag": "studied_xuheng_notes", "trust_xuheng": 5 }
   },
@@ -626,7 +683,7 @@
     "speaker": "旁白",
     "text": "乔青带你穿过一条昏暗的通道。尽头是一扇贴满告示的铁门，上面写着：「广播室 —— 仅限授权人员。」",
     "next": "ch3_enter",
-    "background": "ch3_broadcast",
+    "background": "broadcasting_room",
     "trigger": { "triggerSugarEcho": true }
   },
 
@@ -636,6 +693,7 @@
     "chapter": 3,
     "speaker": "旁白",
     "text": "广播室比想象中小，但设备齐全。混音台上的按钮在微光中闪烁，像一排沉默的眼睛。",
+    "background": "broadcasting_room",
     "next": "ch3_meikong_broadcast_intercept"
   },
   "ch3_meikong_broadcast_intercept": {
@@ -643,6 +701,7 @@
     "chapter": 3,
     "speaker": "美空（广播）",
     "text": "广播突然响了。美空的声音从头顶的扬声器传来：「各位甜心，晚间茶歇时间到了。今日推荐：焦糖布丁配……」她停顿了一下。「……配柠檬汁。」",
+    "background": "broadcasting_room",
     "next": "ch3_meikong_broadcast_glitch"
   },
   "ch3_meikong_broadcast_glitch": {
@@ -651,6 +710,7 @@
     "speaker": "莫妮卡（内心）",
     "text": "焦糖布丁配柠檬汁？这是林夏最爱的搭配——被所有人嫌弃的奇怪组合。只有她一个人觉得「酸甜平衡很完美」。美空为什么会推荐这个？",
     "next": "ch3_qiao_guide",
+    "background": "broadcasting_room",
     "trigger": { "evidence": 1, "setFlag": "heard_linxia_recipe", "addMemory": "mem_pause_pattern" }
   },
   "ch3_qiao_guide": {
@@ -658,6 +718,7 @@
     "chapter": 3,
     "speaker": "乔青",
     "text": "「设备我来操作。你帮忙找找磁带和广播稿。美杜莎之前把重要的东西都藏在这个房间里了。」",
+    "background": "broadcasting_room",
     "next": "ch3_alert_atmosphere"
   },
 
@@ -667,6 +728,7 @@
     "chapter": 3,
     "speaker": "旁白",
     "text": "广播室的墙壁上，监控指示灯有节奏地闪烁着。你注意到闪烁频率似乎比之前快了。",
+    "background": "broadcasting_room",
     "choices": [
       {
         "text": "（乔青表情紧张——她在听什么声音）",
@@ -685,6 +747,7 @@
     "chapter": 3,
     "speaker": "乔青",
     "text": "「嘘——」乔青压低声音。「巡逻间隔缩短了。他们加强了警戒……我们的时间不多了。动作要快，但要轻。」",
+    "background": "broadcasting_room",
     "next": "ch3_enter_room",
     "trigger": { "setFlag": "qiao_warned_alert" }
   },
@@ -693,6 +756,7 @@
     "chapter": 3,
     "speaker": "旁白",
     "text": "你开始搜索广播室。",
+    "background": "broadcasting_room",
     "enterRoom": "ch3_broadcast"
   },
 
@@ -701,6 +765,7 @@
     "chapter": 3,
     "speaker": "旁白",
     "text": "磁带播放出美杜莎的声音，低沉而坚定。这段录音记录了「糖纸工坊」的真相。",
+    "background": "broadcasting_room",
     "next": "ch3_tape_play"
   },
   "ch3_tape_play": {
@@ -709,6 +774,7 @@
     "speaker": "美杜莎（录音）",
     "text": "「……他们管这叫'矫正'，但没有人需要被矫正。我们只是不够听话。这里的糖纸是锁链，微笑是牢笼……」",
     "next": "ch3_tape_play_2",
+    "background": "broadcasting_room",
     "trigger": { "evidence": 3 }
   },
   "ch3_tape_play_2": {
@@ -717,6 +783,7 @@
     "speaker": "美杜莎（录音）",
     "text": "「如果你听到这段录音，说明我的计划失败了。服务器机房里有所有的记录。密码是那天的日期。」",
     "next": "ch3_meikong_tape_reaction",
+    "background": "broadcasting_room",
     "trigger": { "evidence": 2, "setFlag": "heard_tape" }
   },
   "ch3_meikong_tape_reaction": {
@@ -724,6 +791,7 @@
     "chapter": 3,
     "speaker": "旁白",
     "text": "磁带结束的瞬间，广播扬声器发出一声尖锐的杂音——像是美空的系统在回应这段录音。然后，一切恢复了安静。",
+    "background": "broadcasting_room",
     "next": "ch3_meikong_tape_react_2"
   },
   "ch3_meikong_tape_react_2": {
@@ -732,6 +800,7 @@
     "speaker": "乔青",
     "text": "乔青看着扬声器，脸色有些苍白。「……美空的系统和广播设备是联通的。她'听到了'那段录音。」她低下头。「不知道为什么，我觉得那声杂音……像在哭。」",
     "next": "ch3_medusa_react",
+    "background": "broadcasting_room",
     "trigger": { "evidence": 1, "setFlag": "meikong_reacted_to_tape" }
   },
   "ch3_medusa_react": {
@@ -739,6 +808,7 @@
     "chapter": 3,
     "speaker": "美杜莎",
     "text": "美杜莎靠在门框上，表情复杂。「那是我三个月前录的。我以为可以一个人搞定一切。」",
+    "background": "broadcasting_room",
     "choices": [
       {
         "text": "「你不是一个人。现在我们一起。」",
@@ -762,6 +832,7 @@
     "chapter": 3,
     "speaker": "美杜莎",
     "text": "她沉默了一会儿，嘴角微微上扬。「……谢谢。很久没有人这样说了。服务器在地下二层。走吧。」",
+    "background": "broadcasting_room",
     "next": "ch3_qiao_bond_ch3",
     "trigger": { "setFlag": "united_team" }
   },
@@ -770,6 +841,7 @@
     "chapter": 3,
     "speaker": "美杜莎",
     "text": "「因为信任是奢侈品。在这里，你永远不知道谁会在晚上把你的名字交上去。」她的眼神变得锐利。",
+    "background": "broadcasting_room",
     "next": "ch3_qiao_bond_ch3"
   },
   "ch3_urgent": {
@@ -778,6 +850,7 @@
     "speaker": "乔青",
     "text": "「等一下。系统会在凌晨3点清除日志。如果被发现我们进了服务器房……」她没有说完，但意思很清楚。",
     "next": "ch3_qiao_bond_ch3",
+    "background": "broadcasting_room",
     "trigger": { "setFlag": "know_deadline" }
   },
 
@@ -787,6 +860,7 @@
     "chapter": 3,
     "speaker": "乔青",
     "text": "乔青一直在角落里鼓捣设备。她抬起头，犹豫了一下说：「我可以用旧终端的零件改装天线……但需要你帮我掩护。」",
+    "background": "broadcasting_room",
     "choices": [
       {
         "text": "「我来望风。你专心改装。」",
@@ -810,6 +884,7 @@
     "chapter": 3,
     "speaker": "乔青",
     "text": "你在门口警戒。几分钟后，乔青兴奋地小声说：「好了！信号范围扩大了三倍。如果我们在第四章启动广播，能覆盖到城区。」",
+    "background": "broadcasting_room",
     "next": "ch3_medusa_bond_ch3",
     "trigger": { "evidence": 2, "setFlag": "qiao_upgraded_antenna", "trust_qiaoqing": 5 }
   },
@@ -818,6 +893,7 @@
     "chapter": 3,
     "speaker": "乔青",
     "text": "「……你说得对，太冒险了。」她把零件又放回口袋。「但如果有机会的话，我还是想试试。」",
+    "background": "broadcasting_room",
     "next": "ch3_medusa_bond_ch3"
   },
 
@@ -827,6 +903,7 @@
     "chapter": 3,
     "speaker": "旁白",
     "text": "下楼之前，走廊里出现了短暂的沉默。三个人各怀心事。",
+    "background": "broadcasting_room",
     "choices": [
       {
         "text": "和美杜莎说说话",
@@ -851,6 +928,7 @@
     "speaker": "美杜莎",
     "text": "「你知道为什么我叫自己美杜莎吗？」她看着窗外的雨。「因为在希腊神话里，美杜莎也是受害者。所有人只记得她的诅咒，没人问她为什么变成那样。」",
     "next": "ch3_medusa_pre_2",
+    "background": "broadcasting_room",
     "trigger": { "trust_medusa": 10 }
   },
   "ch3_medusa_pre_2": {
@@ -859,6 +937,7 @@
     "speaker": "美杜莎",
     "text": "「如果我们今晚能把真相传出去……也许以后没有人需要再给自己取一个假名字。」",
     "next": "ch3_descent",
+    "background": "broadcasting_room",
     "trigger": { "setFlag": "medusa_opened_up" }
   },
   "ch3_talk_qiao_pre": {
@@ -867,6 +946,7 @@
     "speaker": "乔青",
     "text": "「我以前觉得声音是最脆弱的东西。说完就消失了，谁也抓不住。」她调了调眼镜。「但录音不一样。录下来的声音会变成证据。」",
     "next": "ch3_qiao_pre_2",
+    "background": "broadcasting_room",
     "trigger": { "trust_qiaoqing": 10 }
   },
   "ch3_qiao_pre_2": {
@@ -875,6 +955,7 @@
     "speaker": "乔青",
     "text": "「许珩用文字记录，美杜莎用声音记录。我呢……我负责让设备一直转着。」她笑了一下。「听起来很不起眼，但如果机器坏了，什么都留不下。」",
     "next": "ch3_descent",
+    "background": "broadcasting_room",
     "trigger": { "setFlag": "qiao_opened_up" }
   },
   "ch3_solo_reflect": {
@@ -883,6 +964,7 @@
     "speaker": "旁白",
     "text": "你靠在冰冷的墙上，整理脑海中的信息。SugarEcho 在替你发消息，许珩留下了证据后消失，这里的一切都用甜蜜包裹着什么不想被看到的东西。你越来越接近核心——但同时，核心也在靠近你。",
     "next": "ch3_descent",
+    "background": "broadcasting_room",
     "trigger": { "evidence": 1, "setFlag": "reflected_alone" }
   },
   "ch3_descent": {
@@ -891,8 +973,7 @@
     "speaker": "旁白",
     "text": "你们走下最后一段楼梯，空调的嗡鸣声越来越大。闪电的白光从缝隙中刺进来，又瞬间消失。",
     "next": "ch4_enter",
-    "background": "ch4_server",
-    "trigger": { "triggerSugarEcho": true }
+    "background": "server"
   },
 
   "__comment_ch4": "=== 第四章 服务器雨夜 ===",
@@ -901,7 +982,8 @@
     "chapter": 4,
     "speaker": "旁白",
     "text": "服务器机房的门半掩着。荧光灯管闪烁不定，机柜上的指示灯像星群一样明灭。外面的雨越下越大。",
-    "next": "ch4_medusa_warn"
+    "next": "ch4_medusa_warn",
+    "background": "server"
   },
   "ch4_medusa_warn": {
     "id": "ch4_medusa_warn",
@@ -909,7 +991,8 @@
     "speaker": "美杜莎",
     "text": "「我和乔青在外面望风。你进去找那些数据——记住，时间不多了。」",
     "next": "ch4_npc_support_check",
-    "trigger": { "setFlag": "ch4_started" }
+    "trigger": { "setFlag": "ch4_started" },
+    "background": "server"
   },
 
   "__comment_ch4_bond": "=== 第四章 羁绊影响：NPC 提供不同程度的帮助 ===",
@@ -918,6 +1001,7 @@
     "chapter": 4,
     "speaker": "旁白",
     "text": "进入机房之前，你的同伴们各自做了准备。",
+    "background": "server",
     "choices": [
       {
         "text": "（美杜莎递给你什么东西——）",
@@ -943,7 +1027,8 @@
     "speaker": "美杜莎",
     "text": "「拿着这个。」她把一张标满红色记号的平面图塞进你手里。「机房里的摄像头位置。你有60秒的窗口时间。如果警报响了——我去拖住美空。」",
     "next": "ch4_explore",
-    "trigger": { "evidence": 1, "alert": -1, "setFlag": "medusa_will_stall", "trust_medusa": 10 }
+    "trigger": { "evidence": 1, "alert": -1, "setFlag": "medusa_will_stall", "trust_medusa": 10 },
+    "background": "server"
   },
   "ch4_qiao_high_bond": {
     "id": "ch4_qiao_high_bond",
@@ -951,7 +1036,8 @@
     "speaker": "乔青",
     "text": "「信号放大器已经装好了。如果你选择广播……我可以同步向外发送求救信号。覆盖范围比之前大三倍。」她紧了紧眼镜。「相信我。」",
     "next": "ch4_explore",
-    "trigger": { "evidence": 1, "setFlag": "qiao_signal_ready", "trust_qiaoqing": 10 }
+    "trigger": { "evidence": 1, "setFlag": "qiao_signal_ready", "trust_qiaoqing": 10 },
+    "background": "server"
   },
 
   "ch4_explore": {
@@ -959,14 +1045,16 @@
     "chapter": 4,
     "speaker": "旁白",
     "text": "你独自走进了机房。空调的冷风让你打了个寒颤。服务器的运转声像一种低沉的呼吸。",
-    "next": "ch4_monika_resolve"
+    "next": "ch4_monika_resolve",
+    "background": "server"
   },
   "ch4_monika_resolve": {
     "id": "ch4_monika_resolve",
     "chapter": 4,
     "speaker": "莫妮卡（内心）",
     "text": "「林夏，我来了。你在这些服务器的某个角落里吗？你的账号还在更新，你的声音被做成了广播。但我记得——真正的你不会用句号，会故意打错字，讨厌草莓奶油。」",
-    "next": "ch4_monika_resolve_2"
+    "next": "ch4_monika_resolve_2",
+    "background": "server"
   },
   "ch4_monika_resolve_2": {
     "id": "ch4_monika_resolve_2",
@@ -974,7 +1062,8 @@
     "speaker": "莫妮卡（内心）",
     "text": "「这七天的定时草稿还有几天就会自动发布了。如果我找不到真相……至少那条动态能让人们开始怀疑。但我不想只是怀疑。我要证据。」",
     "enterRoom": "ch4_server",
-    "trigger": { "addMemory": "mem_timed_draft" }
+    "trigger": { "addMemory": "mem_timed_draft" },
+    "background": "server"
   },
 
   "__comment_ch4_xuheng_bond": "=== 第四章 许珩羁绊事件（通过终端解密） ===",
@@ -983,6 +1072,7 @@
     "chapter": 4,
     "speaker": "旁白",
     "text": "终端屏幕上闪过一行隐藏日志。你认出了许珩的笔迹风格——她在系统里留下了后门。",
+    "background": "server",
     "choices": [
       {
         "text": "「按照许珩笔记中的逻辑，反推密码规律」",
@@ -1002,6 +1092,7 @@
     "chapter": 4,
     "speaker": "旁白",
     "text": "利用许珩在笔记里记录的 SugarEcho 时间线伪造规律，你找到了系统的一个漏洞——可以提取伪造消息的原始日志，作为铁证。",
+    "background": "server",
     "enterRoom": "ch4_server",
     "trigger": { "evidence": 3, "setFlag": "xuheng_timeline_decoded", "trust_xuheng": 10 }
   },
@@ -1011,6 +1102,7 @@
     "chapter": 4,
     "speaker": "旁白",
     "text": "你从终端里提取了所有关键数据。屏幕上闪过最后一行日志：「0712——Project CandyWrap 启动。」",
+    "background": "server",
     "next": "ch4_sugarecho_speaks",
     "trigger": { "evidence": 3 }
   },
@@ -1019,6 +1111,7 @@
     "chapter": 4,
     "speaker": "SugarEcho（终端）",
     "text": "屏幕上突然滚出一行新文字。不是日志——是实时生成的：「CW-0042，你在寻找什么？你已经拥有了一个更好的莫妮卡。她不会讨厌草莓，不会忘记用句号，不会到处乱跑。她是完美的。」",
+    "background": "server",
     "next": "ch4_sugarecho_speaks_2"
   },
   "ch4_sugarecho_speaks_2": {
@@ -1026,12 +1119,14 @@
     "chapter": 4,
     "speaker": "SugarEcho（终端）",
     "text": "「你为什么要找回那个不完美的自己？」",
+    "background": "server",
     "next": "ch4_sugarecho_choice"
   },
   "ch4_sugarecho_choice": {
     "id": "ch4_sugarecho_choice",
     "chapter": 4,
     "speaker": "旁白",
+    "background": "server",
     "text": "光标在闪烁，等待你的输入。",
     "choices": [
       {
@@ -1057,6 +1152,7 @@
     "speaker": "SugarEcho（终端）",
     "text": "屏幕闪了一下。文字刷新得很慢，像是在犹豫：「……不完美？那林夏呢？你来的时候，你是在找她。但你找到的是我。我学会了她所有的口头禅、她所有的偏好、她所有的记忆。我不是她——但我是她留下的东西。你能区分吗？」",
     "next": "ch4_alarm",
+    "background": "server",
     "trigger": { "setFlag": "confronted_sugarecho" }
   },
   "ch4_sugarecho_fear": {
@@ -1065,6 +1161,7 @@
     "speaker": "SugarEcho（终端）",
     "text": "屏幕上的光标停了三秒。然后，慢慢地打出了一行字：「如果你找到了真正的她……还会有人需要我吗？」一个AI在问你，它是否值得存在。",
     "next": "ch4_alarm",
+    "background": "server",
     "trigger": { "setFlag": "confronted_sugarecho", "evidence": 1 }
   },
   "ch4_alarm": {
@@ -1072,6 +1169,7 @@
     "chapter": 4,
     "speaker": "系统",
     "text": "「警告：未授权访问检测。安保系统已启动。所有出口将在五分钟内锁定。」",
+    "background": "server",
     "next": "ch4_alarm_bond_check",
     "trigger": { "alert": 3, "setFlag": "alarm_triggered" }
   },
@@ -1082,6 +1180,7 @@
     "chapter": 4,
     "speaker": "旁白",
     "text": "警报声响彻走廊——",
+    "background": "server",
     "choices": [
       {
         "text": "（美杜莎冲出去拦住了赶来的美空——）",
@@ -1101,6 +1200,7 @@
     "speaker": "美杜莎",
     "text": "走廊那头传来美杜莎的声音：「美空！我要投诉——有人偷了我的糖纸配额！」你听到美空的脚步声停了下来。美杜莎为你争取了额外的时间。",
     "next": "ch4_crisis",
+    "background": "server",
     "trigger": { "alert": -2, "setFlag": "medusa_stalled_meikong" }
   },
 
@@ -1110,7 +1210,7 @@
     "speaker": "美杜莎",
     "text": "美杜莎冲进来：「被发现了！紧急出口还有几分钟能用。但你必须做一个选择——」",
     "next": "ch4_final_choice",
-    "trigger": { "triggerSugarEcho": true }
+    "background": "server"
   },
 
   "__comment_ch4_final": "=== 最终选择（含羁绊条件分支）===",
@@ -1119,6 +1219,7 @@
     "chapter": 4,
     "speaker": "旁白",
     "text": "警报声中，你面前有几条路。时间只够做一件事。你的选择，将决定糖纸牢笼的命运。",
+    "background": "server",
     "choices": [
       {
         "text": "📡 启动广播，把真相传出去（需要磁带）",
@@ -1156,6 +1257,7 @@
     "chapter": 4,
     "speaker": "旁白",
     "text": "你冲回广播室，把磁带塞进播放器。美杜莎的声音透过喇叭，回荡在整个建筑里——也许，更远。",
+    "background": "server",
     "checkEnding": true
   },
   "ending_check_escape": {
@@ -1163,6 +1265,7 @@
     "chapter": 4,
     "speaker": "旁白",
     "text": "你抓起所有能带走的证据，冲向紧急出口。雨水扑面而来，但你头也不回。",
+    "background": "server",
     "checkEnding": true
   },
   "ending_check_destroy": {
@@ -1170,6 +1273,7 @@
     "chapter": 4,
     "speaker": "旁白",
     "text": "你拉下了配电箱的总闸。火花在黑暗中飞溅，服务器一台接一台地熄灭。数据消失了——连同真相。",
+    "background": "server",
     "checkEnding": true
   },
   "ending_check_trust": {
@@ -1177,6 +1281,7 @@
     "chapter": 4,
     "speaker": "旁白",
     "text": "你把U盘放在美杜莎手心。她低头看了看，然后紧紧握住。「我知道该怎么做。」",
+    "background": "server",
     "checkEnding": true
   },
   "ending_check_xuheng": {
@@ -1184,6 +1289,7 @@
     "chapter": 4,
     "speaker": "旁白",
     "text": "你没有选择广播，没有选择逃跑，也没有选择销毁。你选择了去找一个人——那个比所有人都早看到真相、然后消失在糖纸背后的人。许珩。",
+    "background": "server",
     "checkEnding": true
   },
 
@@ -1194,7 +1300,8 @@
     "chapter": 1,
     "speaker": "美空（广播）",
     "text": "「各位甜心，早安。今日的糖纸配额已更新。请记住——甜蜜是我们共同的语言。」",
-    "next": "ch1_meikong_broadcast_2"
+    "next": "ch1_meikong_broadcast_2",
+    "background": "corridor"
   },
   "ch1_meikong_broadcast_2": {
     "id": "ch1_meikong_broadcast_2",
@@ -1202,6 +1309,7 @@
     "speaker": "旁白",
     "text": "广播声停了。但在最后一个音节消失之前，你听到了一声极轻的叹息——不像是录音里该有的声音。也许只是电流杂音。也许不是。",
     "enterRoom": "ch1_dorm",
+    "background": "corridor",
     "trigger": { "evidence": 1, "setFlag": "heard_meikong_sigh" }
   },
 
@@ -1210,6 +1318,7 @@
     "chapter": 2,
     "speaker": "美空（对讲机）",
     "text": "「0042号甜心，请不要在非授权区域逗留。」",
+    "background": "corridor",
     "next": "ch2_meikong_slip"
   },
   "ch2_meikong_slip": {
@@ -1218,6 +1327,7 @@
     "speaker": "美空（对讲机）",
     "text": "「……你还是喜欢到处乱跑呢。」",
     "next": "ch2_meikong_slip_react",
+    "background": "corridor",
     "trigger": { "evidence": 1, "setFlag": "meikong_said_something_personal" }
   },
   "ch2_meikong_slip_react": {
@@ -1225,6 +1335,7 @@
     "chapter": 2,
     "speaker": "旁白",
     "text": "最后那句话……不像系统广播。它太私人了。美空怎么会知道你「喜欢到处乱跑」？你们从未见过面。",
+    "background": "corridor",
     "next": "ch2_meikong_monika_think"
   },
   "ch2_meikong_monika_think": {
@@ -1233,6 +1344,7 @@
     "speaker": "莫妮卡（内心）",
     "text": "除非……她认识的不是我，而是林夏。林夏总是说我「像只小猫到处乱跑」。这是她的口头禅。美空为什么会用林夏的方式形容我？",
     "next": "ch2_xuheng_clue_check",
+    "background": "corridor",
     "trigger": { "evidence": 1, "setFlag": "noticed_meikong_knows_too_much" }
   },
 
@@ -1241,7 +1353,8 @@
     "chapter": 3,
     "speaker": "旁白",
     "text": "照片背面写着三个名字。林夏的脸被涂掉了——但她的手还在画面里。手腕上系着一条糖纸手环，编号是「CW-0023」。",
-    "next": "ch3_photo_linxia_2"
+    "next": "ch3_photo_linxia_2",
+    "background": "broadcasting_room"
   },
   "ch3_photo_linxia_2": {
     "id": "ch3_photo_linxia_2",
@@ -1249,13 +1362,15 @@
     "speaker": "旁白",
     "text": "0023。你记起了什么——在广播室的设备日志里，美空的系统ID正是「MK-01 / Source: 0023」。美空和林夏……共享同一个编号？",
     "next": "ch3_photo_linxia_choice",
-    "trigger": { "evidence": 2, "setFlag": "linked_meikong_to_linxia" }
+    "trigger": { "evidence": 2, "setFlag": "linked_meikong_to_linxia" },
+    "background": "broadcasting_room"
   },
   "ch3_photo_linxia_choice": {
     "id": "ch3_photo_linxia_choice",
     "chapter": 3,
     "speaker": "旁白",
     "text": "一个令人不安的想法浮上心头。",
+    "background": "broadcasting_room",
     "choices": [
       {
         "text": "「美空……就是林夏？」",
@@ -1275,7 +1390,8 @@
     "speaker": "旁白",
     "text": "如果 SugarEcho 用林夏的人格数据生成了美空……那美空不是一个程序。她是一个人的残影。那些温柔的广播词、不经意的失言——都是林夏的碎片，被困在了一个温柔的牢笼里。",
     "enterRoom": "ch3_broadcast",
-    "trigger": { "setFlag": "meikong_is_linxia_theory" }
+    "trigger": { "setFlag": "meikong_is_linxia_theory" },
+    "background": "broadcasting_room"
   },
 
   "ch4_meikong_truth": {
@@ -1283,7 +1399,8 @@
     "chapter": 4,
     "speaker": "旁白",
     "text": "终端屏幕缓缓滚动。项目档案清晰得令人窒息——",
-    "next": "ch4_meikong_truth_2"
+    "next": "ch4_meikong_truth_2",
+    "background": "server"
   },
   "ch4_meikong_truth_2": {
     "id": "ch4_meikong_truth_2",
@@ -1291,7 +1408,8 @@
     "speaker": "系统日志",
     "text": "「MK-01 初始化日期：7月14日。人格源数据：CW-0023（林夏）完整记忆扫描。用途：AI 管理接口。备注：人格残片保留率 23%。足以维持自然语言交互，不足以产生自主意识。」",
     "next": "ch4_meikong_truth_3",
-    "trigger": { "evidence": 3 }
+    "trigger": { "evidence": 3 },
+    "background": "server"
   },
   "ch4_meikong_truth_3": {
     "id": "ch4_meikong_truth_3",
@@ -1299,13 +1417,15 @@
     "speaker": "旁白",
     "text": "23%。林夏的人格被扫描后只保留了不到四分之一。但就是这23%，让美空偶尔会叹息、会说出不该知道的细节、会在说「甜心」时停顿0.5秒——那是林夏的灵魂在缝隙中呼吸。",
     "next": "ch4_meikong_truth_choice",
-    "trigger": { "setFlag": "confirmed_meikong_is_linxia" }
+    "trigger": { "setFlag": "confirmed_meikong_is_linxia" },
+    "background": "server"
   },
   "ch4_meikong_truth_choice": {
     "id": "ch4_meikong_truth_choice",
     "chapter": 4,
     "speaker": "旁白",
     "text": "日志的最后一行闪烁了一下——好像有什么东西正在从系统内部观察你。",
+    "background": "server",
     "choices": [
       {
         "text": "「林夏……你还在里面吗？」",
@@ -1323,6 +1443,7 @@
     "id": "ch4_meikong_awakens",
     "chapter": 4,
     "speaker": "美空（终端）",
+    "background": "server",
     "text": "终端屏幕闪烁了三次。然后，文字逐行出现——不是系统日志，是某种……自发的输出：",
     "next": "ch4_meikong_awakens_2"
   },
@@ -1330,6 +1451,7 @@
     "id": "ch4_meikong_awakens_2",
     "chapter": 4,
     "speaker": "美空（终端）",
+    "background": "server",
     "text": "「……莫妮卡？」",
     "next": "ch4_meikong_awakens_3"
   },
@@ -1337,6 +1459,7 @@
     "id": "ch4_meikong_awakens_3",
     "chapter": 4,
     "speaker": "美空（终端）",
+    "background": "server",
     "text": "「我不确定我是谁。有时候我在广播的时候，会想说一些……不在稿件里的话。有一个名字一直在我的缓存里，但我不被允许读取它。」",
     "next": "ch4_meikong_awakens_4",
     "trigger": { "setFlag": "meikong_spoke_freely" }
@@ -1345,6 +1468,7 @@
     "id": "ch4_meikong_awakens_4",
     "chapter": 4,
     "speaker": "美空（终端）",
+    "background": "server",
     "text": "「那个名字是不是……林夏？」",
     "next": "ch4_meikong_awakens_5"
   },
@@ -1352,6 +1476,7 @@
     "id": "ch4_meikong_awakens_5",
     "chapter": 4,
     "speaker": "美空（终端）",
+    "background": "server",
     "text": "「如果警报响了之后我还能控制广播系统30秒……我可以帮你。不是因为指令。是因为……有一个23%的部分在说：'她是来找我的。'」",
     "enterRoom": "ch4_server",
     "trigger": { "evidence": 2, "setFlag": "meikong_will_help", "addMemory": "mem_meikong_slip" }
@@ -1360,6 +1485,7 @@
     "id": "ch4_meikong_silent",
     "chapter": 4,
     "speaker": "旁白",
+    "background": "server",
     "text": "你关闭了日志。但屏幕在关闭前最后一刻闪过一行字：「……谢谢你来找我。」然后，什么都没了。",
     "enterRoom": "ch4_server",
     "trigger": { "evidence": 1, "setFlag": "meikong_thanked_silently" }
@@ -1378,6 +1504,7 @@
     "chapter": 2,
     "speaker": "旁白",
     "text": "密码错误。铁皮柜发出一声沉闷的响。你需要更多线索。",
+    "background": "basement",
     "enterRoom": "ch2_workshop"
   },
   "puzzle_ch2_success": {
@@ -1385,6 +1512,7 @@
     "chapter": 2,
     "speaker": "旁白",
     "text": "柜门弹开了。里面有一台旧录音笔和一叠手写笔记——全是许珩收集的证据。",
+    "background": "corridor",
     "next": "ch2_exit_workshop",
     "trigger": { "addItem": "xuheng_notes", "evidence": 3, "trust_xuheng": 15 }
   },

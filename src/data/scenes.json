@@ -446,7 +446,7 @@
         "label": "服务器机柜",
         "icon": "🗄️",
         "description": "机柜标签写着「CANDY-SRV-07」。第七层的硬盘指示灯异常闪烁——那里存着7月12日的数据。",
-        "interactionType": "pickup",
+        "interactionType": "investigate",
         "interactionRadius": 50,
         "promptText": "取出硬盘",
         "spriteColor": 2236979,
