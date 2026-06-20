@@ -107,7 +107,7 @@ export default function PhaserRoom() {
       {/* 房间顶栏（React 浮层） */}
       <div className="phaser-room-header">
         <span className="phaser-room-controls">
-          WASD / 方向键移动 ｜ E 交互 ｜ ESC 离开
+          WASD / 方向键：移动 ｜ E：交互 ｜ 空格：显示可交互区域
         </span>
 
       </div>

@@ -269,10 +269,7 @@ export default class RoomScene extends Phaser.Scene {
       }
     });
 
-    // ESC 退出
-    this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.ESC).on('down', () => {
-      useGameStore.getState().exitRoom();
-    });
+
 
     // 暂停/恢复
     this.game.events.on('pause-input', () => { this.input.keyboard!.enabled = false; });

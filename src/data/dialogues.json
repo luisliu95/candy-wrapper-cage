@@ -149,7 +149,7 @@
     "id": "ch1_door_panel_fail",
     "chapter": 1,
     "speaker": "旁白",
-    "text": "「密码错误。剩余尝试次数：2」面板上闪过红色警告。你需要找到正确的密码。",
+    "text": "「密码错误」面板上闪过红色警告。你需要找到正确的密码。",
     "enterRoom": "ch1_dorm",
     "trigger": { "alert": 1 },
     "background": "part1_background"
@@ -310,8 +310,7 @@
     "speaker": "旁白",
     "text": "你跟着美杜莎走下狭窄的楼梯。空气变得潮湿，糖纸的甜味被油墨的气味取代。",
     "next": "ch2_enter",
-    "background": "basement",
-    "trigger": { "triggerSugarEcho": true }
+    "background": "basement"
   },
 
   "__comment_ch2": "=== 第二章 传单工坊 ===",
@@ -321,7 +320,8 @@
     "speaker": "旁白",
     "text": "地下室比你想象的大得多。角落里堆着一台老式印刷机，到处散落着纸张和传单。",
     "next": "ch2_monika_observe",
-    "background": "basement"
+    "background": "basement",
+    "trigger": { "triggerSugarEcho": true }
   },
   "ch2_monika_observe": {
     "id": "ch2_monika_observe",
@@ -683,8 +683,7 @@
     "speaker": "旁白",
     "text": "乔青带你穿过一条昏暗的通道。尽头是一扇贴满告示的铁门，上面写着：「广播室 —— 仅限授权人员。」",
     "next": "ch3_enter",
-    "background": "broadcasting_room",
-    "trigger": { "triggerSugarEcho": true }
+    "background": "broadcasting_room"
   },
 
   "__comment_ch3": "=== 第三章 广播室 ===",
@@ -694,7 +693,8 @@
     "speaker": "旁白",
     "text": "广播室比想象中小，但设备齐全。混音台上的按钮在微光中闪烁，像一排沉默的眼睛。",
     "background": "broadcasting_room",
-    "next": "ch3_meikong_broadcast_intercept"
+    "next": "ch3_meikong_broadcast_intercept",
+    "trigger": { "triggerSugarEcho": true }
   },
   "ch3_meikong_broadcast_intercept": {
     "id": "ch3_meikong_broadcast_intercept",

@@ -41,14 +41,12 @@ export default function GameUI() {
   } = useGameStore();
 
   const node = getCurrentNode();
-  const [typingDone, setTypingDone] = useState(false);
+  const [typingDoneFor, setTypingDoneFor] = useState<string | null>(null);
   const bgmRef = useRef<HTMLAudioElement | null>(null);
   const bgmPathRef = useRef<string>('');
 
-  // 节点切换时重置
-  useEffect(() => {
-    setTypingDone(false);
-  }, [node?.id]);
+  // typingDone 只有当完成的节点ID和当前节点ID匹配时才为 true
+  const typingDone = typingDoneFor === node?.id;
 
   // BGM 管理
   useEffect(() => {
@@ -124,7 +122,7 @@ export default function GameUI() {
         )}
         {phase === 'story' && node && (
           <>
-            <DialogBox node={node} onTypingDone={() => setTypingDone(true)} />
+            <DialogBox node={node} onTypingDone={() => setTypingDoneFor(node.id)} />
             {typingDone && node.choices && node.choices.length > 0 && (
               <ChoicePanel choices={node.choices} />
             )}
