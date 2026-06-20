@@ -104,12 +104,14 @@ export default function PhaserRoom() {
       {/* Phaser 画布容器 */}
       <div id="phaser-container" ref={containerRef} className="phaser-canvas-container" />
 
-      {/* 房间顶栏（React 浮层） */}
-      <div className="phaser-room-header">
-        <span className="phaser-room-controls">
-          WASD / 方向键：移动 ｜ E：交互 ｜ 空格：显示可交互区域
-        </span>
-
+      {/* 操作提示图标 */}
+      <div className="phaser-help-icon">
+        ?
+        <div className="phaser-help-tooltip">
+          WASD / 方向键：移动<br/>
+          E：交互<br/>
+          空格：显示可交互区域
+        </div>
       </div>
 
       {/* 交互弹窗（React 浮层，覆盖在 Phaser 画布上） */}
